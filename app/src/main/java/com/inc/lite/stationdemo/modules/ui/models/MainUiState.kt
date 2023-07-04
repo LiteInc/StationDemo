@@ -9,5 +9,8 @@ data class MainUiState(
     val stationQR: String = "http://www.riisu.co/rent?now=86546307",
     val title: String = "時裝時裝",
     val startButtonString: String = "開始點餐",
-    val startButtonCOlor: Color = MainColor
+    val startButtonColor: Color = MainColor,
+    val statusUiState: StatusBarUiState = StatusBarUiState(),
+    val onAppPreviewClick: () -> Unit = {},
+    val onStartClick: () -> Unit = {},
 )

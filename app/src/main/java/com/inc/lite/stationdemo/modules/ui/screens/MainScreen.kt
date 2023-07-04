@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -34,73 +35,61 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.inc.lite.stationdemo.modules.ui.models.MainUiState
 import com.inc.lite.stationdemo.modules.ui.theme.MainColor
 import com.inc.lite.stationdemo.modules.ui.theme.StationLIteTheme
 import com.inc.lite.stationdemo.modules.ui.theme.pingFangTCFamily
 import com.inc.lite.stationdemo.modules.ui.viewModel.MainViewModel
 import com.inc.lite.stationdemo.R
+import com.inc.lite.stationdemo.modules.ui.components.StatusBar
+import com.inc.lite.stationdemo.modules.ui.navigation.Screen
 import com.inc.lite.stationdemo.util.QRCodeUtil
 
 
 @Composable
 fun MainScreen(
     viewModel: MainViewModel = viewModel(),
-    onAppPreviewClick: () -> Unit = {},
-    onStartClick: () -> Unit = {},
-    onAppsClick: () -> Unit = {}
+    navHostController: NavHostController
 ) {
 
     val uiState by viewModel._uiState.collectAsState()
     val bitmap = QRCodeUtil.createQRImage(uiState.stationQR, 140, 140, null, MainColor.toArgb()).asImageBitmap()
 
     Column(modifier = Modifier.fillMaxSize()) {
+        StatusBar(
+            uiState = uiState.statusUiState,
+            modifier = Modifier.weight(0.056f)
+        )
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(72.dp)
-                .background(Color.White)
-                .padding(horizontal = 16.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Row(
-                modifier = Modifier.fillMaxSize(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("ID: ${uiState.stationID}", fontSize = 12.sp)
-                Image(
-                    painter = painterResource(id = R.drawable.network_state),
-                    contentDescription = "Network state",
-                    modifier = Modifier.height(16.dp)
-                )
-            }
-            Text(uiState.title, fontSize = 44.sp)
+                .weight(0.82f)
 
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(1052.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.add_main),
                 contentDescription = "Main add",
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.FillBounds
             )
         }
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(156.dp)
+                .weight(0.121f)
+                .background(Color.White)
         ) {
             Row(
                 Modifier
@@ -116,13 +105,16 @@ fun MainScreen(
                 StrippedVerticalLine()
                 CentralBottomBox(
                     modifier = Modifier.weight(0.525f),
-                    onStartClick = onStartClick,
                     uiState = uiState,
-                    bitmap = bitmap
+                    bitmap = bitmap,
                 )
-                StrippedVerticalLine()
+//                StrippedVerticalLine()
                 RightBottomBox(
-                    modifier = Modifier.weight(0.205f)
+                    modifier = Modifier.weight(0.205f),
+                    uiState,
+                    onAppsClick = {
+                        navHostController.navigate(Screen.Programs.route)
+                    }
                 )
 
             }
@@ -134,7 +126,10 @@ fun MainScreen(
 @Composable
 fun MainPreview(){
     StationLIteTheme() {
-        MainScreen(viewModel())
+        MainScreen(
+            viewModel(),
+            navHostController = rememberNavController()
+        )
     }
 }
 
@@ -151,9 +146,9 @@ fun FirstBottomBox(
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "手機\n 掃碼\n 點餐",
+                text = "Download\nsome\napplication",
                 fontSize = 14.sp,
-                modifier = Modifier.width(60.dp),
+                modifier = Modifier.width(75.dp),
                 textAlign = TextAlign.Center,
                                 style = TextStyle(
                                     fontFamily = pingFangTCFamily,
@@ -175,7 +170,6 @@ fun FirstBottomBox(
 @Composable
 fun CentralBottomBox(
     modifier: Modifier = Modifier,
-    onStartClick: ()-> Unit = {},
     uiState: MainUiState,
     bitmap: ImageBitmap
 ) {
@@ -190,14 +184,14 @@ fun CentralBottomBox(
                 Modifier
                     .fillMaxSize()
                     .padding(
-                        horizontal = 22.dp,
+                        horizontal = 20.dp,
                         vertical = 20.dp
                     ),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(
-                    onClick = onStartClick,
+                    onClick = uiState.onStartClick,
                     modifier = Modifier
                         .fillMaxHeight()
                         .width(167.dp),
@@ -209,7 +203,7 @@ fun CentralBottomBox(
                     )
                 }
                 Text(
-                    text = "掃個碼，就能\n輕鬆租借行動\n電源囉！右邊\n等你噢！",
+                    text = "Or scan\nQR Code！",
                     modifier = Modifier,
                     fontSize = 14.sp,
                     textAlign = TextAlign.Start,
@@ -223,7 +217,8 @@ fun CentralBottomBox(
                     Image(
                         modifier = Modifier.size(79.dp),
                         bitmap = bitmap,
-                        contentDescription = "Station URL in QR"
+                        contentDescription = "Station URL in QR",
+                        contentScale = ContentScale.Fit
                     )
 //                    Image(
 //                        modifier = Modifier
@@ -240,22 +235,23 @@ fun CentralBottomBox(
 }
 
 
-@Preview
+
 @Composable
 fun RightBottomBox(
     modifier: Modifier = Modifier,
-    onAppPreviewClick: () -> Unit = {},
-    onAppsClick: () -> Unit = {},
+    uiState: MainUiState,
+    onAppsClick: ()-> Unit = {}
 ) {
     Box(
         modifier.fillMaxHeight()
     ) {
         Column(
             Modifier
-                .padding(top = 14.dp, bottom = 14.dp, start = 16.dp)
+                .padding(top = 14.dp, bottom = 14.dp, start = 16.dp, end = 16.dp)
                 .fillMaxHeight()
         ) {
             Text(
+                modifier = Modifier.padding(start = 6.dp),
                 text = "使用其他應用",
                 fontSize = 14.sp,
                 textAlign = TextAlign.Center,
@@ -279,7 +275,7 @@ fun RightBottomBox(
                     verticalArrangement = Arrangement.SpaceAround
                 ){
                     items(6){
-                        ProgramItem()
+                        ProgramItem(uiState.onAppPreviewClick)
                     }
                 }
                 Image(
@@ -288,7 +284,12 @@ fun RightBottomBox(
                     modifier = Modifier
                         .height(16.dp)
                         .width(14.dp)
-                        .clickable { onAppsClick() }
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            onAppsClick()
+                        }
                 )
             }
 
@@ -297,20 +298,31 @@ fun RightBottomBox(
     }
 }
 
-
+@Preview
 @Composable
 fun ProgramItem(
     onAppPreviewClick: ()-> Unit = {}
 ) {
-    Image(
-        painter = painterResource(id = R.drawable.icon_brand),
-        contentDescription = "Icons with brands",
-        modifier = Modifier
-            .clickable(
-                indication = null,
-                interactionSource = remember { MutableInteractionSource() }
-            ) { onAppPreviewClick() }
-    )
+    Box(
+        Modifier
+            .height(36.dp)
+            .width(32.dp)
+            .background(Color.Transparent),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.icon_brand),
+            contentDescription = "Icons with brands",
+            modifier = Modifier
+                .size(22.dp)
+                .clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }
+                ) {
+                    onAppPreviewClick()
+                }
+        )
+    }
 }
 
 @Composable
