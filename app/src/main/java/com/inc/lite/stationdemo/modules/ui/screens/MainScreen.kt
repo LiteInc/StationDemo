@@ -44,6 +44,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -60,7 +61,7 @@ import com.inc.lite.stationdemo.util.QRCodeUtil
 
 @Composable
 fun MainScreen(
-    viewModel: MainViewModel = viewModel(),
+    viewModel: MainViewModel = hiltViewModel(),
     navHostController: NavHostController
 ) {
 
@@ -217,8 +218,7 @@ fun CentralBottomBox(
                     Image(
                         modifier = Modifier.size(79.dp),
                         bitmap = bitmap,
-                        contentDescription = "Station URL in QR",
-                        contentScale = ContentScale.Fit
+                        contentDescription = "Station URL in QR"
                     )
 //                    Image(
 //                        modifier = Modifier

@@ -44,7 +44,7 @@ fun ProgramsScreen(
                     columns = GridCells.Fixed(4),
                 ){
                     items(6){
-                        ProgramItemComponent()
+                        ProgramItemComponent(navHostController = navHostController)
                     }
                 }
             }

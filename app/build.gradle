@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -12,8 +14,8 @@ android {
         minSdk 24
         //noinspection ExpiredTargetSdkVersion
         targetSdk 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -42,11 +44,23 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    kotlin {
+        jvmToolchain {
+            languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_1_8.majorVersion))
+        }
+        // Or shorter:
+        jvmToolchain(8)
+        // For example:
+        jvmToolchain(8)
+    }
     buildFeatures {
         compose true
     }
     composeOptions {
         kotlinCompilerExtensionVersion '1.4.7'
+    }
+    kapt {
+        correctErrorTypes true
     }
 
 }
@@ -104,4 +118,12 @@ dependencies {
     //Navigation
 //    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
     implementation "androidx.navigation:navigation-compose:2.6.0"
+
+    //Accompanist
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.28.0"
+
+    //dagger hilt
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-android-compiler:2.44"
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
 }
