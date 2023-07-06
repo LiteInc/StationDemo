@@ -19,6 +19,7 @@ import com.inc.lite.stationdemo.modules.ui.components.ProgramItemComponent
 import com.inc.lite.stationdemo.modules.ui.components.StatusBar
 import com.inc.lite.stationdemo.modules.ui.components.TopBar
 import com.inc.lite.stationdemo.modules.ui.models.StatusBarUiState
+import com.inc.lite.stationdemo.modules.ui.navigation.Screen
 
 //@Preview(widthDp = 800, heightDp = 1280)
 @Composable
@@ -37,7 +38,10 @@ fun ProgramsScreen(
                 .padding(it)
         ) {
             Column {
-                TopBar(onBackArrowClick = { navHostController.popBackStack() })
+                TopBar(
+                    onBackArrowClick = { navHostController.popBackStack() },
+                    onReturnHomeClick = { navHostController.navigate(Screen.Main.route) }
+                )
                 Spacer(modifier = Modifier.height(60.dp))
                 LazyVerticalGrid(
                     modifier = Modifier.padding(horizontal = 76.dp, vertical = 60.dp),

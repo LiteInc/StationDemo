@@ -14,7 +14,7 @@ import com.inc.lite.stationdemo.modules.ui.screens.WebViewScreen
 fun NavigationGraph(
     navHostController: NavHostController
 ) {
-    NavHost(navController = navHostController, startDestination = Screen.WebView.route){
+    NavHost(navController = navHostController, startDestination = Screen.Main.route){
         composable(Screen.Main.route){
             MainScreen(navHostController = navHostController)
         }

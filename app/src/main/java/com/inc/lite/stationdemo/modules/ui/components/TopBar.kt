@@ -29,7 +29,8 @@ import com.inc.lite.stationdemo.modules.ui.theme.MainColor
 @Composable
 fun TopBar(
     modifier: Modifier = Modifier,
-    onBackArrowClick: ()-> Unit = {}
+    onBackArrowClick: ()-> Unit = {},
+    onReturnHomeClick: ()-> Unit = {}
 ) {
     Surface(
         modifier = modifier,
@@ -59,7 +60,14 @@ fun TopBar(
                     text = "Return to\nhome screen",
                     textAlign = TextAlign.Center,
                     color = MainColor,
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
+                    modifier = Modifier
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            onReturnHomeClick()
+                        }
                 )
             }
             Box {
@@ -70,11 +78,11 @@ fun TopBar(
                 ) {
                     Image(
                         modifier = Modifier.padding(end = 16.dp),
-                        painter = painterResource(id = R.drawable.apple_apps_store),
+                        painter = painterResource(id = R.drawable.gplay_logo),
                         contentDescription = ""
                     )
                     Text(
-                        text = "inLine",
+                        text = "Google",
                         fontSize = 32.sp
                     )
                 }

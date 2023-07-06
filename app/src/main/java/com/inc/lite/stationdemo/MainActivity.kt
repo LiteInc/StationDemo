@@ -50,7 +50,8 @@ class MainActivity : ComponentActivity() {
                         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                                 or View.SYSTEM_UI_FLAG_IMMERSIVE)
-            } else {
+            }
+            else {
                 window.insetsController?.apply {
                     window.decorView.systemUiVisibility = (
                             View.SYSTEM_UI_FLAG_HIDE_NAVIGATION

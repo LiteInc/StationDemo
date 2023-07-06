@@ -32,6 +32,7 @@ import com.inc.lite.stationdemo.modules.ui.components.StatusBar
 import com.inc.lite.stationdemo.modules.ui.components.TopBar
 import com.inc.lite.stationdemo.modules.ui.components.WebViewComponent
 import com.inc.lite.stationdemo.modules.ui.models.StatusBarUiState
+import com.inc.lite.stationdemo.modules.ui.navigation.Screen
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -46,6 +47,8 @@ fun WebViewScreen(
     val animatedWebView by animateIntAsState(targetValue = if (isKeyboardOpen == Keyboard.Opened) 700 else 959)
 //    val animatedSpacer by animateFloatAsState(targetValue = if (isKeyboardOpen == Keyboard.Opened) 0.273f else 0.001f)
     val animatedSpacer2 by animateIntAsState(targetValue = if (isKeyboardOpen == Keyboard.Opened) 350 else 0)
+
+
 
 
 //    Column(
@@ -64,7 +67,15 @@ fun WebViewScreen(
         topBar = {
             Column(Modifier.height(149.dp)) {
                 StatusBar(uiState = StatusBarUiState())
-                TopBar(modifier = Modifier,onBackArrowClick = { navHostController.popBackStack() })
+                TopBar(
+                    modifier = Modifier,
+                    onBackArrowClick = { navHostController.popBackStack() },
+                    onReturnHomeClick = {
+                        navHostController.navigate(
+                            Screen.Main.route
+                        )
+                    }
+                )
             }
 //            Text(text = "$isKeyboardOpen")
         },

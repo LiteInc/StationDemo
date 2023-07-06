@@ -37,9 +37,13 @@ class MainViewModel @Inject constructor(
         val qrURL = QrCodeLink().getLink(imei)
         uiState.update {
             it.copy(
+                startButtonString = "Start",
                 stationID = imei.toLong(),
                 stationQR = qrURL,
-                statusUiState = StatusBarUiState(stationID = StationID().getUserFriendlyStationId(imei))
+                statusUiState = StatusBarUiState(
+                    stationID = StationID().getUserFriendlyStationId(imei),
+                    titleText = "時裝時裝"
+                )
             )
         }
     }

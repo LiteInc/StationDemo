@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
@@ -29,6 +30,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
@@ -36,6 +39,8 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -68,57 +73,101 @@ fun MainScreen(
     val uiState by viewModel._uiState.collectAsState()
     val bitmap = QRCodeUtil.createQRImage(uiState.stationQR, 140, 140, null, MainColor.toArgb()).asImageBitmap()
 
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp
+    val screenHeight = configuration.screenHeightDp
+
+
     Column(modifier = Modifier.fillMaxSize()) {
-        StatusBar(
-            uiState = uiState.statusUiState,
-            modifier = Modifier.weight(0.056f)
-        )
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(0.82f)
+                .fillMaxHeight(0.89f)
+//                .weight(0.89f)
 
         ) {
             Image(
-                painter = painterResource(id = R.drawable.add_main),
+                painter = painterResource(id = R.drawable.main_add),
                 contentDescription = "Main add",
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.FillBounds
+                modifier = Modifier.height(1142.dp).width(800.dp),
+//                contentScale = ContentScale.Crop
             )
         }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(0.121f)
-                .background(Color.White)
-        ) {
-            Row(
-                Modifier
-                    .fillMaxSize()
-                    .padding(vertical = 18.dp)) {
 
-                //First Box With text and QR
-                FirstBottomBox(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(0.27f)
-                )
-                StrippedVerticalLine()
-                CentralBottomBox(
-                    modifier = Modifier.weight(0.525f),
-                    uiState = uiState,
-                    bitmap = bitmap,
-                )
-//                StrippedVerticalLine()
-                RightBottomBox(
-                    modifier = Modifier.weight(0.205f),
-                    uiState,
-                    onAppsClick = {
-                        navHostController.navigate(Screen.Programs.route)
-                    }
-                )
+    }
+    StatusBar(
+        uiState = uiState.statusUiState,
+        modifier = Modifier,
+        backgroundColor = Color.Black,
+        contentColor = Color.White,
+        backgroundAlpha = 0.12f
+    )
 
+
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
+        Column {
+            Box(modifier = Modifier
+                .height(30.dp)
+                .fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ){
+                Text(
+                    modifier = Modifier.background(Color.Black.copy(alpha = 0.6f)),
+                    text = "Screen: width - $screenWidth, height - $screenHeight",
+                    color = Color.White,
+                    fontSize = 20.sp
+                )
             }
+            BottomBarMain(
+                modifier = Modifier.height(156.dp),
+                bitmap = bitmap,
+                uiState = uiState,
+                navHostController = navHostController
+            )
+        }
+
+    }
+}
+
+@Composable
+fun BottomBarMain(
+    modifier: Modifier = Modifier,
+    bitmap: ImageBitmap,
+    uiState: MainUiState,
+    navHostController: NavHostController
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+            .background(Color.White)
+    ) {
+        Row(
+            Modifier
+                .fillMaxSize()
+                .padding(vertical = 18.dp)) {
+
+            //First Box With text and QR
+            FirstBottomBox(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(0.27f)
+            )
+            StrippedVerticalLine()
+            CentralBottomBox(
+                modifier = Modifier.weight(0.525f),
+                uiState = uiState,
+                bitmap = bitmap,
+            )
+//                StrippedVerticalLine()
+            RightBottomBox(
+                modifier = Modifier.weight(0.205f),
+                uiState,
+                onAppsClick = {
+                    navHostController.navigate(Screen.Programs.route)
+                }
+            )
+
         }
     }
 }
