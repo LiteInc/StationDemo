@@ -1,20 +1,21 @@
 package com.inc.lite.stationdemo.modules.ui.navigation
 
-import androidx.compose.runtime.Composable
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
+import androidx.navigation.navigation
 import com.inc.lite.stationdemo.modules.ui.screens.MainScreen
 import com.inc.lite.stationdemo.modules.ui.screens.ProgramsScreen
 import com.inc.lite.stationdemo.modules.ui.screens.WebViewScreen
 
-@Composable
-fun NavigationGraph(
+
+fun NavGraphBuilder.homeNavGraph(
     navHostController: NavHostController
 ) {
-    NavHost(navController = navHostController, startDestination = Screen.Main.route){
+    navigation(
+        startDestination = Screen.Main.route,
+        route = HOME_ROUTE
+    ){
         composable(Screen.Main.route){
             MainScreen(navHostController = navHostController)
         }
@@ -24,6 +25,7 @@ fun NavigationGraph(
         composable(Screen.WebView.route){
             WebViewScreen(navHostController = navHostController, "https://www.google.com.tw/?hl=zh_TW")
         }
+    }
 //        composable(
 //            route = Screen.WebView.route +"/{url}",
 //            arguments = listOf(navArgument("url") { type = NavType.StringType })
@@ -33,13 +35,7 @@ fun NavigationGraph(
 //                navHostController = navHostController
 //            )
 //        }
-    }
 }
 
 
 
-sealed class Screen(val route: String){
-    object Main: Screen("main_screen")
-    object Programs: Screen("programs_screen")
-    object WebView: Screen("webview_screen")
-}

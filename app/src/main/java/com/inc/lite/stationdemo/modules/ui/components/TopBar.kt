@@ -1,6 +1,7 @@
 package com.inc.lite.stationdemo.modules.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,13 +27,16 @@ import androidx.compose.ui.unit.sp
 import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.modules.ui.theme.MainColor
 
-@Preview(widthDp = 800, heightDp = 1280)
+@Preview(widthDp = 400, heightDp = 640)
 @Composable
 fun TopBar(
     modifier: Modifier = Modifier,
     onBackArrowClick: ()-> Unit = {},
     onReturnHomeClick: ()-> Unit = {}
 ) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp
+    val screenHeight = configuration.screenHeightDp + 72
     Surface(
         modifier = modifier,
         color = Color.White
@@ -40,8 +45,8 @@ fun TopBar(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(77.dp)
-                    .padding(horizontal = 36.dp),
+                    .height((screenHeight/16.6).dp)
+                    .padding(horizontal = (screenHeight/35.5).dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
@@ -49,6 +54,7 @@ fun TopBar(
                     painter = painterResource(id = R.drawable.back_arrow),
                     contentDescription = "",
                     modifier = Modifier
+                        .height((screenHeight/42).dp)
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
@@ -60,7 +66,7 @@ fun TopBar(
                     text = "Return to\nhome screen",
                     textAlign = TextAlign.Center,
                     color = MainColor,
-                    fontSize = 18.sp,
+                    fontSize = (screenHeight/71).sp,
                     modifier = Modifier
                         .clickable(
                             indication = null,
@@ -72,18 +78,21 @@ fun TopBar(
             }
             Box {
                 Row(
-                    modifier = Modifier.fillMaxWidth().height(77.dp),
+                    modifier = Modifier.fillMaxWidth().height((screenHeight/16.6).dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Image(
-                        modifier = Modifier.padding(end = 16.dp),
+                        modifier = Modifier
+                            .height((screenHeight/37.64).dp)
+                            .padding(end = ((screenHeight/80)).dp),
                         painter = painterResource(id = R.drawable.gplay_logo),
                         contentDescription = ""
                     )
                     Text(
                         text = "Google",
-                        fontSize = 32.sp
+                        fontSize = (screenHeight/40).sp,
+                        textAlign = TextAlign.Center
                     )
                 }
             }

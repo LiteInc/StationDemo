@@ -7,13 +7,12 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
-import com.inc.lite.stationdemo.modules.ui.navigation.NavigationGraph
+import com.inc.lite.stationdemo.modules.ui.navigation.RootNavGraph
 import com.inc.lite.stationdemo.ui.theme.StationDemoTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navHostController = rememberNavController()
-                    NavigationGraph(navHostController = navHostController)
+                    RootNavGraph(navHostController = navHostController)
                 }
             }
         }

@@ -11,6 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -26,11 +27,12 @@ import com.inc.lite.stationdemo.modules.ui.navigation.Screen
 fun ProgramsScreen(
     navHostController: NavHostController
 ) {
-
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp
+    val screenHeight = configuration.screenHeightDp + 72
     Scaffold(
         bottomBar = { BottomBar() },
         topBar = { StatusBar(uiState = StatusBarUiState()) }
-
     ) {
         Surface(
             Modifier
@@ -42,9 +44,9 @@ fun ProgramsScreen(
                     onBackArrowClick = { navHostController.popBackStack() },
                     onReturnHomeClick = { navHostController.navigate(Screen.Main.route) }
                 )
-                Spacer(modifier = Modifier.height(60.dp))
+                Spacer(modifier = Modifier.height((screenHeight/21.3).dp))
                 LazyVerticalGrid(
-                    modifier = Modifier.padding(horizontal = 76.dp, vertical = 60.dp),
+                    modifier = Modifier.padding(horizontal = (screenHeight/16.8).dp, vertical = (screenHeight/21.3).dp),
                     columns = GridCells.Fixed(4),
                 ){
                     items(6){

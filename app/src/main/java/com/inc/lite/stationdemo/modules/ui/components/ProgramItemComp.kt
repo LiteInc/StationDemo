@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,10 +33,13 @@ fun ProgramItemComponent(
     programItem: ProgramItem = ProgramItem("Google Maps"),
     navHostController: NavHostController,
 ) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp
+    val screenHeight = configuration.screenHeightDp + 72
     Surface(
         modifier = modifier
-            .height(152.dp)
-            .width(152.dp)
+            .height((screenHeight/8.42).dp)
+            .width((screenHeight/8.42).dp)
             .clickable(
             indication = null,
             interactionSource = remember { MutableInteractionSource() }
@@ -50,14 +54,14 @@ fun ProgramItemComponent(
         ) {
             Image(
                 modifier = Modifier
-                    .size(100.dp)
-                    .padding(bottom = 20.dp),
+                    .size((screenHeight/12.8).dp)
+                    .padding(bottom = (screenHeight/64).dp),
                 painter = painterResource(id = programItem.imageUrl),
                 contentDescription = ""
             )
             Text(
                 text = programItem.title,
-                fontSize = 24.sp,
+                fontSize = (screenHeight/53.3).sp,
                 fontWeight = FontWeight.Light
             )
         }

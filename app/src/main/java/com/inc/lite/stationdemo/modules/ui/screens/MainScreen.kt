@@ -75,21 +75,19 @@ fun MainScreen(
 
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp
-    val screenHeight = configuration.screenHeightDp
+    val screenHeight = configuration.screenHeightDp + 72
 
 
     Column(modifier = Modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.89f)
-//                .weight(0.89f)
 
         ) {
             Image(
                 painter = painterResource(id = R.drawable.main_add),
                 contentDescription = "Main add",
-                modifier = Modifier.height(1142.dp).width(800.dp),
+                modifier = Modifier.height((screenHeight/1.12).dp).width(screenWidth.dp),
 //                contentScale = ContentScale.Crop
             )
         }
@@ -113,13 +111,13 @@ fun MainScreen(
             ){
                 Text(
                     modifier = Modifier.background(Color.Black.copy(alpha = 0.6f)),
-                    text = "Screen: width - $screenWidth, height - $screenHeight",
+                    text = "Screen: $screenWidth x $screenHeight",
                     color = Color.White,
                     fontSize = 20.sp
                 )
             }
             BottomBarMain(
-                modifier = Modifier.height(156.dp),
+                modifier = Modifier.height((screenHeight/8.20).dp),
                 bitmap = bitmap,
                 uiState = uiState,
                 navHostController = navHostController
@@ -136,16 +134,20 @@ fun BottomBarMain(
     uiState: MainUiState,
     navHostController: NavHostController
 ) {
+
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp
+    val screenHeight = configuration.screenHeightDp + 72
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+            .clip(RoundedCornerShape(topStart = 10.0f, topEnd = 10.0f))
             .background(Color.White)
     ) {
         Row(
             Modifier
                 .fillMaxSize()
-                .padding(vertical = 18.dp)) {
+                .padding(vertical = (screenHeight/71).dp)) {
 
             //First Box With text and QR
             FirstBottomBox(
@@ -187,6 +189,9 @@ fun MainPreview(){
 fun FirstBottomBox(
     modifier: Modifier = Modifier
 ) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp
+    val screenHeight = configuration.screenHeightDp + 72
     Box(
         modifier.fillMaxHeight()
     ) {
@@ -197,18 +202,18 @@ fun FirstBottomBox(
         ) {
             Text(
                 text = "Download\nsome\napplication",
-                fontSize = 14.sp,
-                modifier = Modifier.width(75.dp),
+                fontSize = (screenHeight/91.42).sp,
+                modifier = Modifier.width((screenHeight/17).dp),
                 textAlign = TextAlign.Center,
                                 style = TextStyle(
                                     fontFamily = pingFangTCFamily,
                                     fontWeight = FontWeight.Normal
                                 )
             )
-            Spacer(Modifier.width(10.dp))
+            Spacer(Modifier.width((screenHeight/128).dp))
             Image(
                 modifier = Modifier
-                    .height(79.dp),
+                    .height((screenHeight/16.2).dp),
                 painter = painterResource(id = R.drawable.upload__your_app),
                 contentDescription = "download qrs"
             )
@@ -223,6 +228,9 @@ fun CentralBottomBox(
     uiState: MainUiState,
     bitmap: ImageBitmap
 ) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp
+    val screenHeight = configuration.screenHeightDp + 72
     Box(
         modifier.fillMaxHeight()
     ) {
@@ -234,8 +242,8 @@ fun CentralBottomBox(
                 Modifier
                     .fillMaxSize()
                     .padding(
-                        horizontal = 20.dp,
-                        vertical = 20.dp
+                        horizontal = (screenHeight/64).dp,
+                        vertical = (screenHeight/64).dp
                     ),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -244,18 +252,18 @@ fun CentralBottomBox(
                     onClick = uiState.onStartClick,
                     modifier = Modifier
                         .fillMaxHeight()
-                        .width(167.dp),
+                        .width((screenHeight/7.5).dp),
                     colors = ButtonDefaults.buttonColors(containerColor = MainColor)
                 ) {
                     Text(
                         text = uiState.startButtonString,
-                        fontSize = 24.sp
+                        fontSize = (screenHeight/53.3).sp
                     )
                 }
                 Text(
                     text = "Or scan\nQR Code！",
                     modifier = Modifier,
-                    fontSize = 14.sp,
+                    fontSize = (screenHeight/91.42).sp,
                     textAlign = TextAlign.Start,
                     style = TextStyle(
                         fontFamily = pingFangTCFamily,
@@ -265,7 +273,7 @@ fun CentralBottomBox(
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Image(
-                        modifier = Modifier.size(79.dp),
+                        modifier = Modifier.size((screenHeight/16.2).dp),
                         bitmap = bitmap,
                         contentDescription = "Station URL in QR"
                     )
@@ -291,18 +299,21 @@ fun RightBottomBox(
     uiState: MainUiState,
     onAppsClick: ()-> Unit = {}
 ) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp
+    val screenHeight = configuration.screenHeightDp + 72
     Box(
         modifier.fillMaxHeight()
     ) {
         Column(
             Modifier
-                .padding(top = 14.dp, bottom = 14.dp, start = 16.dp, end = 16.dp)
+                .padding(vertical = (screenHeight/91.42).dp, horizontal = (screenHeight/80).dp)
                 .fillMaxHeight()
         ) {
             Text(
-                modifier = Modifier.padding(start = 6.dp),
+                modifier = Modifier.padding(start = (screenHeight/213.3).dp),
                 text = "使用其他應用",
-                fontSize = 14.sp,
+                fontSize = (screenHeight/91.42).sp,
                 textAlign = TextAlign.Center,
                 style = TextStyle(
                     fontFamily = pingFangTCFamily,
@@ -318,8 +329,8 @@ fun RightBottomBox(
                     columns = GridCells.Fixed(3),
                     modifier = Modifier
                         .fillMaxHeight()
-                        .width(109.dp)
-                        .padding(top = 4.dp),
+                        .width((screenHeight/11.74).dp)
+                        .padding(top = (screenHeight/320).dp),
                     horizontalArrangement = Arrangement.SpaceAround,
                     verticalArrangement = Arrangement.SpaceAround
                 ){
@@ -331,8 +342,8 @@ fun RightBottomBox(
                     painter = painterResource(id = R.drawable.play_arrow),
                     contentDescription = "Open programs",
                     modifier = Modifier
-                        .height(16.dp)
-                        .width(14.dp)
+                        .height((screenHeight/80).dp)
+                        .width((screenHeight/91.42).dp)
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
@@ -352,10 +363,13 @@ fun RightBottomBox(
 fun ProgramItem(
     onAppPreviewClick: ()-> Unit = {}
 ) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp
+    val screenHeight = configuration.screenHeightDp + 72
     Box(
         Modifier
-            .height(36.dp)
-            .width(32.dp)
+            .height((screenHeight/35.5).dp)
+            .width((screenHeight/40).dp)
             .background(Color.Transparent),
         contentAlignment = Alignment.Center
     ) {
@@ -363,7 +377,7 @@ fun ProgramItem(
             painter = painterResource(id = R.drawable.icon_brand),
             contentDescription = "Icons with brands",
             modifier = Modifier
-                .size(22.dp)
+                .size((screenHeight/58).dp)
                 .clickable(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() }
@@ -391,7 +405,7 @@ fun StrippedVerticalLine(
             color = MainColor,
             start = Offset(startX, startY),
             end = Offset(stopX, stopY),
-            strokeWidth = 2f,
+            strokeWidth = 1f,
             pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 2f)
         )
     }

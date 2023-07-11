@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,6 +37,9 @@ fun BottomBar(
     modifier: Modifier = Modifier
 ) {
 
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp
+    val screenHeight = configuration.screenHeightDp + 72
     val bitmap = QRCodeUtil.createQRImage(
         "http://www.riisu.co/rent?now=86546307",
         140,
@@ -52,10 +56,10 @@ fun BottomBar(
         Row(
             Modifier
                 .fillMaxWidth()
-                .height(202.dp)
+                .height((screenHeight/6.33).dp)
                 .padding(
-                    vertical = 32.dp,
-                    horizontal = 60.dp
+                    vertical = (screenHeight/40).dp,
+                    horizontal = (screenHeight/21.33).dp
                 ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -63,13 +67,13 @@ fun BottomBar(
         ) {
             Row(Modifier.height(94.dp)) {
                 Image(
-                    modifier = Modifier.size(94.dp),
+                    modifier = Modifier.size((screenHeight/13.6).dp),
                     painter = painterResource(id = R.drawable.lite_app_logo),
                     contentDescription = null
                 )
                 Column(
                     Modifier
-                        .padding(start = 20.dp)
+                        .padding(start = (screenHeight/64).dp)
                         .fillMaxHeight(),
                     verticalArrangement = Arrangement.SpaceAround
                 ) {
@@ -82,14 +86,14 @@ fun BottomBar(
                     Text(
                         text = "While someone else is using the screen, you can scan the QR code to start the rental",
                         modifier = Modifier
-                            .width(226.dp)
-                            .padding(end = 5.dp),
-                        fontSize = 16.sp
+                            .width((screenHeight/5.66).dp)
+                            .padding(end = (screenHeight/256).dp),
+                        fontSize = (screenHeight/80).sp
                     )
                     Image(
                         bitmap,
                         contentDescription = "",
-                        modifier = Modifier.size(140.dp)
+                        modifier = Modifier.size((screenHeight/9.14).dp)
                     )
                 }
             }
