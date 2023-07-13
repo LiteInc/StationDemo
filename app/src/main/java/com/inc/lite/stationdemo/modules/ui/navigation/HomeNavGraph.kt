@@ -4,9 +4,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.inc.lite.stationdemo.modules.ui.screens.MainScreen
-import com.inc.lite.stationdemo.modules.ui.screens.ProgramsScreen
-import com.inc.lite.stationdemo.modules.ui.screens.WebViewScreen
+import com.inc.lite.stationdemo.modules.ui.screens.home.MainScreen
+import com.inc.lite.stationdemo.modules.ui.screens.home.ProgramsScreen
+import com.inc.lite.stationdemo.modules.ui.screens.home.WebViewScreen
 
 
 fun NavGraphBuilder.homeNavGraph(

@@ -1,28 +1,25 @@
 package com.inc.lite.stationdemo.modules.ui.navigation
 
-import androidx.navigation.NavGraphBuilder
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
+import com.inc.lite.stationdemo.modules.ui.models.LoginUiState
+import com.inc.lite.stationdemo.modules.ui.screens.rentingSystem.loginReg.EnterPhoneNumber
 
-fun NavGraphBuilder.regNavBuilder(
-    navHostController: NavHostController
-){
-    navigation(
-        startDestination = Screen.LoginEnterNumber.route,
-        route = REGISTER
+
+
+@Composable
+fun RegistrationNavGraph(
+    navHostController: NavHostController,
+    uiState: LoginUiState
+) {
+    NavHost(
+        navController = navHostController,
+        startDestination = Screen.LoginEnterNumber.route
     ){
         composable(Screen.LoginEnterNumber.route){
-
-        }
-        composable(Screen.LoginEnterSMS.route){
-
-        }
-        composable(Screen.LoginEnterPass.route){
-
-        }
-        composable(Screen.RegEnterEmail.route){
-
+//            EnterPhoneNumber(navHostController = navHostController)
         }
     }
 }

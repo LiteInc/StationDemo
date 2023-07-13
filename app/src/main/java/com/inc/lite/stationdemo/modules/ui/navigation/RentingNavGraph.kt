@@ -1,9 +1,12 @@
 package com.inc.lite.stationdemo.modules.ui.navigation
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.inc.lite.stationdemo.modules.ui.screens.rentingSystem.loginReg.LoginScreen
+import com.inc.lite.stationdemo.modules.ui.screens.rentingSystem.loginReg.RegOrLoginScreen
 
 fun NavGraphBuilder.rentingNavBuilder(
     navHostController: NavHostController
@@ -13,13 +16,13 @@ fun NavGraphBuilder.rentingNavBuilder(
         route = RENTING_ROUTE
     ){
         composable(Screen.RegOrLogin.route){
+            RegOrLoginScreen(navHostController)
+        }
+        composable(Screen.LoginScreen.route){
+            LoginScreen(navHostController = navHostController)
+        }
+        composable(Screen.Registration.route){
 
-        }
-        composable(LOG_IN){
-            loginNavBuilder(navHostController)
-        }
-        composable(REGISTER){
-            regNavBuilder(navHostController)
         }
         composable(RENT){
             rentNavBuilder(navHostController)
@@ -31,8 +34,7 @@ fun NavGraphBuilder.rentingNavBuilder(
     }
 }
 
-const val LOG_IN = "login"
-const val REGISTER = "register"
+
 const val RENT = "rent"
 const val ACCOUNT = "account"
 

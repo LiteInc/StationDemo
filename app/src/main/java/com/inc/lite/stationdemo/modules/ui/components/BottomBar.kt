@@ -24,11 +24,14 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.modules.ui.theme.MainColor
+import com.inc.lite.stationdemo.modules.ui.theme.pingFangTCFamily
 import com.inc.lite.stationdemo.util.QRCodeUtil
 
 @Preview(widthDp = 800, heightDp = 1280)
@@ -65,7 +68,8 @@ fun BottomBar(
             horizontalArrangement = Arrangement.SpaceBetween
 
         ) {
-            Row(Modifier.height(94.dp)) {
+            Row(Modifier.height((screenHeight/13.6).dp)) {
+
                 Image(
                     modifier = Modifier.size((screenHeight/13.6).dp),
                     painter = painterResource(id = R.drawable.lite_app_logo),
@@ -75,20 +79,33 @@ fun BottomBar(
                     Modifier
                         .padding(start = (screenHeight/64).dp)
                         .fillMaxHeight(),
-                    verticalArrangement = Arrangement.SpaceAround
+                    verticalArrangement = Arrangement.SpaceAround,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Image(painter = painterResource(id = R.drawable.gplay_logo), contentDescription = "")
-                    Image(painter = painterResource(id = R.drawable.apple_apps_store), contentDescription = "")
+                    Image(
+                        modifier = Modifier.size((screenHeight/42.66).dp),
+                        painter = painterResource(id = R.drawable.gplay_logo),
+                        contentDescription = ""
+                    )
+                    Image(
+                        modifier = Modifier.size((screenHeight/42.66).dp),
+                        painter = painterResource(id = R.drawable.apple_apps_store),
+                        contentDescription = ""
+                    )
                 }
             }
             Box() {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "While someone else is using the screen, you can scan the QR code to start the rental",
+                        text = "While someone else is using\nthe screen, you can scan the\nQR code to start the rental",
                         modifier = Modifier
                             .width((screenHeight/5.66).dp)
                             .padding(end = (screenHeight/256).dp),
-                        fontSize = (screenHeight/80).sp
+                        fontSize = (screenHeight/80).sp,
+                        style = TextStyle(
+                            fontFamily = pingFangTCFamily,
+                            fontWeight = FontWeight.Normal
+                        )
                     )
                     Image(
                         bitmap,

@@ -12,10 +12,12 @@ sealed class Screen(val route: String){
     object RegOrLogin: Screen("reg_or_login_screen")
     //Login
     object LoginEnterNumber: Screen("log_number_screen")
+    object LoginScreen: Screen("login_screen")
     object LoginEnterSMS: Screen("log_sms_screen")
     object LoginEnterPass: Screen("log_pass_screen")
 
     //Registration
+    object Registration: Screen("registration_screen")
     object RegEnterEmail: Screen("reg_email_screen")
 
 

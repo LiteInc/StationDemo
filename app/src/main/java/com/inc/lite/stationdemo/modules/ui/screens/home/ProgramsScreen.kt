@@ -1,4 +1,4 @@
-package com.inc.lite.stationdemo.modules.ui.screens
+package com.inc.lite.stationdemo.modules.ui.screens.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -32,7 +32,15 @@ fun ProgramsScreen(
     val screenHeight = configuration.screenHeightDp + 72
     Scaffold(
         bottomBar = { BottomBar() },
-        topBar = { StatusBar(uiState = StatusBarUiState()) }
+        topBar = {
+            Column() {
+                StatusBar(uiState = StatusBarUiState())
+                TopBar(
+                    onBackArrowClick = { navHostController.popBackStack() },
+                    onReturnHomeClick = { navHostController.navigate(Screen.Main.route) }
+                )
+            }
+        }
     ) {
         Surface(
             Modifier
@@ -40,10 +48,6 @@ fun ProgramsScreen(
                 .padding(it)
         ) {
             Column {
-                TopBar(
-                    onBackArrowClick = { navHostController.popBackStack() },
-                    onReturnHomeClick = { navHostController.navigate(Screen.Main.route) }
-                )
                 Spacer(modifier = Modifier.height((screenHeight/21.3).dp))
                 LazyVerticalGrid(
                     modifier = Modifier.padding(horizontal = (screenHeight/16.8).dp, vertical = (screenHeight/21.3).dp),

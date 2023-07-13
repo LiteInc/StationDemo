@@ -1,4 +1,4 @@
-package com.inc.lite.stationdemo.modules.ui.screens
+package com.inc.lite.stationdemo.modules.ui.screens.home
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -22,7 +22,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -30,7 +29,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -38,15 +36,12 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -60,6 +55,7 @@ import com.inc.lite.stationdemo.modules.ui.theme.pingFangTCFamily
 import com.inc.lite.stationdemo.modules.ui.viewModel.MainViewModel
 import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.modules.ui.components.StatusBar
+import com.inc.lite.stationdemo.modules.ui.navigation.RENTING_ROUTE
 import com.inc.lite.stationdemo.modules.ui.navigation.Screen
 import com.inc.lite.stationdemo.util.QRCodeUtil
 
@@ -159,6 +155,7 @@ fun BottomBarMain(
             CentralBottomBox(
                 modifier = Modifier.weight(0.525f),
                 uiState = uiState,
+                navHostController = navHostController,
                 bitmap = bitmap,
             )
 //                StrippedVerticalLine()
@@ -225,6 +222,7 @@ fun FirstBottomBox(
 @Composable
 fun CentralBottomBox(
     modifier: Modifier = Modifier,
+    navHostController: NavHostController,
     uiState: MainUiState,
     bitmap: ImageBitmap
 ) {
@@ -249,7 +247,10 @@ fun CentralBottomBox(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(
-                    onClick = uiState.onStartClick,
+//                    onClick = uiState.onStartClick,
+                    onClick = {
+                        navHostController.navigate(RENTING_ROUTE)
+                    },
                     modifier = Modifier
                         .fillMaxHeight()
                         .width((screenHeight/7.5).dp),
