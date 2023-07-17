@@ -33,12 +33,13 @@ import com.inc.lite.stationdemo.util.AdjScreenSize
 @Preview(showBackground = true, widthDp = 800, heightDp = 1280)
 @Composable
 fun DigitKeyboard(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onDigitClicked: (String) -> Unit = {_->}
 ) {
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
     val buttonsList = listOf(
-        "1", "2", "3", "4", "5", "6", "7", "8", "9"," ","0","del"
+        "1", "2", "3", "4", "5", "6", "7", "8", "9"," ","0","d"
     )
 
     Box(modifier = Modifier
@@ -48,10 +49,21 @@ fun DigitKeyboard(
 
         LazyVerticalGrid(columns = GridCells.Fixed(3), horizontalArrangement = Arrangement.Center){
             items(buttonsList){
-                if(it != "del"){
-                    DigitKeyButton(text = it)
+                if(it != "d"){
+                    DigitKeyButton(
+                        text = it,
+                        onButtonClick = { key ->
+                            onDigitClicked(key)
+                        }
+                    )
                 }else{
-                    DigitKeyButton(text = "", image = R.drawable.remove)
+                    DigitKeyButton(
+                        text = "d",
+                        image = R.drawable.remove,
+                        onButtonClick = { key ->
+                            onDigitClicked(key)
+                        }
+                    )
                 }
             }
         }
@@ -64,7 +76,8 @@ fun DigitKeyboard(
 @Composable
 fun DigitKeyButton(
     text: String = "1",
-    image: Int? = null
+    image: Int? = null,
+    onButtonClick: (String) -> Unit = {_->}
 ) {
 
     val configuration = LocalConfiguration.current
@@ -79,7 +92,7 @@ fun DigitKeyButton(
                 horizontal = size.dp(16)
             ),
         onClick = {
-
+            onButtonClick(text)
         },
         shape = RoundedCornerShape(size.dp(6)),
         colors = ButtonDefaults

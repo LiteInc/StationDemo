@@ -79,7 +79,9 @@ fun DropDownList(
                     CountryItem(
                         it.first,
                         it.second,
-                        onItemClick = onItemSelected
+                        onItemClick = {choice ->
+                            onItemSelected(choice)
+                        }
                     )
                 }
             }

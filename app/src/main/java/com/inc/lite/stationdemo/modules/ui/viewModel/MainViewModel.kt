@@ -16,26 +16,18 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ): ViewModel() {
-
-    private val uiState = MutableStateFlow(MainUiState())
-    val _uiState = uiState.asStateFlow()
-
-
+    private val _uiState = MutableStateFlow(MainUiState())
+    val uiState = _uiState.asStateFlow()
 
     init {
         onStart()
     }
 
-
-
-
-
-
     private fun onStart(){
         val imei = "86732904546307"
 
         val qrURL = QrCodeLink().getLink(imei)
-        uiState.update {
+        _uiState.update {
             it.copy(
                 startButtonString = "Start",
                 stationID = imei.toLong(),

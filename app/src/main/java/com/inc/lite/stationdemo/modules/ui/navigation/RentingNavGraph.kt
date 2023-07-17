@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.inc.lite.stationdemo.modules.ui.screens.rentingSystem.loginReg.LoginScreen
 import com.inc.lite.stationdemo.modules.ui.screens.rentingSystem.loginReg.RegOrLoginScreen
+import com.inc.lite.stationdemo.modules.ui.screens.rentingSystem.loginReg.RegistrationScreen
 
 fun NavGraphBuilder.rentingNavBuilder(
     navHostController: NavHostController
@@ -22,7 +23,7 @@ fun NavGraphBuilder.rentingNavBuilder(
             LoginScreen(navHostController = navHostController)
         }
         composable(Screen.Registration.route){
-
+            RegistrationScreen(navHostController = navHostController)
         }
         composable(RENT){
             rentNavBuilder(navHostController)

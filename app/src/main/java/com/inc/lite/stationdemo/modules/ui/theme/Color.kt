@@ -16,5 +16,6 @@ val LightGrayColor = Color(0xFF9F9F9F)
 val LightKey = Color(0xFFECECEC)
 val Black = Color(0xFF000000)
 val White = Color(0xFFFFFFFF)
+val Background = White
 val GrayDotColor = Color(0xFFD9D9D9)
 val RedInfoColor = Color(0xFFBA0C0C)

@@ -1,39 +1,23 @@
 package com.inc.lite.stationdemo.modules.ui.viewModel
 
-import android.util.Log
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.currentComposer
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.inc.lite.stationdemo.modules.ui.models.LoginUiState
 import com.inc.lite.stationdemo.modules.ui.navigation.Screen
-import com.inc.lite.stationdemo.modules.ui.repository.MainRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import javax.inject.Inject
 
-@HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val mainRepository: MainRepository,
-): ViewModel(), AuthViewModel {
-
+class RegistrationViewModel: ViewModel(),AuthViewModel {
     private var _uiState = MutableStateFlow(LoginUiState())
     override val uiState = _uiState
 
 
-    init {
+    override fun onKeyBoardClick(key: String, typeOfScreen: Screen) {
+        if(key != "del" && key != ""){
 
+        }
     }
 
-    override fun onKeyBoardClick(key: String, typeOfScreen: Screen){
-    }
-
-    override fun onDropDownItemClick(pair: Pair<String, String>){
+    override fun onDropDownItemClick(pair: Pair<String, String>) {
         _uiState.update {
             uiState.value.copy(
                 countryName = pair.first,
@@ -42,11 +26,12 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    override fun onValueEmailSubmit(email: String){
-
+    override fun onValueEmailSubmit(email: String) {
+        TODO("Not yet implemented")
     }
-    override fun onValueNickNameSubmit(nickname: String){
 
+    override fun onValueNickNameSubmit(nickname: String) {
+        TODO("Not yet implemented")
     }
 
     override fun addValueByKey(string: String, key: String): String {

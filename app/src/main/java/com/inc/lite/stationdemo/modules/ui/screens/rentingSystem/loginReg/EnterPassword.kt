@@ -1,7 +1,5 @@
 package com.inc.lite.stationdemo.modules.ui.screens.rentingSystem.loginReg
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
@@ -24,38 +21,31 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.inc.lite.stationdemo.R
-import com.inc.lite.stationdemo.modules.ui.components.DigitItem
 import com.inc.lite.stationdemo.modules.ui.components.DigitKeyboard
+import com.inc.lite.stationdemo.modules.ui.components.PasswordItem
 import com.inc.lite.stationdemo.modules.ui.navigation.Screen
 import com.inc.lite.stationdemo.modules.ui.theme.LightGrayColor
 import com.inc.lite.stationdemo.modules.ui.theme.MainColor
-import com.inc.lite.stationdemo.modules.ui.theme.RedInfoColor
-import com.inc.lite.stationdemo.modules.ui.theme.pingFangTCFamily
 import com.inc.lite.stationdemo.modules.ui.viewModel.AuthViewModel
 import com.inc.lite.stationdemo.util.AdjScreenSize
 
-
-@Preview(widthDp = 800, heightDp = 1280, showBackground = false)
+//@Preview(widthDp = 800, heightDp = 1280, showBackground = false)
 @Composable
-fun EnterSMS(
+fun EnterPassword(
     modifier: Modifier = Modifier,
-    viewModel: AuthViewModel = hiltViewModel(),
-    navHostController: NavHostController = rememberNavController()
+    navHostController: NavHostController = rememberNavController(),
+    viewModel: AuthViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
+
     var digit by remember {
-        mutableStateOf("    ")
+        mutableStateOf("      ")
     }
 
     Surface(
@@ -64,7 +54,7 @@ fun EnterSMS(
             .padding(
                 top = size.dp(60)
             ),
-    ){
+    ) {
         Column(
             Modifier
                 .fillMaxSize()
@@ -74,32 +64,20 @@ fun EnterSMS(
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = "Enter the verification code sent to +${uiState.getFullNumber()} ",
+                text = "Create your six digit passcode",
                 fontSize = size.sp(28),
                 color = LightGrayColor,
                 textAlign = TextAlign.Center
             )
-            SmsEntering(
-                Modifier
-                    .padding(
-                        bottom = size.dp(40),
-                        top = size.dp(50)
-                    ),
-                smsCode = digit.toCharArray()
+            PassEntering(
+                password = digit.toCharArray()
             )
-            AnimatedVisibility(
-                modifier = Modifier
-                    .padding(top = size.dp(20)),
-                visible = uiState.isErrorShow
-            ) {
-                InfoRow()
-            }
             Button(
                 modifier = Modifier
                     .padding(top = size.dp(40))
                     .height(size.dp(80)),
                 onClick = {
-                    navHostController.navigate(Screen.LoginEnterPass.route)
+                    navHostController.navigate(Screen.RegEnterNickName.route)
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = MainColor)
             ) {
@@ -111,9 +89,8 @@ fun EnterSMS(
             }
             DigitKeyboard(
                 onDigitClicked = {key ->
-                    viewModel.onKeyBoardClick(key, Screen.LoginEnterSMS)
+                    viewModel.onKeyBoardClick(key, Screen.LoginEnterPass)
                     digit = viewModel.addValueByKey(digit,key)
-
                 }
             )
 
@@ -123,65 +100,28 @@ fun EnterSMS(
 
 @Preview
 @Composable
-fun SmsEntering(
+fun PassEntering(
     modifier: Modifier = Modifier,
-    smsCode: CharArray = CharArray(4),
-    onSmsEntered: (String) -> Unit = {_->}
+    password: CharArray = charArrayOf(' ',' ',' ',' ',' ',' '),
 ) {
-
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
+
+
     Box(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.Center){
-        Row() {
-            for(n in 0..3){
-                DigitItem(
-                    modifier = Modifier
-                        .padding(
-                            start = size.dp(24),
-                            end = size.dp(24)
-                        ),
-                    digit = smsCode[n].toString()
-                )
+        Row {
+            for(n in 0..5){
+                if (password[n] == ' '){
+                    PasswordItem(
+                        digit = password[n].toString()
+                    )
+                }else{
+                    PasswordItem(
+                        digit = password[n].toString(),
+                        color = MainColor
+                    )
+                }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun InfoRow(
-    modifier: Modifier = Modifier,
-    message: String = "Sms code does not match with\nour system, try sending it again"
-) {
-    val configuration = LocalConfiguration.current
-    val size = AdjScreenSize(configuration)
-    Row(
-        modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Image(
-            modifier = Modifier
-                .height(size.dp(40))
-                .width(size.dp(40))
-                .padding(
-                    end = size.dp(16),
-                    bottom = size.dp(10)
-                ),
-            painter = painterResource(id = R.drawable.info_outlined),
-            contentDescription = ""
-        )
-        Text(
-            text = message,
-            modifier = Modifier
-                .width(size.dp(350))
-                .height(size.dp(66)),
-            fontSize = size.sp(24),
-            color = RedInfoColor,
-            style = TextStyle(
-                fontFamily = pingFangTCFamily,
-                fontWeight = FontWeight.Normal
-            )
-        )
     }
 }

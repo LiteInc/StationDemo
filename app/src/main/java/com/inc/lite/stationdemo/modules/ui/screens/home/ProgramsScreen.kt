@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -23,6 +24,7 @@ import com.inc.lite.stationdemo.modules.ui.models.StatusBarUiState
 import com.inc.lite.stationdemo.modules.ui.navigation.Screen
 
 //@Preview(widthDp = 800, heightDp = 1280)
+
 @Composable
 fun ProgramsScreen(
     navHostController: NavHostController

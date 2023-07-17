@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
@@ -18,12 +20,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.inc.lite.stationdemo.modules.ui.theme.LightGrayColor
 import com.inc.lite.stationdemo.util.AdjScreenSize
+import kotlinx.coroutines.flow.MutableStateFlow
 
-@Preview
+
 @Composable
 fun DigitItem(
     modifier: Modifier = Modifier,
-    digit: String = "1",
+    digit: String,
     width: Int = 36
 ){
     val configuration = LocalConfiguration.current
@@ -34,7 +37,9 @@ fun DigitItem(
     ){
         Column {
             Text(
-                modifier = Modifier.fillMaxWidth().padding(bottom = size.dp(5)),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = size.dp(5)),
                 text = digit,
                 fontSize = size.sp(28),
                 textAlign = TextAlign.Center

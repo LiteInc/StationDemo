@@ -19,6 +19,7 @@ sealed class Screen(val route: String){
     //Registration
     object Registration: Screen("registration_screen")
     object RegEnterEmail: Screen("reg_email_screen")
+    object RegEnterNickName: Screen("reg_nick_name_screen")
 
 
     //Rent

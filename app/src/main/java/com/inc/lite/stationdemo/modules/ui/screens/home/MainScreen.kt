@@ -66,7 +66,7 @@ fun MainScreen(
     navHostController: NavHostController
 ) {
 
-    val uiState by viewModel._uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
     val bitmap = QRCodeUtil.createQRImage(uiState.stationQR, 140, 140, null, MainColor.toArgb()).asImageBitmap()
 
     val configuration = LocalConfiguration.current
