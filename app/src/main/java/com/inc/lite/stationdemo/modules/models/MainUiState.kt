@@ -2,7 +2,6 @@ package com.inc.lite.stationdemo.modules.models
 
 import androidx.compose.ui.graphics.Color
 import com.inc.lite.stationdemo.modules.theme.MainColor
-import com.inc.lite.stationdemo.util.AdsTimer
 
 
 data class MainUiState(
@@ -13,6 +12,6 @@ data class MainUiState(
     val statusUiState: StatusBarUiState = StatusBarUiState(),
     val onAppPreviewClick: () -> Unit = {},
     val onStartClick: () -> Unit = {},
-    val adsLayout: AdsLayouts = AdsLayouts.SingleImage,
+    val ads: AdsUI = AdsUI(),
     val isShowQrAdd: Boolean = false
 )

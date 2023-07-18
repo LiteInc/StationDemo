@@ -21,9 +21,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideRemoteRepository(
-        remoteApi: AdsApi
+        remoteApi: AdsApi,
+        app: MyApplication
     ): RemoteRepository{
-        return RemoteRepository(remoteApi)
+        return RemoteRepository(remoteApi, app)
     }
 
     @Provides

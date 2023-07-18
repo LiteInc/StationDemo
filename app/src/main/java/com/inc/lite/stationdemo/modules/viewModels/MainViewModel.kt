@@ -1,6 +1,7 @@
 package com.inc.lite.stationdemo.modules.viewModels
 
 import androidx.lifecycle.ViewModel
+import com.inc.lite.stationdemo.MyApplication
 import com.inc.lite.stationdemo.modules.models.MainUiState
 import com.inc.lite.stationdemo.modules.models.StatusBarUiState
 import com.inc.lite.stationdemo.modules.repository.MainRepository
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val mainRepository: MainRepository
+    private val mainRepository: MainRepository,
+    private val app: MyApplication
 ): ViewModel() {
     private val _uiState = MutableStateFlow(MainUiState())
     val uiState = _uiState.asStateFlow()
@@ -33,7 +35,7 @@ class MainViewModel @Inject constructor(
                 stationID = imei.toLong(),
                 stationQR = qrURL,
                 statusUiState = StatusBarUiState(
-                    stationID = StationID().getUserFriendlyStationId(imei),
+                    stationID = app.getStationId(),
                     titleText = "時裝時裝"
                 )
             )

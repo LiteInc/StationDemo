@@ -20,7 +20,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.inc.lite.stationdemo.R
+import com.inc.lite.stationdemo.modules.components.VideoElement
+import com.inc.lite.stationdemo.modules.models.AdsItem
 import com.inc.lite.stationdemo.modules.models.AdsLayouts
+import com.inc.lite.stationdemo.modules.models.AdsType
+import com.inc.lite.stationdemo.modules.models.AdsUI
 import com.inc.lite.stationdemo.modules.viewModels.MainViewModel
 import com.inc.lite.stationdemo.util.AdjScreenSize
 
@@ -38,18 +42,18 @@ fun AdsFragment(
             .width(size.dp(800)),
         contentAlignment = Alignment.Center
     ) {
-        when(uiState.adsLayout){
+        when(uiState.ads.adsLayout){
             AdsLayouts.SingleImage -> {
-                Layout1()
+                Layout1(uiState.ads.adsList)
             }
             AdsLayouts.TwoImage -> {
-                Layout2("http://res.cloudinary.com/riisu/image/upload/v1683550824/vsbdycwwiexcpkkhldyn.jpg", "http://res.cloudinary.com/riisu/image/upload/v1683550813/uqrhemv8erk4qil2xmsi.jpg")
+                Layout2(uiState.ads.adsList)
             }
             AdsLayouts.ThreeImage -> {
-                Layout3()
+                Layout3(uiState.ads.adsList)
             }
             AdsLayouts.FourImage -> {
-                Layout4()
+                Layout4(uiState.ads.adsList)
             }
         }
     }
@@ -57,134 +61,237 @@ fun AdsFragment(
 
 @Composable
 fun Layout1(
-    image: String = ""
+    ads: List<AdsItem> = listOf(
+    AdsItem("", AdsType.Image)
+)
 ) {
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
-    Image(
-        painter = rememberAsyncImagePainter(
-            model = image
-        ),
-        contentDescription = "add",
-        modifier  = Modifier
-            .height(size.dp(1142))
-            .width(size.dp(800)),
-        contentScale = ContentScale.FillBounds
-    )
+
+    if(ads.first().type == AdsType.Image){
+        Image(
+            painter = rememberAsyncImagePainter(
+                model = ads.first().url
+            ),
+            contentDescription = "add",
+            modifier  = Modifier
+                .height(size.dp(1142))
+                .width(size.dp(800)),
+            contentScale = ContentScale.FillBounds
+        )
+    } else if (ads.first().type == AdsType.Video){
+        VideoElement(
+            modifier = Modifier
+                .height(size.dp(1142))
+                .width(size.dp(800)),
+            url = ads.first().url
+        )
+    }
+
+
+
 }
 @Composable
 fun Layout2(
-    image1: String = "",
-    image2: String = ""
+    ads: List<AdsItem> = listOf(
+        AdsItem("", AdsType.Image),
+        AdsItem("", AdsType.Image)
+    )
 ) {
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
     Column(Modifier.fillMaxSize()) {
-        Image(
-            modifier = Modifier.weight(1f),
-            painter = rememberAsyncImagePainter(
-                model = image1
-            ),
-            contentDescription = "",
-            contentScale = ContentScale.FillBounds
-        )
-
-        Image(
-            painter = rememberAsyncImagePainter(
-                model = image2
-            ),
-            contentDescription = "",
-            modifier = Modifier.weight(1f),
-            contentScale = ContentScale.FillBounds
-        )
-
+        ads.forEach {
+            if(it.type == AdsType.Image){
+                Image(
+                    modifier = Modifier
+                        .height(size.dp(571))
+                        .width(size.dp(800)),
+                    painter = rememberAsyncImagePainter(
+                        model = it.url
+                    ),
+                    contentDescription = "",
+                    contentScale = ContentScale.FillBounds
+                )
+            } else {
+                VideoElement(
+                    modifier = Modifier
+                        .height(size.dp(571))
+                        .width(size.dp(800)),
+                    url = it.url
+                )
+            }
+        }
     }
 }
 @Composable
 fun Layout3(
-    image1: String = "",
-    image2: String = "",
-    image3: String = ""
+    ads: List<AdsItem> = listOf(
+        AdsItem("", AdsType.Image),
+        AdsItem("", AdsType.Image),
+        AdsItem("", AdsType.Image)
+    )
 ) {
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
     Column(Modifier.fillMaxSize()) {
-        Image(
-            painter = rememberAsyncImagePainter(
-                model = image1
-            ),
-            contentDescription = "",
-            modifier = Modifier.weight(1f),
-        )
+
+        if(ads[0].type == AdsType.Image){
+            Image(
+                painter = rememberAsyncImagePainter(
+                    model = ads[0].url
+                ),
+                contentDescription = "",
+                modifier = Modifier
+                    .height(size.dp(571))
+                    .width(size.dp(800)),
+            )
+        } else {
+            VideoElement(
+                modifier = Modifier
+                    .height(size.dp(571))
+                    .width(size.dp(800)),
+                url = ads[0].url
+            )
+        }
 
         Row(Modifier.height(size.dp(571))) {
-            Image(
-                painter = rememberAsyncImagePainter(
-                    model = image2
-                ),
-                contentDescription = "",
-                modifier = Modifier.weight(1f),
-            )
-            Image(
-                painter = rememberAsyncImagePainter(
-                    model = image3
-                ),
-                contentDescription = "",
-                modifier = Modifier.weight(1f),
-            )
+            if(ads[1].type == AdsType.Image){
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        model = ads[1].url
+                    ),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .height(size.dp(571))
+                        .width(size.dp(400)),
+                )
+            }else{
+                VideoElement(
+                    modifier = Modifier
+                        .height(size.dp(571))
+                        .width(size.dp(400)),
+                    url = ads[1].url
+                )
+            }
+
+            if(ads[2].type == AdsType.Image){
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        model = ads[2].url
+                    ),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .height(size.dp(571))
+                        .width(size.dp(400)),
+                )
+            }else{
+                VideoElement(
+                    modifier = Modifier
+                        .height(size.dp(571))
+                        .width(size.dp(400)),
+                    url = ads[2].url
+                )
+            }
 
         }
 
     }
 }@Composable
 fun Layout4(
-    image1: String = "",
-    image2: String = "",
-    image3: String = "",
-    image4: String = ""
+    ads: List<AdsItem> = listOf(
+        AdsItem("", AdsType.Image),
+        AdsItem("", AdsType.Image),
+        AdsItem("", AdsType.Image),
+        AdsItem("", AdsType.Image)
+    )
 ) {
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
     Column(Modifier.fillMaxSize()) {
 
         Row(Modifier.height(size.dp(571))) {
-            Image(
-                painter = rememberAsyncImagePainter(
-                    model = image1
-                ),
-                contentDescription = "",
-                modifier = Modifier.weight(1f),
-                contentScale = ContentScale.FillBounds
-            )
-            Image(
-                painter = rememberAsyncImagePainter(
-                    model = image2
-                ),
-                contentDescription = "",
-                modifier = Modifier.weight(1f),
-                contentScale = ContentScale.FillBounds
-            )
+            if(ads[0].type == AdsType.Image){
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        model = ads[0].url
+                    ),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .height(size.dp(571))
+                        .width(size.dp(400)),
+                )
+            }else{
+                VideoElement(
+                    modifier = Modifier
+                        .height(size.dp(571))
+                        .width(size.dp(400)),
+                    url = ads[0].url
+                )
+            }
+
+            if(ads[1].type == AdsType.Image){
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        model = ads[1].url
+                    ),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .height(size.dp(571))
+                        .width(size.dp(400)),
+                )
+            }else{
+                VideoElement(
+                    modifier = Modifier
+                        .height(size.dp(571))
+                        .width(size.dp(400)),
+                    url = ads[1].url
+                )
+            }
 
         }
         Row(Modifier.height(size.dp(571))) {
-            Image(
-                painter = rememberAsyncImagePainter(
-                    model = image3
-                ),
-                contentDescription = "",
-                modifier = Modifier.weight(1f),
-                contentScale = ContentScale.FillBounds
-            )
-            Image(
-                painter = rememberAsyncImagePainter(
-                    model = image4
-                ),
-                contentDescription = "",
-                modifier = Modifier.weight(1f),
-                contentScale = ContentScale.FillBounds
-            )
+            if(ads[2].type == AdsType.Image){
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        model = ads[2].url
+                    ),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .height(size.dp(571))
+                        .width(size.dp(400)),
+                )
+            }else{
+                VideoElement(
+                    modifier = Modifier
+                        .height(size.dp(571))
+                        .width(size.dp(400)),
+                    url = ads[2].url
+                )
+            }
+
+            if(ads[3].type == AdsType.Image){
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        model = ads[3].url
+                    ),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .height(size.dp(571))
+                        .width(size.dp(400)),
+                )
+            }else{
+                VideoElement(
+                    modifier = Modifier
+                        .height(size.dp(571))
+                        .width(size.dp(400)),
+                    url = ads[3].url
+                )
+            }
 
         }
 
     }
 }
+
+
