@@ -8,8 +8,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.inc.lite.stationdemo.modules.navigation.HomeNavGraph
-import com.inc.lite.stationdemo.modules.theme.StationLiteTheme
+import com.inc.lite.stationdemo.ui.navigation.HomeNavGraph
+import com.inc.lite.stationdemo.ui.theme.StationLiteTheme
 import com.inc.lite.stationdemo.util.FullScreenMode
 import dagger.hilt.android.AndroidEntryPoint
 

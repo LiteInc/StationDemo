@@ -2,11 +2,7 @@ package com.inc.lite.stationdemo
 
 import android.app.Application
 import android.content.Context
-import android.content.pm.PackageManager
-import android.telephony.TelephonyManager
-import androidx.compose.ui.platform.LocalContext
-import androidx.core.app.ActivityCompat
-import com.inc.lite.stationdemo.modules.models.AppEnvironment
+import com.inc.lite.stationdemo.model.AppEnvironment
 import com.inc.lite.stationdemo.util.StationID
 import dagger.hilt.android.HiltAndroidApp
 
@@ -18,7 +14,7 @@ class MyApplication: Application() {
     }
 
 
-    private val imei = "86732904546307"
+    private val imei = "867329045453854"
     fun getInstance(): Context{
         return applicationContext
     }

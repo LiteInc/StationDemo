@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.compose.rememberNavController
-import com.inc.lite.stationdemo.modules.navigation.AuthNavGraph
-import com.inc.lite.stationdemo.modules.theme.StationLiteTheme
+import com.inc.lite.stationdemo.ui.navigation.AuthNavGraph
+import com.inc.lite.stationdemo.ui.theme.StationLiteTheme
 import com.inc.lite.stationdemo.util.FullScreenMode
 import dagger.hilt.android.AndroidEntryPoint
 

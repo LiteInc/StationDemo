@@ -1,6 +1,6 @@
 package com.inc.lite.stationdemo.api
 
-import com.inc.lite.stationdemo.modules.models.Ads
+import com.inc.lite.stationdemo.model.Ads
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
