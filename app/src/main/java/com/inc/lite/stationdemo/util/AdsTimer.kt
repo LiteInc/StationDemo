@@ -18,7 +18,7 @@ class AdsTimer private constructor(
         private var listOfAds: List<AdsItem> = emptyList()
 
         fun layout(value: AdsLayouts) = apply { layoutType = value }
-        fun listOfAds(value: List<AdsItem>) = apply { listOfAds = value }
+        fun listOfAds(value: List<AdsItem>) = apply { listOfAds = value.sortedBy { it.order } }
 
         fun build() = AdsTimer(layoutType,listOfAds)
     }
@@ -26,11 +26,16 @@ class AdsTimer private constructor(
     fun updateVideoStatus(value: Boolean){
         isVideoPlay = value
     }
+    private fun sortAdsList(list: List<AdsItem>): List<AdsItem>{
+        return list.sortedBy { it.order }
+    }
 
     fun updateListOfAds(list: List<AdsItem>){
-        listOfAds = list
+        listOfAds = sortAdsList(list)
         isTimer = false
     }
+
+
     suspend fun showAdsFlow(
         actionOnPlay: (AdsItem)-> Unit
     ){
@@ -52,9 +57,11 @@ class AdsTimer private constructor(
                     delay(time)
                 }
             }
-            Log.d("AdsTimer","Working")
+//            Log.d("AdsTimer","Working")
         }
         Log.d("AdsTimer","Stopped")
     }
+
+
 
 }

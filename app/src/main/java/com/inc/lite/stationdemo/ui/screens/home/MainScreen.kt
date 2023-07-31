@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -34,6 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -45,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberAsyncImagePainter
 import com.inc.lite.stationdemo.model.MainUiState
 import com.inc.lite.stationdemo.ui.theme.MainColor
 import com.inc.lite.stationdemo.ui.theme.StationLiteTheme
@@ -52,6 +55,7 @@ import com.inc.lite.stationdemo.ui.theme.pingFangTCFamily
 import com.inc.lite.stationdemo.viewModels.MainViewModel
 import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.activities.AuthActivity
+import com.inc.lite.stationdemo.model.ProgramItem
 import com.inc.lite.stationdemo.ui.components.QrElement
 import com.inc.lite.stationdemo.ui.components.StatusBar
 import com.inc.lite.stationdemo.ui.navigation.Screen
@@ -98,12 +102,12 @@ fun MainScreen(
                 .fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ){
-                Text(
-                    modifier = Modifier.background(Color.Black.copy(alpha = 0.6f)),
-                    text = "Screen: ${size.screenWidth} x ${size.screenHeight}",
-                    color = Color.White,
-                    fontSize = size.sp(20)
-                )
+//                Text(
+//                    modifier = Modifier.background(Color.Black.copy(alpha = 0.6f)),
+//                    text = "Screen: ${size.screenWidth} x ${size.screenHeight}",
+//                    color = Color.White,
+//                    fontSize = size.sp(20)
+//                )
             }
             BottomBarMain(
                 modifier = Modifier.height(size.dp(156)),
@@ -142,12 +146,14 @@ fun BottomBarMain(
                     .fillMaxHeight()
                     .weight(0.32f)
             )
-            StrippedVerticalLine(Modifier.padding(vertical = size.dp(18)))
+            LineFromImage()
+//            StrippedVerticalLine(Modifier.padding(vertical = size.dp(18)))
             CentralBottomBox(
                 modifier = Modifier.weight(0.472f),
                 uiState = uiState
             )
-//                StrippedVerticalLine()
+            LineFromImage()
+//            StrippedVerticalLine()
             RightBottomBox(
                 modifier = Modifier.weight(0.208f),
                 uiState,
@@ -347,7 +353,9 @@ fun CentralBottomBox(
                     )
                 )
                 QrElement(
-                    Modifier.height(size.dp(80)).width(size.dp(80)),
+                    Modifier
+                        .height(size.dp(80))
+                        .width(size.dp(80)),
                     url = uiState.stationQR,
                     foregroundColor = MainColor,
                     width = size.dp(140),
@@ -401,8 +409,11 @@ fun RightBottomBox(
                     horizontalArrangement = Arrangement.SpaceAround,
                     verticalArrangement = Arrangement.SpaceAround
                 ){
-                    items(6){
-                        ProgramItem(uiState.onAppPreviewClick)
+                    items(uiState.programsList){
+                        ProgramItem(
+                            it,
+                            uiState.onAppPreviewClick
+                        )
                     }
                 }
                 Image(
@@ -428,7 +439,8 @@ fun RightBottomBox(
 @Preview
 @Composable
 fun ProgramItem(
-    onAppPreviewClick: ()-> Unit = {}
+    itemState: ProgramItem = ProgramItem(),
+    onAppPreviewClick: (ProgramItem)-> Unit = {_->}
 ) {
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
@@ -439,17 +451,40 @@ fun ProgramItem(
             .background(Color.Transparent),
         contentAlignment = Alignment.Center
     ) {
+
         Image(
-            painter = painterResource(id = R.drawable.icon_brand),
-            contentDescription = "Icons with brands",
-            modifier = Modifier
+            painter = rememberAsyncImagePainter(
+                model = itemState.link
+            ),
+            contentDescription = "add",
+            modifier  = Modifier
                 .size(size.dp(22))
                 .clickable(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() }
                 ) {
-                    onAppPreviewClick()
-                }
+                    onAppPreviewClick(
+                        itemState
+                    )
+                },
+            contentScale = ContentScale.FillBounds
+        )
+
+    }
+}
+
+
+@Composable
+fun LineFromImage(){
+    val configuration = LocalConfiguration.current
+    val size = AdjScreenSize(configuration)
+    Box(
+        Modifier.fillMaxHeight().padding(vertical = size.dp(18)),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.line_4),
+            contentDescription = ""
         )
     }
 }

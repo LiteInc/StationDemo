@@ -14,13 +14,12 @@ class AuthActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FullScreenMode().hideSystemUI(window)
         setContent {
             StationLiteTheme {
                 val navHostController = rememberNavController()
-               AuthNavGraph(navHostController = navHostController)
+                AuthNavGraph(navHostController = navHostController)
             }
         }
-
+        FullScreenMode().hideSystemUI(window)
     }
 }
