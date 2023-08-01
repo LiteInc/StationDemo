@@ -1,6 +1,6 @@
 package com.inc.lite.stationdemo.viewModels
 
-import com.inc.lite.stationdemo.model.LoginUiState
+import com.inc.lite.stationdemo.model.uiState.LoginUiState
 import com.inc.lite.stationdemo.ui.navigation.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
 

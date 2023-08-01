@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -40,7 +41,12 @@ fun QrElement(
         context
     )
 
-    Image(bitmap = bitmap.asImageBitmap(), contentDescription = "QR Code")
+    Image(
+        modifier = modifier,
+        bitmap = bitmap.asImageBitmap(),
+        contentDescription = "QR Code",
+        contentScale = ContentScale.Fit
+    )
 }
 
 private fun generateQRCodeBitmap(

@@ -1,7 +1,10 @@
-package com.inc.lite.stationdemo.model
+package com.inc.lite.stationdemo.model.uiState
 
 import androidx.compose.ui.graphics.Color
 import com.inc.lite.stationdemo.R
+import com.inc.lite.stationdemo.model.AdsUI
+import com.inc.lite.stationdemo.model.ProgramItem
+import com.inc.lite.stationdemo.model.StatusBarUiState
 import com.inc.lite.stationdemo.ui.theme.MainColor
 
 
@@ -29,7 +32,7 @@ data class MainUiState(
         )
     ),
     val webAppInfo: ProgramItem = ProgramItem(),
-    val onAppPreviewClick: (ProgramItem) -> Unit = {_ ->},
+    val onAppPreviewClick: (ProgramItem) -> Unit = { _ ->},
     val onStartClick: () -> Unit = {},
     val ads: AdsUI = AdsUI(),
     val isShowQrAdd: Boolean = false

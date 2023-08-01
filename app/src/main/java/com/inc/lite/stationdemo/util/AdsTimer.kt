@@ -12,6 +12,7 @@ class AdsTimer private constructor(
 ) {
     private var isTimer = false
     private var isVideoPlay = true
+    private val TAG = "AdsTimer"
     private val defaultVideoDelay: Long = 1000
     class AdsTimerBuilder{
         private var layoutType: AdsLayouts = AdsLayouts.SingleImage
@@ -24,7 +25,7 @@ class AdsTimer private constructor(
     }
 
     fun stopTheTimer(){
-//        isTimer = false
+        isTimer = false
     }
 
     fun updateVideoStatus(value: Boolean){
@@ -43,19 +44,19 @@ class AdsTimer private constructor(
     suspend fun showAdsFlow(
         actionOnPlay: (AdsItem)-> Unit
     ){
+        Log.d(TAG,"Start the ads flow")
         isTimer = true
         while (isTimer){
             for(n in listOfAds.indices){
-
                 if (listOfAds[n].type == AdsType.Video){
                     isVideoPlay = true
-                    Log.d("AdsTimer","Video shows")
+                    Log.d(TAG,"Video shows")
                     actionOnPlay(listOfAds[n])
                     while(isVideoPlay){
                         delay(defaultVideoDelay)
                     }
                 }else{
-                    Log.d("AdsTimer","Image shows")
+                    Log.d(TAG,"Image shows")
                     actionOnPlay(listOfAds[n])
                     val time = if (listOfAds[n].playTime <= 1000 ) 2000 else listOfAds[n].playTime
                     delay(time)
@@ -63,7 +64,7 @@ class AdsTimer private constructor(
             }
 //            Log.d("AdsTimer","Working")
         }
-        Log.d("AdsTimer","Stopped")
+        Log.d(TAG,"Stopped")
     }
 
 

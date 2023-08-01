@@ -3,7 +3,7 @@ package com.inc.lite.stationdemo.model
 data class AdsUI(
     val adsLayout: AdsLayouts = AdsLayouts.SingleImage,
     val adsList: List<AdsItem> = listOf(),
-    val isAdsLoaded: Boolean = false
+    val isAdsLoaded: Boolean = true
 )
 data class AdsItem(
     val url: String = "",

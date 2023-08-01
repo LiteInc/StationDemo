@@ -32,12 +32,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,7 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.inc.lite.stationdemo.model.MainUiState
+import com.inc.lite.stationdemo.model.uiState.MainUiState
 import com.inc.lite.stationdemo.ui.theme.MainColor
 import com.inc.lite.stationdemo.ui.theme.StationLiteTheme
 import com.inc.lite.stationdemo.ui.theme.pingFangTCFamily
@@ -53,6 +51,7 @@ import com.inc.lite.stationdemo.viewModels.MainViewModel
 import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.activities.AuthActivity
 import com.inc.lite.stationdemo.model.ProgramItem
+import com.inc.lite.stationdemo.model.SponsoredSurfaceData
 import com.inc.lite.stationdemo.ui.components.QrElement
 import com.inc.lite.stationdemo.ui.components.StatusBar
 import com.inc.lite.stationdemo.ui.navigation.Screen
@@ -79,7 +78,7 @@ fun MainScreen(
                 .fillMaxWidth()
 
         ) {
-            AdsFragment()
+            AdsFragment(viewModel = viewModel)
         }
 
     }
@@ -116,6 +115,8 @@ fun MainScreen(
 
     }
 }
+
+
 
 @Composable
 fun BottomBarMain(
@@ -175,18 +176,9 @@ fun BottomBarMain(
     }
 }
 
-@Preview(widthDp = 800, heightDp = 1280, showBackground = true)
-@Composable
-fun MainPreview(){
-    StationLiteTheme() {
-        MainScreen(
-            hiltViewModel(),
-            navHostController = rememberNavController()
-        )
-    }
-}
 
-@Preview(widthDp = 257)
+
+
 @Composable
 fun LeftBottomBox(
     modifier: Modifier = Modifier,
@@ -235,14 +227,15 @@ fun LeftBottomBox(
 //                )
 //                Spacer(Modifier.width(size.dp(10)))
 //                QrElement(url = "nryyt")
-                Image(
-                    modifier = Modifier.padding(
-                        vertical = size.dp(30),
-                        horizontal = size.dp(27)
-                    ),
-                    painter = painterResource(id = R.drawable.uber_ads),
-                    contentDescription = ""
-                )
+//                Image(
+//                    modifier = Modifier.padding(
+//                        vertical = size.dp(30),
+//                        horizontal = size.dp(27)
+//                    ),
+//                    painter = painterResource(id = R.drawable.uber_ads),
+//                    contentDescription = ""
+//                )
+                SponsoredSurface(sponsoredData = SponsoredSurfaceData())
             }
 
         } else{
@@ -257,19 +250,15 @@ fun LeftBottomBox(
                  verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Download our application",
+                    text = "下載我們的應用程序",
                     fontSize = size.sp(14),
-                    style = TextStyle(
-                        fontFamily = pingFangTCFamily
-                    )
+                    style = TextStyle( fontFamily = pingFangTCFamily)
 
                 )
                 Spacer(modifier = Modifier.height(size.dp(15)))
                 Row(verticalAlignment = Alignment.Top, horizontalArrangement = Arrangement.Center){
                     QrElement(
                         modifier = Modifier
-                            .height(size.dp(56))
-                            .width(size.dp(56))
                             .padding(end = size.dp(10)),
                         url = "https://play.google.com/store/apps/details?id=com.inc.riisu",
                         height = size.dp(70),
@@ -287,8 +276,6 @@ fun LeftBottomBox(
                     Spacer(Modifier.width(size.dp(30)))
                     QrElement(
                         modifier = Modifier
-                            .height(size.dp(56))
-                            .width(size.dp(56))
                             .padding(end = size.dp(10)),
                         url = "https://play.google.com/store/apps/details?id=com.inc.riisu",
                         height = size.dp(70),
@@ -302,15 +289,9 @@ fun LeftBottomBox(
                             .height(size.dp(30))
                             .width(size.dp(30))
                     )
-
-
                 }
-
             }
         }
-
-
-
     }
 }
 
@@ -379,7 +360,9 @@ fun CentralBottomBox(
                     )
                 )
                 Column(
-                    modifier = Modifier.fillMaxHeight().padding(top = size.dp(40)),
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(top = size.dp(40)),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     QrElement(
@@ -439,7 +422,8 @@ fun RightBottomBox(
 
                 Row(
                     Modifier
-                        .fillMaxSize().clickable { onCertainAppClick() },
+                        .fillMaxSize()
+                        .clickable { onCertainAppClick() },
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -484,6 +468,81 @@ fun RightBottomBox(
 
         }
     }
+}
+
+@Composable
+fun SponsoredSurface(
+    modifier: Modifier = Modifier,
+    sponsoredData: SponsoredSurfaceData
+) {
+    val configuration = LocalConfiguration.current
+    val size = AdjScreenSize(configuration)
+    Box(
+        modifier = modifier,
+    ){
+        Row(
+            Modifier.fillMaxHeight(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                modifier = Modifier.fillMaxHeight(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
+                Box(
+                    modifier = Modifier,
+                    contentAlignment = Alignment.Center
+                ){
+                    Text(
+                        text = sponsoredData.title,
+                        modifier = Modifier.width(size.dp(75)),
+                        fontSize = size.sp(14),
+                        maxLines = 2,
+                        textAlign = TextAlign.Center,
+                        style = TextStyle(fontFamily = pingFangTCFamily)
+                    )
+
+                }
+                Spacer(modifier = Modifier.height(size.dp(4)))
+                Image(
+                    painter = painterResource(id = sponsoredData.logo),
+                    contentDescription = "sponsored logo",
+                    modifier = Modifier
+                        .size(size.dp(42))
+                )
+            }
+            Spacer(modifier = Modifier.width(size.dp(10)))
+            QrElement(
+                modifier = Modifier,
+                url = sponsoredData.url,
+                height = size.dp(79),
+                width = size.dp(79)
+            )
+            Spacer(modifier = Modifier.width(size.dp(10)))
+            Column(verticalArrangement = Arrangement.Center, modifier = Modifier.fillMaxHeight()) {
+                Image(
+                    painter = painterResource(id = R.drawable.gplay_logo),
+                    contentDescription = "sponsored gplay",
+                    modifier = Modifier
+                        .size(size.dp(18))
+
+                )
+                Spacer(modifier = Modifier.height(size.dp(12)))
+                Image(
+                    painter = painterResource(id = R.drawable.apple_apps_store),
+                    contentDescription = "sponsored gplay",
+                    modifier = Modifier
+                        .size(size.dp(18))
+                )
+            }
+        }
+    }
+}
+@Preview
+@Composable
+fun TestSponsored() {
+    SponsoredSurface(sponsoredData = SponsoredSurfaceData())
 }
 
 @Preview

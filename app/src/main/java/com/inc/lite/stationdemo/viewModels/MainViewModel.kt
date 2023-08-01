@@ -1,6 +1,8 @@
 package com.inc.lite.stationdemo.viewModels
 
 import android.util.Log
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.inc.lite.stationdemo.MyApplication
@@ -8,7 +10,7 @@ import com.inc.lite.stationdemo.model.AdsItem
 import com.inc.lite.stationdemo.model.AdsLayouts
 import com.inc.lite.stationdemo.model.AdsType
 import com.inc.lite.stationdemo.model.AdsUI
-import com.inc.lite.stationdemo.model.MainUiState
+import com.inc.lite.stationdemo.model.uiState.MainUiState
 import com.inc.lite.stationdemo.model.ProgramItem
 import com.inc.lite.stationdemo.model.StatusBarUiState
 import com.inc.lite.stationdemo.repository.MainRepository
@@ -29,6 +31,9 @@ class MainViewModel @Inject constructor(
 ): ViewModel() {
     private val _uiState = MutableStateFlow(MainUiState())
     val uiState = _uiState.asStateFlow()
+
+    val adsIsLoaded: MutableState<Boolean> = mutableStateOf(true)
+
 
     private var isVideoPlaying = true
     private lateinit var adsTimer: AdsTimer
@@ -116,6 +121,18 @@ class MainViewModel @Inject constructor(
             mainRepository.getAds{list, message ->
                 if(message == null){
                     adsList = list
+
+                }
+                _uiState.update {
+                    it.copy(
+                        ads = AdsUI(
+                            adsList = list,
+                            isAdsLoaded = true
+                        )
+                    )
+                }
+                if (list.isNotEmpty()){
+                    adsIsLoaded.value = false
                 }
             }
             adsTimer.updateListOfAds(adsList)

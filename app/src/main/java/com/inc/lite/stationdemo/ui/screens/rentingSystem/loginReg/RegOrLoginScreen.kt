@@ -106,7 +106,7 @@ fun RegOrLoginScreen(
                                 .fillMaxHeight()
                                 .weight(1f),
                             onClick = {
-//                                navHostController.navigate(Screen.LoginScreen.route)
+                                navHostController.navigate(Screen.LoginScreen.route)
                                       },
                             colors = ButtonDefaults.buttonColors(containerColor = MainColor),
                             elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
@@ -123,7 +123,7 @@ fun RegOrLoginScreen(
                                 .padding(start = size.dp(20))
                                 .weight(1f),
                             onClick = {
-//                                navHostController.navigate(Screen.Registration.route)
+                                navHostController.navigate(Screen.Registration.route)
                                       },
                             colors = ButtonDefaults.buttonColors(
                                 contentColor = MainColor,

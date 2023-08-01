@@ -1,4 +1,4 @@
-package com.inc.lite.stationdemo.model
+package com.inc.lite.stationdemo.model.uiState
 
 data class LoginUiState(
     val isNumberSent: Boolean = false,

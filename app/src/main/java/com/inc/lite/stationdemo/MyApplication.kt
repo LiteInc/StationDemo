@@ -14,7 +14,7 @@ class MyApplication: Application() {
     }
 
 
-    private val imei = "860456060990168"
+    private val imei = "860456061106541"
     fun getInstance(): Context{
         return applicationContext
     }

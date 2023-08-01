@@ -1,7 +1,7 @@
 package com.inc.lite.stationdemo.viewModels
 
 import androidx.lifecycle.ViewModel
-import com.inc.lite.stationdemo.model.LoginUiState
+import com.inc.lite.stationdemo.model.uiState.LoginUiState
 import com.inc.lite.stationdemo.ui.navigation.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
