@@ -1,29 +1,32 @@
 package com.inc.lite.stationdemo.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.inc.lite.stationdemo.ui.screens.home.MainScreen
 import com.inc.lite.stationdemo.ui.screens.home.ProgramsScreen
 import com.inc.lite.stationdemo.ui.screens.home.WebViewScreen
+import com.inc.lite.stationdemo.viewModels.MainViewModel
 
 @Composable
 fun HomeNavGraph(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    viewModel: MainViewModel = hiltViewModel()
 ) {
     NavHost(
         navController = navHostController,
         startDestination = Screen.Main.route
     ){
         composable(Screen.Main.route){
-            MainScreen(navHostController = navHostController)
+            MainScreen(navHostController = navHostController, viewModel = viewModel)
         }
         composable(Screen.Programs.route){
-            ProgramsScreen(navHostController = navHostController)
+            ProgramsScreen(navHostController = navHostController, viewModel = viewModel)
         }
         composable(Screen.WebView.route){
-            WebViewScreen(navHostController = navHostController, "https://www.google.com.tw/?hl=zh_TW")
+            WebViewScreen(navHostController = navHostController, viewModel = viewModel)
         }
     }
 //        composable(

@@ -15,12 +15,12 @@ import com.inc.lite.stationdemo.repository.MainRepository
 import com.inc.lite.stationdemo.util.AdsTimer
 import com.inc.lite.stationdemo.util.QrCodeLink
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -36,31 +36,16 @@ class MainViewModel @Inject constructor(
     private var adsList: List<AdsItem> = emptyList()
     private var programsList: List<ProgramItem> = emptyList()
 
-    private val programs = listOf(
-        ProgramItem(
-            title = "Google map",
-            link = "https://www.google.com/maps/place/Taiwan/data=!4m2!3m1!1s0x346ef3065c07572f:0xe711f004bf9c5469?sa=X&ved=2ahUKEwih8ufHzK6AAxWJR_EDHYDwBUMQ8gF6BAgQEAA&ved=2ahUKEwih8ufHzK6AAxWJR_EDHYDwBUMQ8gF6BAgREAI",
-            logo = "https://i.postimg.cc/VNZJSxTC/new-google-maps-icon-logo-263-A01-C734-seeklogo-com.png"
-        ),
-        ProgramItem(
-            title = "",
-            link = "https://www.cwb.gov.tw/V8/C/W/County/index.html",
-            logo = "https://i.postimg.cc/SKMGCCbV/weather.webp"
-        ),
-        ProgramItem(
-            title = "",
-            link = "https://inline.app/groups/skm-xinyi?language=zh-TW",
-            logo = ""
-        )
-    )
+    lateinit var webViewProgram: ProgramItem
+        private set
 
     init {
         adsList =
             listOf(
                 AdsItem(
-                    url = "http://res.cloudinary.com/riisu/image/upload/v1688934321/aka8mtwsm6fq4kaxa9ol.jpg",
+                    url = "https://i.postimg.cc/g2MnDMXM/loading-ads.png",
                     type = AdsType.Image,
-                    playTime = 20
+                    playTime = 5
                 )
             )
         _uiState.update {
@@ -69,6 +54,24 @@ class MainViewModel @Inject constructor(
             )
         }
         onStart()
+    }
+
+
+    fun setProgramForWebView(program: ProgramItem){
+        webViewProgram = program
+    }
+
+    fun setWebProgram(program: ProgramItem){
+
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    webAppInfo = program
+                )
+            }
+            Log.d("VIEWMODEL", "$program")
+
+        }
     }
 
     fun getAdsChange(){
@@ -90,8 +93,8 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             mainRepository.getPrograms { list, message ->
                 if (message == null) {
-                    programsList = list
-                    updatePrograms()
+//                    programsList = list
+//                    updatePrograms()
                 }
             }
         }
@@ -109,7 +112,7 @@ class MainViewModel @Inject constructor(
 
 
     private fun getAddsRequest(){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             mainRepository.getAds{list, message ->
                 if(message == null){
                     adsList = list
@@ -133,8 +136,13 @@ class MainViewModel @Inject constructor(
         Log.d("MainViewModel", "Video is finish: $isVideoPlaying")
     }
 
+    fun stopTimer(){
+        adsTimer.stopTheTimer()
+    }
 
     private fun onStart(){
+
+        Log.d("VIEWMODEL", "Started")
         val imei = "86732904546307"
 
         val qrURL = QrCodeLink().getLink(imei)

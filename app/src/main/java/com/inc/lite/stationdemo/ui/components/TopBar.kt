@@ -1,5 +1,6 @@
 package com.inc.lite.stationdemo.ui.components
 
+import android.graphics.Paint.Style
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -34,8 +35,8 @@ fun TopBar(
     modifier: Modifier = Modifier,
     onBackArrowClick: ()-> Unit = {},
     onReturnHomeClick: ()-> Unit = {},
-    returnHomeText: String = "Return to\nhome screen",
-    title: String = "Google",
+    returnHomeText: String = "回到主選單",
+    title: String = "",
     image: Int? = null
 ) {
     val configuration = LocalConfiguration.current
@@ -102,7 +103,8 @@ fun TopBar(
                     Text(
                         text = title,
                         fontSize = (screenHeight/40).sp,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        style = TextStyle(fontFamily = pingFangTCFamily)
                     )
                 }
             }

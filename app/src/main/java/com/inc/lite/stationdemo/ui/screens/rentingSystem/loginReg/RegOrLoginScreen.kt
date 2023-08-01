@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -39,6 +40,7 @@ import com.inc.lite.stationdemo.ui.components.TopBar
 import com.inc.lite.stationdemo.model.StatusBarUiState
 import com.inc.lite.stationdemo.ui.navigation.Screen
 import com.inc.lite.stationdemo.ui.theme.MainColor
+import com.inc.lite.stationdemo.ui.theme.pingFangTCFamily
 import com.inc.lite.stationdemo.util.AdjScreenSize
 
 //@Preview(widthDp = 800, heightDp = 1280)
@@ -79,14 +81,14 @@ fun RegOrLoginScreen(
                 AskingRow1()
                 AskingRow2()
                 AskingRow3()
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = size.dp(117)),
-                    textAlign = TextAlign.Center,
-                    text = "Do you already have an account?",
-                    fontSize = size.sp(32),
-                )
+//                Text(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(top = size.dp(117)),
+//                    textAlign = TextAlign.Center,
+//                    text = "Do you already have an account?",
+//                    fontSize = size.sp(32),
+//                )
                 Box(
                     Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center
@@ -94,6 +96,7 @@ fun RegOrLoginScreen(
                     Row(
                         Modifier
                             .width(size.dp(513))
+                            .padding(top = size.dp(117))
                             .padding(top = size.dp(45))
                             .height(size.dp(79)),
                     ) {
@@ -102,13 +105,16 @@ fun RegOrLoginScreen(
                                 .padding(end = size.dp(20))
                                 .fillMaxHeight()
                                 .weight(1f),
-                            onClick = { navHostController.navigate(Screen.LoginScreen.route) },
+                            onClick = {
+//                                navHostController.navigate(Screen.LoginScreen.route)
+                                      },
                             colors = ButtonDefaults.buttonColors(containerColor = MainColor),
                             elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                         ) {
                             Text(
-                                text = "Yes, Log in",
-                                fontSize = size.sp(24)
+                                text = "快速登入",
+                                fontSize = size.sp(24),
+                                style = TextStyle(fontFamily = pingFangTCFamily)
                             )
                         }
                         OutlinedButton(
@@ -116,7 +122,9 @@ fun RegOrLoginScreen(
                                 .fillMaxHeight()
                                 .padding(start = size.dp(20))
                                 .weight(1f),
-                            onClick = { navHostController.navigate(Screen.Registration.route) },
+                            onClick = {
+//                                navHostController.navigate(Screen.Registration.route)
+                                      },
                             colors = ButtonDefaults.buttonColors(
                                 contentColor = MainColor,
                                 containerColor = Color.Transparent
@@ -124,9 +132,10 @@ fun RegOrLoginScreen(
                             border = BorderStroke(1.dp, MainColor)
                         ) {
                             Text(
-                                text = "No, register",
+                                text = "首次註冊",
                                 fontSize = size.sp(24),
-                                fontWeight = FontWeight.Light
+                                fontWeight = FontWeight.Light,
+                                style = TextStyle(fontFamily = pingFangTCFamily)
                             )
                         }
                     }
@@ -147,8 +156,9 @@ fun AskingRow1() {
         horizontalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Register or Log in with\nyour phone number",
-            fontSize = size.sp(24)
+            text = "手機號碼註冊，立即體驗Lite快速便\n捷租借！",
+            fontSize = size.sp(24),
+            style = TextStyle(fontFamily = pingFangTCFamily)
         )
         Image(
             modifier = Modifier
@@ -176,8 +186,9 @@ fun AskingRow2() {
             contentDescription = ""
         )
         Text(
-            text = "Register or Log in with\nyour phone number",
-            fontSize = size.sp(24)
+            text = "輕鬆快速登入，手機沒電也能自由\n使用！",
+            fontSize = size.sp(24),
+            style = TextStyle(fontFamily = pingFangTCFamily)
         )
     }
 }
@@ -193,8 +204,9 @@ fun AskingRow3() {
         horizontalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Leave a power bank\nat any nearest station",
-            fontSize = size.sp(24)
+            text = "每天最高只需36元！下載Lite App\n邀請朋友領取免費充電券！",
+            fontSize = size.sp(24),
+            style = TextStyle(fontFamily = pingFangTCFamily)
         )
         Image(
             modifier = Modifier

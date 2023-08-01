@@ -1,7 +1,6 @@
 package com.inc.lite.stationdemo.ui.screens.home
 
 import android.content.Intent
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,14 +31,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,7 +45,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import coil.compose.rememberAsyncImagePainter
 import com.inc.lite.stationdemo.model.MainUiState
 import com.inc.lite.stationdemo.ui.theme.MainColor
 import com.inc.lite.stationdemo.ui.theme.StationLiteTheme
@@ -66,7 +63,7 @@ import com.inc.lite.stationdemo.util.AdjScreenSize
 
 @Composable
 fun MainScreen(
-    viewModel: MainViewModel = hiltViewModel(),
+    viewModel: MainViewModel,
     navHostController: NavHostController
 ) {
 
@@ -112,7 +109,8 @@ fun MainScreen(
             BottomBarMain(
                 modifier = Modifier.height(size.dp(156)),
                 uiState = uiState,
-                navHostController = navHostController
+                navHostController = navHostController,
+                viewModel = viewModel
             )
         }
 
@@ -123,7 +121,8 @@ fun MainScreen(
 fun BottomBarMain(
     modifier: Modifier = Modifier,
     uiState: MainUiState,
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    viewModel: MainViewModel
 ) {
 
     val configuration = LocalConfiguration.current
@@ -141,7 +140,7 @@ fun BottomBarMain(
         ) {
 
             //First Box With text and QR
-            FirstBottomBox(
+            LeftBottomBox(
                 modifier = Modifier
                     .fillMaxHeight()
                     .weight(0.32f)
@@ -150,7 +149,8 @@ fun BottomBarMain(
 //            StrippedVerticalLine(Modifier.padding(vertical = size.dp(18)))
             CentralBottomBox(
                 modifier = Modifier.weight(0.472f),
-                uiState = uiState
+                uiState = uiState,
+                viewModel
             )
             LineFromImage()
 //            StrippedVerticalLine()
@@ -159,7 +159,16 @@ fun BottomBarMain(
                 uiState,
                 onAppsClick = {
                     navHostController.navigate(Screen.Programs.route)
+                },
+                onCertainAppClick = {
+                    navHostController.navigate(Screen.Programs.route)
+                    viewModel.stopTimer()
                 }
+//                onSertainAppClick = {item ->
+//                    navHostController.navigate(Screen.Programs.route)
+////                    navHostController.navigate(Screen.WebView.route)
+////                    viewModel.setProgramForWebView(item)
+//                }
             )
 
         }
@@ -179,10 +188,10 @@ fun MainPreview(){
 
 @Preview(widthDp = 257)
 @Composable
-fun FirstBottomBox(
+fun LeftBottomBox(
     modifier: Modifier = Modifier,
 //    uiState: MainUiState = MainUiState(),
-    isShowAdd: Boolean = false
+    isShowAdd: Boolean = true
 ) {
 
     val configuration = LocalConfiguration.current
@@ -201,10 +210,11 @@ fun FirstBottomBox(
             ){
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = "Sponsored",
+                    text = "廣告",
                     color = SponsoredFront,
                     fontSize = size.sp(10),
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(fontFamily = pingFangTCFamily)
                 )
             }
             Row(
@@ -213,18 +223,26 @@ fun FirstBottomBox(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Text(
-                    text = "Download\nsome\napplication",
-                    fontSize = size.sp(14),
-                    modifier = Modifier.width(size.dp(75)),
-                    textAlign = TextAlign.Center,
-                    style = TextStyle(
-                        fontFamily = pingFangTCFamily,
-                        fontWeight = FontWeight.Normal
-                    )
+//                Text(
+//                    text = "Download\nsome\napplication",
+//                    fontSize = size.sp(14),
+//                    modifier = Modifier.width(size.dp(75)),
+//                    textAlign = TextAlign.Center,
+//                    style = TextStyle(
+//                        fontFamily = pingFangTCFamily,
+//                        fontWeight = FontWeight.Normal
+//                    )
+//                )
+//                Spacer(Modifier.width(size.dp(10)))
+//                QrElement(url = "nryyt")
+                Image(
+                    modifier = Modifier.padding(
+                        vertical = size.dp(30),
+                        horizontal = size.dp(27)
+                    ),
+                    painter = painterResource(id = R.drawable.uber_ads),
+                    contentDescription = ""
                 )
-                Spacer(Modifier.width(size.dp(10)))
-                QrElement(url = "")
             }
 
         } else{
@@ -300,6 +318,7 @@ fun FirstBottomBox(
 fun CentralBottomBox(
     modifier: Modifier = Modifier,
     uiState: MainUiState,
+    viewModel: MainViewModel
 ) {
 
     val configuration = LocalConfiguration.current
@@ -320,7 +339,6 @@ fun CentralBottomBox(
                     .fillMaxSize()
                     .padding(
                         horizontal = size.dp(20),
-                        vertical = size.dp(38)
                     ),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -328,13 +346,18 @@ fun CentralBottomBox(
 
                 Button(
                     onClick = {
+                        viewModel.stopTimer()
                         context.startActivity(intent)
                     },
                     modifier = Modifier
                         .fillMaxHeight()
                         .width(size.dp(180))
                         .height(size.dp(79))
-                        .padding(end = size.dp(16)),
+                        .padding(
+                            vertical = size.dp(38)
+                        )
+                        .padding(end = size.dp(16))
+                    ,
                     colors = ButtonDefaults.buttonColors(containerColor = MainColor)
                 ) {
                     Text(
@@ -343,8 +366,11 @@ fun CentralBottomBox(
                     )
                 }
                 Text(
-                    text = "Or scan\nQR Code！",
-                    modifier = Modifier,
+                    text = "右邊掃碼，也\n能使用手機租\n借行動電源哦\n哦！",
+                    modifier = Modifier
+                        .padding(
+                            vertical = size.dp(38)
+                        ),
                     fontSize = size.sp(14),
                     textAlign = TextAlign.Start,
                     style = TextStyle(
@@ -352,15 +378,28 @@ fun CentralBottomBox(
                         fontWeight = FontWeight.Normal
                     )
                 )
-                QrElement(
-                    Modifier
-                        .height(size.dp(80))
-                        .width(size.dp(80)),
-                    url = uiState.stationQR,
-                    foregroundColor = MainColor,
-                    width = size.dp(140),
-                    height = size.dp(140)
-                )
+                Column(
+                    modifier = Modifier.fillMaxHeight().padding(top = size.dp(40)),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    QrElement(
+                        Modifier
+                            .height(size.dp(62))
+                            .width(size.dp(62)),
+                        url = uiState.stationQR,
+                        foregroundColor = MainColor,
+                        width = size.dp(62),
+                        height = size.dp(62)
+                    )
+                    Image(
+                        modifier = Modifier
+                            .padding(size.dp(8))
+                            .height(size.dp(18))
+                            .width(size.dp(27)),
+                        painter = painterResource(id = R.drawable.lite_small_logo),
+                        contentDescription = ""
+                    )
+                }
 
             }
         }
@@ -368,12 +407,13 @@ fun CentralBottomBox(
 }
 
 
-
 @Composable
 fun RightBottomBox(
     modifier: Modifier = Modifier,
     uiState: MainUiState,
-    onAppsClick: ()-> Unit = {}
+    onAppsClick: ()-> Unit = {},
+    onCertainAppClick: ()-> Unit = {}
+//    onSertainAppClick: (ProgramItem)-> Unit = {_->}
 ) {
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
@@ -395,44 +435,54 @@ fun RightBottomBox(
                     fontWeight = FontWeight.Normal
                 )
             )
-            Row(
-                Modifier.fillMaxSize(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(3),
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .width(size.dp(109))
-                        .padding(top = size.dp(4)),
-                    horizontalArrangement = Arrangement.SpaceAround,
-                    verticalArrangement = Arrangement.SpaceAround
-                ){
-                    items(uiState.programsList){
-                        ProgramItem(
-                            it,
-                            uiState.onAppPreviewClick
-                        )
-                    }
-                }
-                Image(
-                    painter = painterResource(id = R.drawable.play_arrow),
-                    contentDescription = "Open programs",
-                    modifier = Modifier
-                        .height(size.dp(16))
-                        .width(size.dp(14))
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) {
-                            onAppsClick()
+            val interactions = remember { MutableInteractionSource() }
+
+                Row(
+                    Modifier
+                        .fillMaxSize().clickable { onCertainAppClick() },
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(3),
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .width(size.dp(109))
+                            .padding(top = size.dp(4)),
+//                        .clickable(
+//                            indication = null,
+//                            interactionSource = interactions
+//                        ) {
+//                            onAppsClick()
+//                        },
+                        horizontalArrangement = Arrangement.SpaceAround,
+                        verticalArrangement = Arrangement.SpaceAround
+                    ){
+                        items(uiState.programsList){
+                            ProgramItem(
+                                itemState = it,
+//                            onAppPreviewClick = {item ->
+//                                onSertainAppClick(item)
+//                            }
+                            )
                         }
-                )
-            }
+                    }
+                    Image(
+                        painter = painterResource(id = R.drawable.play_arrow),
+                        contentDescription = "Open programs",
+                        modifier = Modifier
+                            .height(size.dp(16))
+                            .width(size.dp(14))
+                            .clickable(
+                                indication = null,
+                                interactionSource = interactions
+                            ) {
+//                                onAppsClick()
+                            }
+                    )
+                }
 
         }
-
     }
 }
 
@@ -440,7 +490,7 @@ fun RightBottomBox(
 @Composable
 fun ProgramItem(
     itemState: ProgramItem = ProgramItem(),
-    onAppPreviewClick: (ProgramItem)-> Unit = {_->}
+//    onAppPreviewClick: (ProgramItem)-> Unit = {_->}
 ) {
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
@@ -453,21 +503,18 @@ fun ProgramItem(
     ) {
 
         Image(
-            painter = rememberAsyncImagePainter(
-                model = itemState.link
-            ),
+            painter = painterResource(id = itemState.logo),
             contentDescription = "add",
             modifier  = Modifier
                 .size(size.dp(22))
-                .clickable(
-                    indication = null,
-                    interactionSource = remember { MutableInteractionSource() }
-                ) {
-                    onAppPreviewClick(
-                        itemState
-                    )
-                },
-            contentScale = ContentScale.FillBounds
+//                .clickable(
+//                    indication = null,
+//                    interactionSource = remember { MutableInteractionSource() }
+//                ) {
+//                    onAppPreviewClick(
+//                        itemState
+//                    )
+//                },
         )
 
     }
@@ -479,7 +526,9 @@ fun LineFromImage(){
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
     Box(
-        Modifier.fillMaxHeight().padding(vertical = size.dp(18)),
+        Modifier
+            .fillMaxHeight()
+            .padding(vertical = size.dp(18)),
         contentAlignment = Alignment.Center
     ) {
         Image(
@@ -489,26 +538,26 @@ fun LineFromImage(){
     }
 }
 
-@Composable
-fun StrippedVerticalLine(
-    modifier: Modifier = Modifier
-) {
-
-    Canvas(modifier = modifier.fillMaxHeight()){
-        val canvasWidth = size.width
-        val canvasHeight = size.height
-
-        val startX = canvasWidth / 2f
-        val startY = 0f
-        val stopX = canvasWidth / 2f
-        val stopY = canvasHeight
-
-        drawLine(
-            color = MainColor,
-            start = Offset(startX, startY),
-            end = Offset(stopX, stopY),
-            strokeWidth = 1f,
-            pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 2f)
-        )
-    }
-}
+//@Composable
+//fun StrippedVerticalLine(
+//    modifier: Modifier = Modifier
+//) {
+//
+//    Canvas(modifier = modifier.fillMaxHeight()){
+//        val canvasWidth = size.width
+//        val canvasHeight = size.height
+//
+//        val startX = canvasWidth / 2f
+//        val startY = 0f
+//        val stopX = canvasWidth / 2f
+//        val stopY = canvasHeight
+//
+//        drawLine(
+//            color = MainColor,
+//            start = Offset(startX, startY),
+//            end = Offset(stopX, stopY),
+//            strokeWidth = 1f,
+//            pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 2f)
+//        )
+//    }
+//}

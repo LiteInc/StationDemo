@@ -13,9 +13,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.zxing.BarcodeFormat
+import com.google.zxing.EncodeHintType
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 
 @Composable
 fun QrElement(
@@ -57,8 +59,9 @@ private fun generateQRCodeBitmap(
     val heightPx = (height * density).toInt()
 
 
-    val hints = mutableMapOf<com.google.zxing.EncodeHintType, Any>()
-    hints[com.google.zxing.EncodeHintType.MARGIN] = 0 // Set the margin to 0
+    val hints = mutableMapOf<EncodeHintType, Any>()
+    hints[EncodeHintType.MARGIN] = 0 // Set the margin to 0
+    hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.L
 
 
     try {

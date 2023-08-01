@@ -57,10 +57,10 @@ fun BottomBar(
         Row(
             Modifier
                 .fillMaxWidth()
-                .height((screenHeight/6.33).dp)
+                .height((screenHeight / 6.33).dp)
                 .padding(
-                    vertical = (screenHeight/40).dp,
-                    horizontal = (screenHeight/21.33).dp
+                    vertical = (screenHeight / 40).dp,
+                    horizontal = (screenHeight / 21.33).dp
                 ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -70,12 +70,12 @@ fun BottomBar(
 
                 Image(
                     modifier = Modifier.size((screenHeight/13.6).dp),
-                    painter = painterResource(id = R.drawable.lite_app_logo),
+                    painter = painterResource(id = R.drawable.lite_logo),
                     contentDescription = null
                 )
                 Column(
                     Modifier
-                        .padding(start = (screenHeight/64).dp)
+                        .padding(start = (screenHeight / 64).dp)
                         .fillMaxHeight(),
                     verticalArrangement = Arrangement.SpaceAround,
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -95,21 +95,28 @@ fun BottomBar(
             Box() {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "While someone else is using\nthe screen, you can scan the\nQR code to start the rental",
+                        text = "就算他人正陶醉於螢幕世界，你\n只需掃描神秘的QR碼，即刻啟\n動借電之旅！",
                         modifier = Modifier
-                            .width((screenHeight/5.66).dp)
-                            .padding(end = (screenHeight/256).dp),
+                            .width((screenHeight / 5.66).dp)
+                            .padding(end = (screenHeight / 256).dp),
                         fontSize = (screenHeight/80).sp,
                         style = TextStyle(
                             fontFamily = pingFangTCFamily,
                             fontWeight = FontWeight.Normal
                         )
                     )
-                    Image(
-                        bitmap,
-                        contentDescription = "",
-                        modifier = Modifier.size((screenHeight/9.14).dp)
+                    QrElement(
+                        url = "http://www.riisu.co/rent?now=86099016",
+                        modifier = Modifier.size((screenHeight / 9.14).dp),
+                        height = 140.dp,
+                        width = 140.dp,
+                        foregroundColor = MainColor
                     )
+//                    Image(
+//                        bitmap,
+//                        contentDescription = "",
+//                        modifier = Modifier.size((screenHeight/9.14).dp)
+//                    )
                 }
             }
 

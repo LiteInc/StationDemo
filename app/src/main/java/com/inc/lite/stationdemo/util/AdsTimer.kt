@@ -23,6 +23,10 @@ class AdsTimer private constructor(
         fun build() = AdsTimer(layoutType,listOfAds)
     }
 
+    fun stopTheTimer(){
+//        isTimer = false
+    }
+
     fun updateVideoStatus(value: Boolean){
         isVideoPlay = value
     }

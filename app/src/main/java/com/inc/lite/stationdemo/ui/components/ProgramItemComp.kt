@@ -22,10 +22,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.inc.lite.stationdemo.model.ProgramItem
 import com.inc.lite.stationdemo.util.AdjScreenSize
+import com.inc.lite.stationdemo.viewModels.MainViewModel
 
 
 @Composable
@@ -33,6 +36,7 @@ fun ProgramItemComponent(
     modifier: Modifier = Modifier,
     programItem: ProgramItem = ProgramItem(title = "Google Maps"),
     navHostController: NavHostController,
+    viewModel: MainViewModel
 ) {
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
@@ -41,34 +45,36 @@ fun ProgramItemComponent(
             .height(size.dp(152))
             .width(size.dp(152))
             .clickable(
-            indication = null,
-            interactionSource = remember { MutableInteractionSource() }
-        ) {
-            navHostController.navigate("webview_screen")
-        },
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) {
+                viewModel.setWebProgram(programItem)
+                viewModel.setProgramForWebView(programItem)
+                navHostController.navigate("webview_screen")
+            },
         color =  Color.Transparent
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-//            Image(
-//                modifier = Modifier
-//                    .size(size.dp(100))
-//                    .padding(bottom = size.dp(20)),
-//                painter = painterResource(id = programItem.logo),
-//                contentDescription = ""
-//            )
             Image(
-                painter = rememberAsyncImagePainter(
-                    model = programItem.logo
-                ),
-                contentDescription = "logo",
-                modifier  = Modifier
+                modifier = Modifier
                     .size(size.dp(100))
                     .padding(bottom = size.dp(20)),
-                contentScale = ContentScale.FillBounds
+                painter = painterResource(id = programItem.logo),
+                contentDescription = ""
             )
+//            Image(
+//                painter = rememberAsyncImagePainter(
+//                    model = programItem.logo
+//                ),
+//                contentDescription = "logo",
+//                modifier  = Modifier
+//                    .height(size.dp(100))
+//                    .width(size.dp(100))
+//                    .padding(bottom = size.dp(20)),
+//            )
             Text(
                 text = programItem.title,
                 fontSize = size.sp(24),
