@@ -35,7 +35,6 @@ import androidx.navigation.compose.rememberNavController
 import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.ui.components.DigitItem
 import com.inc.lite.stationdemo.ui.components.DigitKeyboard
-import com.inc.lite.stationdemo.ui.navigation.Screen
 import com.inc.lite.stationdemo.ui.theme.LightGrayColor
 import com.inc.lite.stationdemo.ui.theme.MainColor
 import com.inc.lite.stationdemo.ui.theme.RedInfoColor
@@ -90,7 +89,7 @@ fun EnterSMS(
             AnimatedVisibility(
                 modifier = Modifier
                     .padding(top = size.dp(20)),
-                visible = uiState.isErrorShow
+                visible = viewModel.isCodeError.value
             ) {
                 InfoRow()
             }
@@ -99,7 +98,7 @@ fun EnterSMS(
                     .padding(top = size.dp(40))
                     .height(size.dp(80)),
                 onClick = {
-                    navHostController.navigate(Screen.LoginEnterPass.route)
+                    viewModel.confirmSMSCode(digit)
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = MainColor)
             ) {
@@ -111,9 +110,7 @@ fun EnterSMS(
             }
             DigitKeyboard(
                 onDigitClicked = {key ->
-                    viewModel.onKeyBoardClick(key, Screen.LoginEnterSMS)
                     digit = viewModel.addValueByKey(digit,key)
-
                 }
             )
 

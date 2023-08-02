@@ -46,9 +46,6 @@ fun RegistrationNavGraph(
                 Modifier.padding(paddingValues),
                 navHostController = navHostController,
                 viewModel = hiltViewModel<LoginViewModel>(),
-                onNextClick = {
-                    navHostController.navigate(Screen.RegEnterNickName.route)
-                }
             )
         }
 

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">StationDemo</string>
+    <string name="log_in">Log in</string>
+    <string name="enter_your_phone_number">Enter your phone number</string>
 </resources>

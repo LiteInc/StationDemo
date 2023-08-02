@@ -1,15 +1,26 @@
 package com.inc.lite.stationdemo.viewModels
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavHostController
 import com.inc.lite.stationdemo.model.uiState.LoginUiState
 import com.inc.lite.stationdemo.ui.navigation.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
-class RegistrationViewModel: ViewModel(), AuthViewModel {
+class RegistrationViewModel() : ViewModel(), AuthViewModel {
     private var _uiState = MutableStateFlow(LoginUiState())
     override val uiState = _uiState
 
+    private var _isLoading: MutableState<Boolean> = mutableStateOf(false)
+    override val isLoading: MutableState<Boolean> = _isLoading
+
+    private var _isCodeError: MutableState<Boolean> = mutableStateOf(false)
+    override val isCodeError = _isCodeError
+
+    lateinit var navigationHost: NavHostController
+    val confirmCode: MutableState<String> = mutableStateOf("")
 
     override fun onKeyBoardClick(key: String, typeOfScreen: Screen) {
         if(key != "del" && key != ""){
@@ -21,18 +32,11 @@ class RegistrationViewModel: ViewModel(), AuthViewModel {
         _uiState.update {
             uiState.value.copy(
                 countryName = pair.first,
-                countyCode = pair.second
+                countyCode = pair.second.drop(1)
             )
         }
     }
 
-    override fun onValueEmailSubmit(email: String) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onValueNickNameSubmit(nickname: String) {
-        TODO("Not yet implemented")
-    }
 
     override fun addValueByKey(string: String, key: String): String {
         val array = string.toCharArray()
@@ -83,4 +87,28 @@ class RegistrationViewModel: ViewModel(), AuthViewModel {
             return result
         }
     }
+
+    override fun confirmPhoneNumber(navHostController: NavHostController, number: String) {
+        navigationHost = navHostController
+    }
+
+    override fun confirmSMSCode(verificationCode: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun confirmPassword(password: String) {
+        TODO("Not yet implemented")
+    }
+    override fun createPassword(password: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onValueEmailSubmit(email: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onValueNickNameSubmit(nickname: String) {
+        TODO("Not yet implemented")
+    }
+
 }

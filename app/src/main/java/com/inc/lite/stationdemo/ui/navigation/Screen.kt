@@ -15,6 +15,7 @@ sealed class Screen(val route: String){
     object LoginScreen: Screen("login_screen")
     object LoginEnterSMS: Screen("log_sms_screen")
     object LoginEnterPass: Screen("log_pass_screen")
+    object LoginCreatePass: Screen("log_create_pass_screen")
 
     //Registration
     object Registration: Screen("registration_screen")

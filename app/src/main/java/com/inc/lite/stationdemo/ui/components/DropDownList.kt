@@ -5,7 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -59,9 +61,9 @@ fun DropDownList(
             )
         Card(
             Modifier
-                .height(size.dp(352))
-                .width(size.dp(332))
-                .offset(y = size.dp(-140)),
+                .height(size.dp(700))
+                .width(size.dp(600))
+                .offset(y = size.dp(-50)),
             elevation = CardDefaults.elevatedCardElevation(2.dp),
             colors = CardDefaults.cardColors(containerColor = White)
         ) {
@@ -93,29 +95,42 @@ fun DropDownList(
 @Composable
 fun CountryItem(
     title: String = "Ukraine",
-    code: String = "380",
+    code: String = "+380",
     onItemClick: (Pair<String,String>) -> Unit = {_->},
 ) {
 
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
 
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .clickable {
-                onItemClick(Pair(title, code))
-            }
-    ) {
-        Text(
-            modifier = Modifier.width(size.dp(155)),
-            text = title,
-            fontSize = size.sp(28)
+    Column {
+        Spacer(modifier = Modifier.height(size.dp(5)))
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .clickable {
+                    onItemClick(Pair(title, code))
+                },
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                modifier = Modifier.width(size.dp(400)),
+                text = title,
+                fontSize = size.sp(28)
+            )
+            Text(
+                text = code,
+                fontWeight = FontWeight.Bold,
+                fontSize = size.sp(28)
+            )
+        }
+        Spacer(modifier = Modifier.height(size.dp(4)))
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(2.dp)
+                .background(Color.Gray)
         )
-        Text(
-            text = code,
-            fontWeight = FontWeight.Bold,
-            fontSize = size.sp(28)
-        )
+
+
     }
 }

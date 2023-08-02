@@ -36,8 +36,10 @@ fun LoginScreen(
                     title = "Log in",
                     onBackArrowClick = {
                         navHostController.navigate(Screen.RegOrLogin.route)
+                        viewModel.cleanUser()
                     },
                     onReturnHomeClick = {
+                        viewModel.cleanUser()
                         context.startActivity(intent)
                     }
                 )
@@ -49,7 +51,8 @@ fun LoginScreen(
     ) {
         LoginNavGraph(
             paddingValues = it,
-            navController = rememberNavController()
+            navController = rememberNavController(),
+            viewModel = viewModel
         )
     }
 }

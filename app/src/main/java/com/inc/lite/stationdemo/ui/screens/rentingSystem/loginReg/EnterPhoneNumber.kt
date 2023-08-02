@@ -30,9 +30,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.ui.components.DigitKeyboard
 import com.inc.lite.stationdemo.ui.components.DropDownList
@@ -49,7 +49,7 @@ import com.inc.lite.stationdemo.util.AdjScreenSize
 fun EnterPhoneNumber(
     modifier: Modifier = Modifier,
     viewModel: AuthViewModel,
-    navHostController: NavHostController = rememberNavController()
+    navHostController: NavHostController
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -78,7 +78,7 @@ fun EnterPhoneNumber(
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     modifier = Modifier,
-                    text = "Enter your phone number",
+                    text = stringResource(id = R.string.enter_your_phone_number),
                     color = LightGrayColor,
                     fontSize = size.sp(28),
                     textAlign = TextAlign.Center
@@ -119,13 +119,13 @@ fun EnterPhoneNumber(
                         .height(size.dp(80))
                         .width(size.dp(182)),
                     onClick = {
-                        navHostController.navigate(Screen.LoginEnterSMS.route)
+                          viewModel.confirmPhoneNumber(navHostController, digit)
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = MainColor)
                 ) {
                     Text(
                         modifier = Modifier,
-                        text = "Log in",
+                        text = stringResource(id = R.string.log_in),
                         fontSize = size.sp(24)
                     )
                 }

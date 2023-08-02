@@ -1,18 +1,10 @@
 package com.inc.lite.stationdemo.model.uiState
 
+import com.inc.lite.stationdemo.util.CountryCodes
+
 data class LoginUiState(
     val isNumberSent: Boolean = false,
-    val countriesList: List<Pair<String, String>> = listOf(
-        Pair("Datong", "350"),
-        Pair("Shuozhou", "351"),
-        Pair("Xinzhou", "352"),
-        Pair("Ukraine", "353"),
-        Pair("Netherlands", "354"),
-        Pair("USA", "355"),
-        Pair("Italy", "353"),
-        Pair("France", "354"),
-        Pair("Germany", "355"),
-    ),
+    val countriesList: List<Pair<String, String>> = CountryCodes().countryListWithPlus,
     val number: Array<String?> = arrayOfNulls(9),
     val countyCode: String = "380",
     val countryName: String = "Ukraine",

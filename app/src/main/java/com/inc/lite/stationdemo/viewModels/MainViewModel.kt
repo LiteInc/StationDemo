@@ -17,6 +17,7 @@ import com.inc.lite.stationdemo.repository.MainRepository
 import com.inc.lite.stationdemo.util.AdsTimer
 import com.inc.lite.stationdemo.util.QrCodeLink
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -117,26 +118,26 @@ class MainViewModel @Inject constructor(
 
 
     private fun getAddsRequest(){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             mainRepository.getAds{list, message ->
                 if(message == null){
                     adsList = list
-
-                }
-                _uiState.update {
-                    it.copy(
-                        ads = AdsUI(
-                            adsList = list,
-                            isAdsLoaded = true
+                    _uiState.update {
+                        it.copy(
+                            ads = AdsUI(
+                                adsList = list,
+                                isAdsLoaded = true
+                            )
                         )
-                    )
+                    }
                 }
+
                 if (list.isNotEmpty()){
                     adsIsLoaded.value = false
+                    adsTimer.updateListOfAds(adsList)
+                    getAdsChange()
                 }
             }
-            adsTimer.updateListOfAds(adsList)
-            getAdsChange()
         }
     }
     private fun initTimer(){

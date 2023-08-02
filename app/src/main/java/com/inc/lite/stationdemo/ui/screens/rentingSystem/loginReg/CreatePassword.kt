@@ -35,7 +35,7 @@ import com.inc.lite.stationdemo.util.AdjScreenSize
 
 //@Preview(widthDp = 800, heightDp = 1280, showBackground = false)
 @Composable
-fun EnterPassword(
+fun CreatePassword(
     modifier: Modifier = Modifier,
     navHostController: NavHostController = rememberNavController(),
     viewModel: AuthViewModel,
@@ -64,7 +64,7 @@ fun EnterPassword(
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = "Enter your six digit passcode",
+                text = "Create your six digit passcode",
                 fontSize = size.sp(28),
                 color = LightGrayColor,
                 textAlign = TextAlign.Center
@@ -77,7 +77,7 @@ fun EnterPassword(
                     .padding(top = size.dp(40))
                     .height(size.dp(80)),
                 onClick = {
-                    viewModel.confirmPassword(digit)
+                          viewModel.createPassword(digit)
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = MainColor)
             ) {
@@ -98,30 +98,3 @@ fun EnterPassword(
     }
 }
 
-@Preview
-@Composable
-fun PassEntering(
-    modifier: Modifier = Modifier,
-    password: CharArray = charArrayOf(' ',' ',' ',' ',' ',' '),
-) {
-    val configuration = LocalConfiguration.current
-    val size = AdjScreenSize(configuration)
-
-
-    Box(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.Center){
-        Row {
-            for(n in 0..5){
-                if (password[n] == ' '){
-                    PasswordItem(
-                        digit = password[n].toString()
-                    )
-                }else{
-                    PasswordItem(
-                        digit = password[n].toString(),
-                        color = MainColor
-                    )
-                }
-            }
-        }
-    }
-}
