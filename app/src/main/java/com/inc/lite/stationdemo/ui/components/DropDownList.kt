@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.inc.lite.stationdemo.ui.theme.White
+import com.inc.lite.stationdemo.ui.theme.mainTextStyle
 import com.inc.lite.stationdemo.util.AdjScreenSize
 
 @Preview
@@ -115,12 +116,14 @@ fun CountryItem(
             Text(
                 modifier = Modifier.width(size.dp(400)),
                 text = title,
-                fontSize = size.sp(28)
+                fontSize = size.sp(28),
+                style = mainTextStyle
             )
             Text(
                 text = code,
                 fontWeight = FontWeight.Bold,
-                fontSize = size.sp(28)
+                fontSize = size.sp(28),
+                style = mainTextStyle
             )
         }
         Spacer(modifier = Modifier.height(size.dp(4)))

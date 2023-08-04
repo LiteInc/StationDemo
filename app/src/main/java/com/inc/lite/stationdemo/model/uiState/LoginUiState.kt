@@ -4,12 +4,9 @@ import com.inc.lite.stationdemo.util.CountryCodes
 
 data class LoginUiState(
     val isNumberSent: Boolean = false,
-    val countriesList: List<Pair<String, String>> = CountryCodes().countryListWithPlus,
-    val number: Array<String?> = arrayOfNulls(9),
+    val countriesList: List<Pair<String, String>> = CountryCodes().countryListChinese,
     val countyCode: String = "380",
     val countryName: String = "Ukraine",
-    val smsCode: Array<String?> = arrayOfNulls(4),
-    val password: Array<String?> = arrayOf("1","2","","","",""),
     val errorMessage: String = "",
     val isErrorShow: Boolean = false,
     val nickName: String = "",
@@ -23,10 +20,7 @@ data class LoginUiState(
 
         if (isNumberSent != other.isNumberSent) return false
         if (countriesList != other.countriesList) return false
-        if (!number.contentEquals(other.number)) return false
         if (countyCode != other.countyCode) return false
-        if (!smsCode.contentEquals(other.smsCode)) return false
-        if (!password.contentEquals(other.password)) return false
         if (errorMessage != other.errorMessage) return false
         if (isErrorShow != other.isErrorShow) return false
 
@@ -36,19 +30,10 @@ data class LoginUiState(
     override fun hashCode(): Int {
         var result = isNumberSent.hashCode()
         result = 31 * result + countriesList.hashCode()
-        result = 31 * result + number.contentHashCode()
         result = 31 * result + countyCode.hashCode()
-        result = 31 * result + smsCode.hashCode()
-        result = 31 * result + password.hashCode()
         result = 31 * result + errorMessage.hashCode()
         result = 31 * result + isErrorShow.hashCode()
         return result
     }
-    fun getFullNumber(): String{
-        var numberBody = ""
-        number.forEach {
-            numberBody += it ?: ""
-        }
-        return "$countyCode $numberBody"
-    }
+
 }

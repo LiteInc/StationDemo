@@ -3,7 +3,7 @@ package com.inc.lite.stationdemo.repository
 import android.util.Log
 import com.inc.lite.stationdemo.MyApplication
 import com.inc.lite.stationdemo.api.AdsApi
-import com.inc.lite.stationdemo.model.Ads
+import com.inc.lite.stationdemo.model.AdsRequest
 import com.inc.lite.stationdemo.model.Programs
 import javax.inject.Inject
 
@@ -11,7 +11,7 @@ class RemoteRepository @Inject constructor(
     private val RemoteApi: AdsApi,
     private val app: MyApplication
 ){
-    suspend fun getAdds(): Pair<Ads?, String> {
+    suspend fun getAdds(): Pair<AdsRequest?, String> {
         Log.d("RemoteRepo", "GetAdsRequest")
         return try {
             val response = RemoteApi.getAdds(app.getStationImei(), app.getAdsSign())

@@ -43,7 +43,8 @@ fun RegistrationScreen(
     ) {
         RegistrationNavGraph(
             paddingValues = it,
-            navHostController = rememberNavController()
+            navHostController = rememberNavController(),
+            mainNavHost = navHostController
         )
     }
 }

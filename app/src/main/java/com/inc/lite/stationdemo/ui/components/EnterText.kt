@@ -22,12 +22,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.ui.theme.Background
 import com.inc.lite.stationdemo.ui.theme.LightGrayColor
 import com.inc.lite.stationdemo.ui.theme.MainColor
+import com.inc.lite.stationdemo.ui.theme.mainTextStyle
+import com.inc.lite.stationdemo.ui.theme.pingFangTCFamily
 import com.inc.lite.stationdemo.util.AdjScreenSize
 
 
@@ -65,7 +69,8 @@ fun EnterText(
                 text = title,
                 fontSize = size.sp(28),
                 color = LightGrayColor,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                style = mainTextStyle
             )
 
             TextField(
@@ -87,7 +92,8 @@ fun EnterText(
                 ),
                 textStyle = TextStyle(
                     fontSize = size.sp(28),
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    fontFamily = pingFangTCFamily
                 ),
                 maxLines = 1
             )
@@ -103,8 +109,9 @@ fun EnterText(
             ) {
                 Text(
                     modifier = Modifier.padding(horizontal = size.dp(55)),
-                    text = "Next",
-                    fontSize = size.sp(24)
+                    text = stringResource(id = R.string.next),
+                    fontSize = size.sp(24),
+                    style = mainTextStyle
                 )
             }
         }

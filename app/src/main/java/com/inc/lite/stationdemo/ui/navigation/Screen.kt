@@ -24,11 +24,11 @@ sealed class Screen(val route: String){
 
 
     //Rent
-    object Rent: Screen("rent_screen")
+    object StartRent: Screen("start_rent_screen")
 
 
     //Account
-    object  AccountPage: Screen("account_page_screen")
+    object  ProfilePage: Screen("profile_page_screen")
 
 
 }

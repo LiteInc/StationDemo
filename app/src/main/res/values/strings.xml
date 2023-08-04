@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">StationDemo</string>
-    <string name="log_in">Log in</string>
-    <string name="enter_your_phone_number">Enter your phone number</string>
+    <string name="log_in">登入</string>
+    <string name="verification_time_out">Verification time out</string>
+    <string name="enter_your_phone_number">你的手機號碼是 ?</string>
+    <string name="enter_verification_code">輸入發送至手機的簡訊驗證碼</string>
+    <string name="confirm">確認</string>
+    <string name="next">Next</string>
+    <string name="send_verification_sms">發送驗證碼</string>
+    <string name="enter_your_password">請輸入你的六位數密碼</string>
+    <string name="enter_your_nickname">你的暱稱是 ?</string>
+    <string name="enter_your_email">你的email是 ?</string>
+    <string name="create_your_password">創建你的六位數密碼</string>
+    <string name="wrong_verification_code">Sms code does not match with\nour system, try sending it again</string>
+    <string name="next_step">下一步</string>
+    <string name="lite_wallet">錢包</string>
+    <string name="logout">登出</string>
+    <string name="bottom_info">就算他人正陶醉於螢幕世界，你\\n只需掃描神秘的QR碼，即刻啟\\n動借電之旅！</string>
 </resources>

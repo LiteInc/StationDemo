@@ -1,13 +1,11 @@
 package com.inc.lite.stationdemo.repository
 
-import com.inc.lite.stationdemo.model.Ads
 import com.inc.lite.stationdemo.model.AdsItem
 import com.inc.lite.stationdemo.model.ConfirmVerificationResponse
 import com.inc.lite.stationdemo.model.ProgramItem
 import com.inc.lite.stationdemo.model.StartVerificationResponse
 import com.inc.lite.stationdemo.model.UserUpdate
 import com.inc.lite.stationdemo.model.UserUpdateResponse
-import java.net.PasswordAuthentication
 
 interface  MainRepository {
     suspend fun getAds(result: (List<AdsItem>, String?) -> Unit)

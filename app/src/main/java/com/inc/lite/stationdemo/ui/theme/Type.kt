@@ -39,3 +39,5 @@ val Typography = Typography(
     )
     */
 )
+
+val mainTextStyle = TextStyle(fontFamily = pingFangTCFamily)

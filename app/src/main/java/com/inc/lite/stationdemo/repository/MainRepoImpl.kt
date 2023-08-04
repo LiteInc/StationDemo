@@ -26,7 +26,7 @@ class MainRepoImpl @Inject constructor(
         Log.d(TAG, "Response : $response")
         if (response.first != null){
 
-            response.first!!.data.forEach {
+            response.first!!.adsList.forEach {
                 list
                     .add(
                         AdsItem(

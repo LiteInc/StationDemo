@@ -40,6 +40,7 @@ import com.inc.lite.stationdemo.ui.components.TopBar
 import com.inc.lite.stationdemo.model.StatusBarUiState
 import com.inc.lite.stationdemo.ui.navigation.Screen
 import com.inc.lite.stationdemo.ui.theme.MainColor
+import com.inc.lite.stationdemo.ui.theme.mainTextStyle
 import com.inc.lite.stationdemo.ui.theme.pingFangTCFamily
 import com.inc.lite.stationdemo.util.AdjScreenSize
 
@@ -114,7 +115,7 @@ fun RegOrLoginScreen(
                             Text(
                                 text = "快速登入",
                                 fontSize = size.sp(24),
-                                style = TextStyle(fontFamily = pingFangTCFamily)
+                                style = mainTextStyle
                             )
                         }
                         OutlinedButton(
@@ -123,8 +124,8 @@ fun RegOrLoginScreen(
                                 .padding(start = size.dp(20))
                                 .weight(1f),
                             onClick = {
-                                navHostController.navigate(Screen.Registration.route)
-                                      },
+//                                navHostController.navigate(Screen.Registration.route)
+                                },
                             colors = ButtonDefaults.buttonColors(
                                 contentColor = MainColor,
                                 containerColor = Color.Transparent
@@ -135,7 +136,7 @@ fun RegOrLoginScreen(
                                 text = "首次註冊",
                                 fontSize = size.sp(24),
                                 fontWeight = FontWeight.Light,
-                                style = TextStyle(fontFamily = pingFangTCFamily)
+                                style = mainTextStyle
                             )
                         }
                     }
@@ -158,7 +159,7 @@ fun AskingRow1() {
         Text(
             text = "手機號碼註冊，立即體驗Lite快速便\n捷租借！",
             fontSize = size.sp(24),
-            style = TextStyle(fontFamily = pingFangTCFamily)
+            style = mainTextStyle
         )
         Image(
             modifier = Modifier
@@ -188,7 +189,7 @@ fun AskingRow2() {
         Text(
             text = "輕鬆快速登入，手機沒電也能自由\n使用！",
             fontSize = size.sp(24),
-            style = TextStyle(fontFamily = pingFangTCFamily)
+            style = mainTextStyle
         )
     }
 }
@@ -206,7 +207,7 @@ fun AskingRow3() {
         Text(
             text = "每天最高只需36元！下載Lite App\n邀請朋友領取免費充電券！",
             fontSize = size.sp(24),
-            style = TextStyle(fontFamily = pingFangTCFamily)
+            style = mainTextStyle
         )
         Image(
             modifier = Modifier

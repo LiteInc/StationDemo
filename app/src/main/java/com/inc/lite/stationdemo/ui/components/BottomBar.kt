@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,7 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.ui.theme.MainColor
+import com.inc.lite.stationdemo.ui.theme.mainTextStyle
 import com.inc.lite.stationdemo.ui.theme.pingFangTCFamily
+import com.inc.lite.stationdemo.util.AdjScreenSize
 import com.inc.lite.stationdemo.util.QRCodeUtil
 
 @Preview(widthDp = 800, heightDp = 1280)
@@ -41,13 +44,9 @@ fun BottomBar(
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp
     val screenHeight = configuration.screenHeightDp + 72
-    val bitmap = QRCodeUtil.createQRImage(
-        "http://www.riisu.co/rent?now=86546307",
-        140,
-        140,
-        null,
-        MainColor.toArgb()
-    ).asImageBitmap()
+
+
+    val size = AdjScreenSize(configuration)
 
     Surface(
         tonalElevation =  BottomAppBarDefaults.ContainerElevation,
@@ -57,7 +56,7 @@ fun BottomBar(
         Row(
             Modifier
                 .fillMaxWidth()
-                .height((screenHeight / 6.33).dp)
+                .height(size.dp(202))
                 .padding(
                     vertical = (screenHeight / 40).dp,
                     horizontal = (screenHeight / 21.33).dp
@@ -95,28 +94,20 @@ fun BottomBar(
             Box() {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "就算他人正陶醉於螢幕世界，你\n只需掃描神秘的QR碼，即刻啟\n動借電之旅！",
+                        text = stringResource(id = R.string.bottom_info),
                         modifier = Modifier
-                            .width((screenHeight / 5.66).dp)
-                            .padding(end = (screenHeight / 256).dp),
-                        fontSize = (screenHeight/80).sp,
-                        style = TextStyle(
-                            fontFamily = pingFangTCFamily,
-                            fontWeight = FontWeight.Normal
-                        )
+                            .width(size.dp(226))
+                            .padding(end = size.dp(5)),
+                        fontSize = size.sp(16),
+                        style = mainTextStyle
                     )
                     QrElement(
                         url = "http://www.riisu.co/rent?now=86099016",
-                        modifier = Modifier.size((screenHeight / 9.14).dp),
+                        modifier = Modifier.size(size.dp(140)),
                         height = 140.dp,
                         width = 140.dp,
                         foregroundColor = MainColor
                     )
-//                    Image(
-//                        bitmap,
-//                        contentDescription = "",
-//                        modifier = Modifier.size((screenHeight/9.14).dp)
-//                    )
                 }
             }
 

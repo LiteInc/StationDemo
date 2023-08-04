@@ -19,6 +19,15 @@ class RegistrationViewModel() : ViewModel(), AuthViewModel {
     private var _isCodeError: MutableState<Boolean> = mutableStateOf(false)
     override val isCodeError = _isCodeError
 
+    private var _isShowToast: MutableState<Boolean> = mutableStateOf(false)
+    override val isShowToast = _isShowToast
+
+    override val phoneNumber: MutableState<String> = mutableStateOf("         ")
+    override val password: MutableState<String> = mutableStateOf("         ")
+
+    override val smsCode: MutableState<String> = mutableStateOf("")
+
+
     lateinit var navigationHost: NavHostController
     val confirmCode: MutableState<String> = mutableStateOf("")
 
@@ -87,27 +96,30 @@ class RegistrationViewModel() : ViewModel(), AuthViewModel {
             return result
         }
     }
+    override fun passMainNavHost(navHostController: NavHostController){
 
-    override fun confirmPhoneNumber(navHostController: NavHostController, number: String) {
+    }
+
+    override fun confirmPhoneNumber(navHostController: NavHostController) {
         navigationHost = navHostController
     }
 
-    override fun confirmSMSCode(verificationCode: String) {
+    override fun confirmSMSCode() {
         TODO("Not yet implemented")
     }
 
-    override fun confirmPassword(password: String) {
+    override fun confirmCurrentPassword() {
         TODO("Not yet implemented")
     }
-    override fun createPassword(password: String) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onValueEmailSubmit(email: String) {
+    override fun createPassword() {
         TODO("Not yet implemented")
     }
 
-    override fun onValueNickNameSubmit(nickname: String) {
+    override fun confirmEmail(email: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun confirmNickname(nickname: String) {
         TODO("Not yet implemented")
     }
 

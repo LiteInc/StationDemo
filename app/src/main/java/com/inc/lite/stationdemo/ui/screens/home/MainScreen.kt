@@ -57,6 +57,7 @@ import com.inc.lite.stationdemo.ui.components.StatusBar
 import com.inc.lite.stationdemo.ui.navigation.Screen
 import com.inc.lite.stationdemo.ui.theme.SponsoredBack
 import com.inc.lite.stationdemo.ui.theme.SponsoredFront
+import com.inc.lite.stationdemo.ui.theme.mainTextStyle
 import com.inc.lite.stationdemo.util.AdjScreenSize
 
 
@@ -252,7 +253,7 @@ fun LeftBottomBox(
                 Text(
                     text = "下載我們的應用程序",
                     fontSize = size.sp(14),
-                    style = TextStyle( fontFamily = pingFangTCFamily)
+                    style = mainTextStyle
 
                 )
                 Spacer(modifier = Modifier.height(size.dp(15)))
@@ -354,10 +355,7 @@ fun CentralBottomBox(
                         ),
                     fontSize = size.sp(14),
                     textAlign = TextAlign.Start,
-                    style = TextStyle(
-                        fontFamily = pingFangTCFamily,
-                        fontWeight = FontWeight.Normal
-                    )
+                    style = mainTextStyle
                 )
                 Column(
                     modifier = Modifier
@@ -413,10 +411,7 @@ fun RightBottomBox(
                 text = "使用其他應用",
                 fontSize = size.sp(14),
                 textAlign = TextAlign.Center,
-                style = TextStyle(
-                    fontFamily = pingFangTCFamily,
-                    fontWeight = FontWeight.Normal
-                )
+                style = mainTextStyle
             )
             val interactions = remember { MutableInteractionSource() }
 
@@ -500,7 +495,7 @@ fun SponsoredSurface(
                         fontSize = size.sp(14),
                         maxLines = 2,
                         textAlign = TextAlign.Center,
-                        style = TextStyle(fontFamily = pingFangTCFamily)
+                        style = mainTextStyle
                     )
 
                 }

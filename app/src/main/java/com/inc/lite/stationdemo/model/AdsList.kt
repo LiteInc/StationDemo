@@ -1,6 +1,6 @@
 package com.inc.lite.stationdemo.model
 
-data class Data(
+data class AdsList(
     val fileType: String,
     val forward: String,
     val id: Int,

@@ -20,7 +20,9 @@ import com.inc.lite.stationdemo.viewModels.RegistrationViewModel
 @Composable
 fun RegistrationNavGraph(
     paddingValues: PaddingValues,
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    mainNavHost: NavHostController,
+    viewModel: RegistrationViewModel = hiltViewModel()
 ) {
     NavHost(
         navController = navHostController,
@@ -30,14 +32,15 @@ fun RegistrationNavGraph(
             EnterPhoneNumber(
                 modifier = Modifier.padding(paddingValues),
                 navHostController = navHostController,
-                viewModel = hiltViewModel<RegistrationViewModel>()
+                viewModel = viewModel,
+                mainNavHost = mainNavHost
             )
         }
         composable(Screen.LoginEnterSMS.route){
             EnterSMS(
                 modifier = Modifier.padding(paddingValues),
                 navHostController = navHostController,
-                viewModel = hiltViewModel<RegistrationViewModel>()
+                viewModel = viewModel
             )
         }
 
@@ -45,22 +48,21 @@ fun RegistrationNavGraph(
             EnterPassword(
                 Modifier.padding(paddingValues),
                 navHostController = navHostController,
-                viewModel = hiltViewModel<LoginViewModel>(),
+                viewModel = viewModel
             )
         }
 
         composable(Screen.RegEnterEmail.route){
             EnterEmail(
                 Modifier.padding(paddingValues),
-                navHostController = navHostController,
-                viewModel = hiltViewModel<LoginViewModel>()
+                viewModel = viewModel
             )
         }
         composable(Screen.RegEnterNickName.route){
             EnterNickName(
                 Modifier.padding(paddingValues),
                 navHostController = navHostController,
-                viewModel = hiltViewModel<LoginViewModel>()
+                viewModel = viewModel
             )
         }
     }

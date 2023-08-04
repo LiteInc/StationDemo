@@ -4,9 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.inc.lite.stationdemo.ui.screens.rentingSystem.rent.ProfileScreen
 import com.inc.lite.stationdemo.ui.screens.rentingSystem.loginReg.LoginScreen
 import com.inc.lite.stationdemo.ui.screens.rentingSystem.loginReg.RegOrLoginScreen
-import com.inc.lite.stationdemo.ui.screens.rentingSystem.loginReg.RegistrationScreen
+import com.inc.lite.stationdemo.ui.screens.rentingSystem.rent.StartRentScreen
 
 @Composable
 fun AuthNavGraph(
@@ -23,13 +24,14 @@ fun AuthNavGraph(
             LoginScreen(navHostController = navHostController)
         }
         composable(Screen.Registration.route){
-            RegistrationScreen(navHostController = navHostController)
+            ProfileScreen(navHostController = navHostController)
+//            RegistrationScreen(navHostController = navHostController)
         }
-        composable(RENT){
-            rentNavBuilder(navHostController)
+        composable(Screen.ProfilePage.route){
+            ProfileScreen(navHostController = navHostController)
         }
-        composable(ACCOUNT){
-            accountNavBuilder(navHostController)
+        composable(Screen.StartRent.route){
+            StartRentScreen(navHostController = navHostController)
         }
 
     }

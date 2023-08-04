@@ -1,6 +1,6 @@
 package com.inc.lite.stationdemo.api
 
-import com.inc.lite.stationdemo.model.Ads
+import com.inc.lite.stationdemo.model.AdsRequest
 import com.inc.lite.stationdemo.model.Programs
 import retrofit2.Response
 import retrofit2.http.GET
@@ -14,7 +14,7 @@ interface AdsApi {
         stationID: String,
         @Query("sign")
         sign: String
-    ): Response<Ads>
+    ): Response<AdsRequest>
     @GET("station_api/v1/programs")
     suspend fun getPrograms(
         @Query("stationUuid")

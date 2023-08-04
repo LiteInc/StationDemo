@@ -11,16 +11,23 @@ interface AuthViewModel {
 
     val isCodeError: MutableState<Boolean>
     val isLoading: MutableState<Boolean>
+    val isShowToast: MutableState<Boolean>
+
+    val smsCode: MutableState<String>
+    val phoneNumber: MutableState<String>
+    val password: MutableState<String>
+
+//    val isCleanPassword: MutableState<Boolean>
 
     fun onKeyBoardClick(key: String, typeOfScreen: Screen)
     fun onDropDownItemClick(pair: Pair<String, String>)
-    fun onValueEmailSubmit(email: String)
-    fun onValueNickNameSubmit(nickname: String)
     fun addValueByKey(string: String, key: String): String
-    fun confirmPhoneNumber(navHostController: NavHostController, number: String)
-    fun confirmSMSCode(verificationCode: String)
-
-    fun createPassword(password: String)
-    fun confirmPassword(password: String)
+    fun confirmPhoneNumber(navHostController: NavHostController)
+    fun confirmEmail(email: String)
+    fun confirmNickname(nickname: String)
+    fun confirmSMSCode()
+    fun createPassword()
+    fun confirmCurrentPassword()
+    fun passMainNavHost(navHostController: NavHostController)
 
 }

@@ -3,7 +3,6 @@ package com.inc.lite.stationdemo.repository
 import android.util.Log
 import com.inc.lite.stationdemo.MyApplication
 import com.inc.lite.stationdemo.api.AuthApi
-import com.inc.lite.stationdemo.model.Ads
 import com.inc.lite.stationdemo.model.ConfirmVerificationResponse
 import com.inc.lite.stationdemo.model.StartVerificationResponse
 import com.inc.lite.stationdemo.model.UserUpdate

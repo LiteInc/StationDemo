@@ -8,6 +8,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,9 +38,11 @@ import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.ui.components.DigitKeyboard
 import com.inc.lite.stationdemo.ui.components.DropDownList
 import com.inc.lite.stationdemo.ui.components.EnteringDigits
+import com.inc.lite.stationdemo.ui.components.LoadingIndicator
 import com.inc.lite.stationdemo.ui.navigation.Screen
 import com.inc.lite.stationdemo.ui.theme.LightGrayColor
 import com.inc.lite.stationdemo.ui.theme.MainColor
+import com.inc.lite.stationdemo.ui.theme.mainTextStyle
 import com.inc.lite.stationdemo.viewModels.AuthViewModel
 import com.inc.lite.stationdemo.util.AdjScreenSize
 
@@ -49,7 +52,8 @@ import com.inc.lite.stationdemo.util.AdjScreenSize
 fun EnterPhoneNumber(
     modifier: Modifier = Modifier,
     viewModel: AuthViewModel,
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    mainNavHost: NavHostController
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -59,9 +63,10 @@ fun EnterPhoneNumber(
     var countriesMenu by remember {
         mutableStateOf(false)
     }
-    var digit by remember {
-        mutableStateOf("         ")
-    }
+    var phoneNumber by viewModel.phoneNumber
+    var isButtonEnabled by remember { mutableStateOf(false) }
+
+    viewModel.passMainNavHost(mainNavHost)
 
     Surface(
         modifier
@@ -94,7 +99,8 @@ fun EnterPhoneNumber(
                 ) {
                     Text(
                         text = uiState.countryName,
-                        fontSize = size.sp(28)
+                        fontSize = size.sp(28),
+                        style = mainTextStyle
                     )
                     Image(
                         modifier = Modifier
@@ -109,32 +115,40 @@ fun EnterPhoneNumber(
                 EnteringDigits(
                     Modifier.padding(top = size.dp(60)),
                     countyCode = uiState.countyCode,
-                    number = digit.toCharArray()
+                    number = phoneNumber.toCharArray()
                 )
 
-
-                Button(
-                    modifier = Modifier
-                        .padding(top = size.dp(80))
-                        .height(size.dp(80))
-                        .width(size.dp(182)),
-                    onClick = {
-                          viewModel.confirmPhoneNumber(navHostController, digit)
-                    },
-                    colors = ButtonDefaults.buttonColors(containerColor = MainColor)
-                ) {
-                    Text(
-                        modifier = Modifier,
-                        text = stringResource(id = R.string.log_in),
-                        fontSize = size.sp(24)
-                    )
+                Box(Modifier.padding(top = size.dp(80)), contentAlignment = Alignment.Center){
+                    if (!viewModel.isLoading.value){
+                        isButtonEnabled = viewModel.phoneNumber.value.toCharArray().last() != ' '
+                        Button(
+                            modifier = Modifier
+                                .height(size.dp(80))
+                                .width(size.dp(182)),
+                            enabled = isButtonEnabled,
+                            onClick = {
+                                viewModel.confirmPhoneNumber(navHostController)
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MainColor,
+                                disabledContainerColor = MainColor.copy(alpha = 0.6f)
+                            )
+                        ) {
+                            Text(
+                                modifier = Modifier,
+                                text = stringResource(id = R.string.confirm),
+                                fontSize = size.sp(24),
+                                style = mainTextStyle
+                            )
+                        }
+                    }
+                    LoadingIndicator(isLoading = viewModel.isLoading.value)
                 }
 
             }
             DigitKeyboard(
                 onDigitClicked = {key ->
-                    viewModel.onKeyBoardClick(key, Screen.LoginEnterNumber)
-                    digit = viewModel.addValueByKey(digit,key)
+                    phoneNumber = viewModel.addValueByKey(phoneNumber,key)
                 }
             )
         }

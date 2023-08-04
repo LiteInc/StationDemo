@@ -21,7 +21,8 @@ import com.inc.lite.stationdemo.viewModels.LoginViewModel
 fun LoginNavGraph(
     paddingValues: PaddingValues,
     navController: NavHostController,
-    viewModel: LoginViewModel
+    viewModel: LoginViewModel,
+    mainNavHost: NavHostController
     ) {
     NavHost(
         navController = navController,
@@ -31,7 +32,8 @@ fun LoginNavGraph(
             EnterPhoneNumber(
                 Modifier.padding(paddingValues),
                 navHostController = navController,
-                viewModel = viewModel
+                viewModel = viewModel,
+                mainNavHost = mainNavHost
             )
         }
         composable(Screen.LoginEnterSMS.route){
@@ -51,14 +53,12 @@ fun LoginNavGraph(
         composable(Screen.LoginCreatePass.route){
             CreatePassword(
                 Modifier.padding(paddingValues),
-                navHostController = navController,
                 viewModel = viewModel
             )
         }
         composable(Screen.RegEnterEmail.route){
             EnterEmail(
                 Modifier.padding(paddingValues),
-                navHostController = navController,
                 viewModel = viewModel
             )
         }
