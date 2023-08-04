@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,6 +40,7 @@ import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.ui.components.DigitItem
 import com.inc.lite.stationdemo.ui.components.DigitKeyboard
 import com.inc.lite.stationdemo.ui.components.LoadingIndicator
+import com.inc.lite.stationdemo.ui.navigation.Screen
 import com.inc.lite.stationdemo.ui.theme.LightGrayColor
 import com.inc.lite.stationdemo.ui.theme.MainColor
 import com.inc.lite.stationdemo.ui.theme.RedInfoColor
@@ -71,69 +74,77 @@ fun EnterSMS(
                 top = size.dp(60)
             ),
     ){
-        Column(
-            Modifier
-                .fillMaxSize()
-                .padding(top = size.dp(120)),
-            verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(id = R.string.enter_verification_code),
-                fontSize = size.sp(28),
-                color = LightGrayColor,
-                textAlign = TextAlign.Center,
-                style = mainTextStyle
-            )
-            SmsEntering(
-                Modifier
-                    .padding(
-                        bottom = size.dp(40),
-                        top = size.dp(50)
-                    ),
-                smsCode = smsCode.toCharArray()
-            )
+        Scaffold(
+            bottomBar = {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Spacer(modifier = Modifier.height(size.dp(20)))
+                    Box(
+                        Modifier,
+                        contentAlignment = Alignment.Center
+                    ){
+                        if(!viewModel.isLoading.value){
 
-            AnimatedVisibility(
-                modifier = Modifier
-                    .padding(top = size.dp(20)),
-                visible = viewModel.isCodeError.value
-            ) {
-                InfoRow(message = stringResource(id = R.string.wrong_verification_code))
-            }
-            Box(Modifier.padding(top = size.dp(40)), contentAlignment = Alignment.Center){
-                if(!viewModel.isLoading.value){
-                    isButtonEnabled = viewModel.smsCode.value.toCharArray().last() != ' '
-                    Button(
-                        modifier = Modifier
-                            .padding(top = size.dp(40))
-                            .height(size.dp(80)),
-                        enabled = isButtonEnabled,
-                        onClick = {
-                            viewModel.confirmSMSCode()
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MainColor,
-                            disabledContainerColor = MainColor.copy(alpha = 0.6f)
-                        )
-                    ) {
-                        Text(
-                            modifier = Modifier.padding(horizontal = size.dp(55)),
-                            text = stringResource(id = R.string.confirm),
-                            fontSize = size.sp(24),
-                            style = mainTextStyle
-                        )
+                            isButtonEnabled = viewModel.smsCode.value.toCharArray().last() != ' '
+                            Button(
+                                modifier = Modifier
+                                    .height(size.dp(80)),
+                                enabled = isButtonEnabled,
+                                onClick = {
+                                    viewModel.confirmSMSCode()
+                                },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = MainColor,
+                                    disabledContainerColor = MainColor.copy(alpha = 0.6f)
+                                )
+                            ) {
+                                Text(
+                                    modifier = Modifier.padding(horizontal = size.dp(55)),
+                                    text = stringResource(id = R.string.confirm),
+                                    fontSize = size.sp(24)
+                                )
+                            }
+
+                        }
+                        LoadingIndicator(isLoading = viewModel.isLoading.value)
                     }
+                    Spacer(modifier = Modifier.height(size.dp(40)))
+                    DigitKeyboard(
+                        onDigitClicked = {key ->
+                            viewModel.onKeyBoardClick(key, Screen.LoginEnterPass)
+                            smsCode = viewModel.addValueByKey(smsCode,key)
+                        }
+                    )
                 }
-                LoadingIndicator(isLoading = viewModel.isLoading.value)
             }
-            DigitKeyboard(
-                onDigitClicked = {key ->
-                    smsCode = viewModel.addValueByKey(smsCode,key)
+        ) {
+            Column(
+                Modifier
+                    .fillMaxSize()
+                    .padding(it)
+                    .padding(top = size.dp(120)),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.enter_verification_code),
+                    fontSize = size.sp(28),
+                    color = LightGrayColor,
+                    textAlign = TextAlign.Center,
+                    style = mainTextStyle
+                )
+                Spacer(modifier = Modifier.height(size.dp(70)))
+                SmsEntering(
+                    smsCode = smsCode.toCharArray()
+                )
+                Spacer(modifier = Modifier.height(size.dp(50)))
+                AnimatedVisibility(
+                    modifier = Modifier,
+                    visible = viewModel.isCodeError.value
+                ) {
+                    InfoRow(message = stringResource(id = R.string.wrong_verification_code))
                 }
-            )
-
+            }
         }
     }
 }

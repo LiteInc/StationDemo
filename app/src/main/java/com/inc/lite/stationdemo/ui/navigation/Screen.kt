@@ -26,6 +26,11 @@ sealed class Screen(val route: String){
     //Rent
     object StartRent: Screen("start_rent_screen")
 
+    object AskCoupons: Screen("ask_coupons")
+    object Coupons: Screen("coupons")
+    object DoYouHaveCoupons: Screen("do_you_have_coupons")
+    object ChoseWitchCoupons: Screen("chose_witch_coupons")
+
 
     //Account
     object  ProfilePage: Screen("profile_page_screen")

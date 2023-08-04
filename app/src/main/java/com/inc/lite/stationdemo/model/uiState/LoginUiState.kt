@@ -5,8 +5,10 @@ import com.inc.lite.stationdemo.util.CountryCodes
 data class LoginUiState(
     val isNumberSent: Boolean = false,
     val countriesList: List<Pair<String, String>> = CountryCodes().countryListChinese,
-    val countyCode: String = "380",
-    val countryName: String = "Ukraine",
+    val countyCode: String = "886",
+    val countryName: String = "乌克兰",
+//    val countyCode: String = "380",
+//    val countryName: String = "乌克兰",
     val errorMessage: String = "",
     val isErrorShow: Boolean = false,
     val nickName: String = "",

@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -113,7 +114,7 @@ fun RegOrLoginScreen(
                             elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                         ) {
                             Text(
-                                text = "快速登入",
+                                text = stringResource(id = R.string.yes_login),
                                 fontSize = size.sp(24),
                                 style = mainTextStyle
                             )
@@ -133,7 +134,7 @@ fun RegOrLoginScreen(
                             border = BorderStroke(1.dp, MainColor)
                         ) {
                             Text(
-                                text = "首次註冊",
+                                text = stringResource(id = R.string.no_register),
                                 fontSize = size.sp(24),
                                 fontWeight = FontWeight.Light,
                                 style = mainTextStyle

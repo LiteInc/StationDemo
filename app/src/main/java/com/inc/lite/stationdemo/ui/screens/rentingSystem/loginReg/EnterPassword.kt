@@ -138,9 +138,6 @@ fun EnterPassword(
                 ) {
                     InfoPassword(message = "Wrong password")
                 }
-
-
-
             }
         }
     }

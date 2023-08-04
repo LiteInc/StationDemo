@@ -64,6 +64,8 @@ class LoginViewModel @Inject constructor(
 
     private var fullPhoneNumber = ""
 
+    private var loginedPage = Screen.Coupons.route
+
 
     fun cleanUser(){
         user.value =  User()
@@ -126,7 +128,9 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun confirmVerification(){
+        Log.d(TAG, "Confirm verification: $fullPhoneNumber + sms : ${smsCode.value} ")
         viewModelScope.launch(Dispatchers.IO) {
+            Log.d(TAG, "Confirm verification: $fullPhoneNumber + sms : ${smsCode.value} ")
             mainRepository.confirmVerification(fullPhoneNumber, smsCode.value){ result, message ->
                 if(result != null){
                     user.value = result.user
@@ -164,7 +168,7 @@ class LoginViewModel @Inject constructor(
                         }
                     }else{
                         viewModelScope.launch(Dispatchers.Main) {
-                            mainNavHost.navigate(Screen.ProfilePage.route)
+                            mainNavHost.navigate(loginedPage)
                         }
                     }
                     _isLoading.value = false
@@ -209,7 +213,7 @@ class LoginViewModel @Inject constructor(
             navigationHost.navigate(Screen.RegEnterEmail.route)
         }else{
             updateUser()
-            mainNavHost.navigate(Screen.ProfilePage.route)
+            mainNavHost.navigate(loginedPage)
 
         }
     }
@@ -247,7 +251,7 @@ class LoginViewModel @Inject constructor(
         )
         Log.d(TAG, "User + nickname : ${user.value}")
         updateUser()
-        mainNavHost.navigate(Screen.ProfilePage.route)
+        mainNavHost.navigate(loginedPage)
     }
 
     override fun addValueByKey(string: String, key: String): String {

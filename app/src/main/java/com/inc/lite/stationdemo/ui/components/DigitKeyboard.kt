@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -26,7 +27,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.ui.theme.Black
-import com.inc.lite.stationdemo.ui.theme.LightKey
+import com.inc.lite.stationdemo.ui.theme.KeyboardDark
+import com.inc.lite.stationdemo.ui.theme.KeyboardLight
+import com.inc.lite.stationdemo.ui.theme.mainTextStyle
 import com.inc.lite.stationdemo.util.AdjScreenSize
 
 @Preview(showBackground = true, widthDp = 800, heightDp = 1280)
@@ -38,7 +41,7 @@ fun DigitKeyboard(
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
     val buttonsList = listOf(
-        "1", "2", "3", "4", "5", "6", "7", "8", "9"," ","0","d"
+        "1", "2", "3", "4", "5", "6", "7", "8", "9","c","0","d"
     )
 
     Box(modifier = Modifier
@@ -48,17 +51,26 @@ fun DigitKeyboard(
 
         LazyVerticalGrid(columns = GridCells.Fixed(3), horizontalArrangement = Arrangement.Center){
             items(buttonsList){
-                if(it != "d"){
-                    DigitKeyButton(
-                        text = it,
-                        onButtonClick = { key ->
-                            onDigitClicked(key)
-                        }
-                    )
-                }else{
+                if(it == "d"){
                     DigitKeyButton(
                         text = "d",
                         image = R.drawable.remove,
+                        onButtonClick = { key ->
+                            onDigitClicked(key)
+                        },
+                        containerColor = KeyboardLight
+                    )
+                }else if (it == "c"){
+                    DigitKeyButton(
+                        text = " ",
+                        onButtonClick = { key ->
+                            onDigitClicked(key)
+                        },
+                        containerColor = KeyboardLight
+                    )
+                }else {
+                    DigitKeyButton(
+                        text = it,
                         onButtonClick = { key ->
                             onDigitClicked(key)
                         }
@@ -76,7 +88,8 @@ fun DigitKeyboard(
 fun DigitKeyButton(
     text: String = "1",
     image: Int? = null,
-    onButtonClick: (String) -> Unit = {_->}
+    onButtonClick: (String) -> Unit = {_->},
+    containerColor: Color = KeyboardDark
 ) {
 
     val configuration = LocalConfiguration.current
@@ -96,7 +109,7 @@ fun DigitKeyButton(
         shape = RoundedCornerShape(size.dp(6)),
         colors = ButtonDefaults
             .buttonColors(
-                containerColor = LightKey,
+                containerColor = containerColor,
                 contentColor = Black
             ),
         elevation = ButtonDefaults
@@ -111,9 +124,11 @@ fun DigitKeyButton(
 
             if(image == null){
                 Text(
+                    modifier = Modifier.padding(bottom = size.dp(2)),
                     text = text,
                     fontSize = size.sp(40),
-                    fontWeight = FontWeight.Normal
+                    fontWeight = FontWeight.Normal,
+                    style = mainTextStyle
                 )
             }else {
                 Icon(
