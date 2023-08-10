@@ -26,7 +26,6 @@ fun AuthNavGraph(
             LoginScreen(navHostController = navHostController)
         }
         composable(Screen.Registration.route){
-//            ProfileScreen(navHostController = navHostController)
             RegistrationScreen(navHostController = navHostController)
         }
         composable(Screen.ProfilePage.route){

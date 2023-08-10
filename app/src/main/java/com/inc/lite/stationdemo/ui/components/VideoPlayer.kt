@@ -14,7 +14,7 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.StyledPlayerView
-import com.inc.lite.stationdemo.viewModels.MainViewModel
+import com.inc.lite.stationdemo.viewModels.HomeViewModel
 
 
 @Composable
@@ -32,7 +32,7 @@ fun VideoElement(
 fun VideoPlayer(
     modifier: Modifier = Modifier,
     videoUrl: String,
-    viewModel: MainViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val exoPlayer = ExoPlayer.Builder(context).build()

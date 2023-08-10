@@ -46,12 +46,8 @@ class LoginViewModel @Inject constructor(
     override val smsCode: MutableState<String> = _smsCode
     override val phoneNumber: MutableState<String> = _phoneNumber
     override val password: MutableState<String> = _password
-
-
-
     private var _isCodeError: MutableState<Boolean> = mutableStateOf(false)
     override val isCodeError = _isCodeError
-
     private var _isShowToast: MutableState<Boolean> = mutableStateOf(false)
     override val isShowToast = _isShowToast
 
@@ -219,10 +215,6 @@ class LoginViewModel @Inject constructor(
     }
 
 
-
-    override fun onKeyBoardClick(key: String, typeOfScreen: Screen){
-
-    }
 
     override fun onDropDownItemClick(pair: Pair<String, String>){
         _uiState.update {

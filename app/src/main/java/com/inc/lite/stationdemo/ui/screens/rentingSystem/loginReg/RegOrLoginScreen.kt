@@ -125,7 +125,7 @@ fun RegOrLoginScreen(
                                 .padding(start = size.dp(20))
                                 .weight(1f),
                             onClick = {
-//                                navHostController.navigate(Screen.Registration.route)
+                                navHostController.navigate(Screen.Registration.route)
                                 },
                             colors = ButtonDefaults.buttonColors(
                                 contentColor = MainColor,

@@ -8,6 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.inc.lite.stationdemo.ui.screens.rentingSystem.loginReg.CreatePassword
 import com.inc.lite.stationdemo.ui.screens.rentingSystem.loginReg.EnterEmail
 import com.inc.lite.stationdemo.ui.screens.rentingSystem.loginReg.EnterNickName
 import com.inc.lite.stationdemo.ui.screens.rentingSystem.loginReg.EnterPassword
@@ -22,7 +23,7 @@ fun RegistrationNavGraph(
     paddingValues: PaddingValues,
     navHostController: NavHostController,
     mainNavHost: NavHostController,
-    viewModel: RegistrationViewModel = hiltViewModel()
+    viewModel: RegistrationViewModel
 ) {
     NavHost(
         navController = navHostController,
@@ -48,6 +49,13 @@ fun RegistrationNavGraph(
             EnterPassword(
                 Modifier.padding(paddingValues),
                 navHostController = navHostController,
+                viewModel = viewModel
+            )
+        }
+
+        composable(Screen.LoginCreatePass.route){
+            CreatePassword(
+                Modifier.padding(paddingValues),
                 viewModel = viewModel
             )
         }

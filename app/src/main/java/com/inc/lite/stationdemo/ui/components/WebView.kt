@@ -1,9 +1,16 @@
 package com.inc.lite.stationdemo.ui.components
 
+import android.graphics.Bitmap
+import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 
@@ -12,29 +19,60 @@ fun WebViewComponent(
     modifier: Modifier = Modifier,
     url: String
 ) {
+//    AndroidView(
+//        modifier = modifier.fillMaxWidth(),
+//        factory = { context ->
+//
+//        WebView(context).apply {
+//            settings.apply {
+//                // Enable JavaScript
+//                javaScriptEnabled = true
+//
+////
+////                // Set the user agent string to simulate a desktop browser
+//                userAgentString = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+////
+////                // Adjust other settings as needed
+////                // For example, you can enable built-in zoom controls or set the initial scale
+//                builtInZoomControls = true
+//                displayZoomControls = false
+//                setSupportZoom(true)
+//                useWideViewPort = true
+//                loadWithOverviewMode = true
+//            }
+//            webViewClient = WebViewClient()
+//            loadUrl(url)
+//        }
+//    })
+
+
+    var backEnable by remember { mutableStateOf(false) }
+    var webview: WebView? = null
+
     AndroidView(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
         factory = { context ->
-
-        WebView(context).apply {
-            settings.apply {
-                // Enable JavaScript
-                javaScriptEnabled = true
-
-//
-//                // Set the user agent string to simulate a desktop browser
-                userAgentString = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-//
-//                // Adjust other settings as needed
-//                // For example, you can enable built-in zoom controls or set the initial scale
-                builtInZoomControls = true
-                displayZoomControls = false
-                setSupportZoom(true)
-                useWideViewPort = true
-                loadWithOverviewMode = true
+            WebView(context).apply {
+                layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
+                webViewClient = object : WebViewClient(){
+                    override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                        backEnable = view!!.canGoBack()
+                    }
+                }
+                settings.javaScriptEnabled = true
+                loadUrl(url)
+                webview = this
             }
-            webViewClient = WebViewClient()
-            loadUrl(url)
-        }
-    })
+        }, update = {
+            webview = it
+        })
+    BackHandler(enabled = backEnable) {
+        webview?.goBack()
+    }
+
+
 }
+

@@ -22,24 +22,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.ui.components.BottomBar
 import com.inc.lite.stationdemo.ui.components.StatusBar
 import com.inc.lite.stationdemo.ui.components.TopBar
 import com.inc.lite.stationdemo.ui.components.WebViewComponent
-import com.inc.lite.stationdemo.model.StatusBarUiState
 import com.inc.lite.stationdemo.ui.navigation.Screen
 import com.inc.lite.stationdemo.util.AdjScreenSize
-import com.inc.lite.stationdemo.viewModels.MainViewModel
+import com.inc.lite.stationdemo.viewModels.HomeViewModel
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun WebViewScreen(
     navHostController: NavHostController,
-    viewModel: MainViewModel
+    viewModel: HomeViewModel
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
@@ -48,9 +45,13 @@ fun WebViewScreen(
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
 
-    val animatedWebView by animateIntAsState(targetValue = if (isKeyboardOpen == Keyboard.Opened) size.dp(700).value.toInt() else size.dp(959).value.toInt())
+    val animatedWebView by animateIntAsState(targetValue = if (isKeyboardOpen == Keyboard.Opened) size.dp(700).value.toInt() else size.dp(1000).value.toInt(),
+        label = ""
+    )
 //    val animatedSpacer by animateFloatAsState(targetValue = if (isKeyboardOpen == Keyboard.Opened) 0.273f else 0.001f)
-    val animatedSpacer2 by animateIntAsState(targetValue = if (isKeyboardOpen == Keyboard.Opened) size.dp(350).value.toInt() else 0)
+    val animatedSpacer2 by animateIntAsState(targetValue = if (isKeyboardOpen == Keyboard.Opened) size.dp(350).value.toInt() else 0,
+        label = ""
+    )
 
 
 //    Column(
@@ -67,7 +68,7 @@ fun WebViewScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            Column(Modifier.height(149.dp)) {
+            Column(Modifier.height(size.dp(124))) {
                 StatusBar(uiState = uiState.statusUiState)
                 TopBar(
                     modifier = Modifier,
@@ -92,7 +93,7 @@ fun WebViewScreen(
     ) {
         WebViewComponent(modifier = Modifier
             .height(animatedWebView.dp)
-            .padding(top = 149.dp),url = uiState.webAppInfo.link)
+            .padding(top = size.dp(124)),url = uiState.webAppInfo.link)
     }
 }
 

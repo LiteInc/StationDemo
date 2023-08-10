@@ -25,6 +25,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -36,18 +37,14 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.inc.lite.stationdemo.model.uiState.MainUiState
 import com.inc.lite.stationdemo.ui.theme.MainColor
-import com.inc.lite.stationdemo.ui.theme.StationLiteTheme
 import com.inc.lite.stationdemo.ui.theme.pingFangTCFamily
-import com.inc.lite.stationdemo.viewModels.MainViewModel
+import com.inc.lite.stationdemo.viewModels.HomeViewModel
 import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.activities.AuthActivity
 import com.inc.lite.stationdemo.model.ProgramItem
@@ -63,7 +60,7 @@ import com.inc.lite.stationdemo.util.AdjScreenSize
 
 @Composable
 fun MainScreen(
-    viewModel: MainViewModel,
+    viewModel: HomeViewModel,
     navHostController: NavHostController
 ) {
 
@@ -71,6 +68,10 @@ fun MainScreen(
 
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
+
+    LaunchedEffect(key1 = true){
+        viewModel.initiateNavHost(navHostController)
+    }
 
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -124,7 +125,7 @@ fun BottomBarMain(
     modifier: Modifier = Modifier,
     uiState: MainUiState,
     navHostController: NavHostController,
-    viewModel: MainViewModel
+    viewModel: HomeViewModel
 ) {
 
     val configuration = LocalConfiguration.current
@@ -160,11 +161,13 @@ fun BottomBarMain(
                 modifier = Modifier.weight(0.208f),
                 uiState,
                 onAppsClick = {
-                    navHostController.navigate(Screen.Programs.route)
+                    viewModel.navigateToPrograms()
+//                    navHostController.navigate(Screen.Programs.route)
                 },
                 onCertainAppClick = {
-                    navHostController.navigate(Screen.Programs.route)
-                    viewModel.stopTimer()
+                    viewModel.navigateToPrograms()
+//                    navHostController.navigate(Screen.Programs.route)
+
                 }
 //                onSertainAppClick = {item ->
 //                    navHostController.navigate(Screen.Programs.route)
@@ -300,7 +303,7 @@ fun LeftBottomBox(
 fun CentralBottomBox(
     modifier: Modifier = Modifier,
     uiState: MainUiState,
-    viewModel: MainViewModel
+    viewModel: HomeViewModel
 ) {
 
     val configuration = LocalConfiguration.current
@@ -328,7 +331,7 @@ fun CentralBottomBox(
 
                 Button(
                     onClick = {
-                        viewModel.stopTimer()
+                        viewModel.stopAdsTimer()
                         context.startActivity(intent)
                     },
                     modifier = Modifier

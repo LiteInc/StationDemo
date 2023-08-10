@@ -24,13 +24,13 @@ import com.inc.lite.stationdemo.model.AdsLayouts
 import com.inc.lite.stationdemo.model.AdsType
 import com.inc.lite.stationdemo.ui.theme.MainColor
 import com.inc.lite.stationdemo.ui.theme.pingFangTCFamily
-import com.inc.lite.stationdemo.viewModels.MainViewModel
+import com.inc.lite.stationdemo.viewModels.HomeViewModel
 import com.inc.lite.stationdemo.util.AdjScreenSize
 
 @Composable
 fun AdsFragment(
     modifier: Modifier = Modifier,
-    viewModel: MainViewModel
+    viewModel: HomeViewModel
 ) {
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)

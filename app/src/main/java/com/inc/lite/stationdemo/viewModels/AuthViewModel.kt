@@ -18,8 +18,6 @@ interface AuthViewModel {
     val password: MutableState<String>
 
 //    val isCleanPassword: MutableState<Boolean>
-
-    fun onKeyBoardClick(key: String, typeOfScreen: Screen)
     fun onDropDownItemClick(pair: Pair<String, String>)
     fun addValueByKey(string: String, key: String): String
     fun confirmPhoneNumber(navHostController: NavHostController)

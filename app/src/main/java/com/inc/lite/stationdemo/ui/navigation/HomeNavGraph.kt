@@ -8,12 +8,12 @@ import androidx.navigation.compose.composable
 import com.inc.lite.stationdemo.ui.screens.home.MainScreen
 import com.inc.lite.stationdemo.ui.screens.home.ProgramsScreen
 import com.inc.lite.stationdemo.ui.screens.home.WebViewScreen
-import com.inc.lite.stationdemo.viewModels.MainViewModel
+import com.inc.lite.stationdemo.viewModels.HomeViewModel
 
 @Composable
 fun HomeNavGraph(
     navHostController: NavHostController,
-    viewModel: MainViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
     NavHost(
         navController = navHostController,

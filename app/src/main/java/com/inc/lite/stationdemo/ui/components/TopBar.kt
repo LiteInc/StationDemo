@@ -45,8 +45,6 @@ fun TopBar(
     image: Int? = null
 ) {
     val configuration = LocalConfiguration.current
-    val screenWidth = configuration.screenWidthDp
-    val screenHeight = configuration.screenHeightDp + 72
     val size = AdjScreenSize(configuration)
     Surface(
         modifier = modifier,
@@ -56,8 +54,8 @@ fun TopBar(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height((screenHeight / 16.6).dp)
-                    .padding(horizontal = (screenHeight / 35.5).dp),
+                    .height(size.dp(77))
+                    .padding(horizontal = size.dp(36)),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
@@ -98,22 +96,22 @@ fun TopBar(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height((screenHeight / 16.6).dp),
+                        .height(size.dp(77)),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
                     if(image != null){
                         Image(
                             modifier = Modifier
-                                .height((screenHeight / 37.64).dp)
-                                .padding(end = ((screenHeight / 80)).dp),
+                                .height(size.dp(34))
+                                .padding(end = size.dp(16)),
                             painter = painterResource(id = image),
                             contentDescription = "title image"
                         )
                     }
                     Text(
                         text = title,
-                        fontSize = (screenHeight/40).sp,
+                        fontSize = size.sp(32),
                         textAlign = TextAlign.Center,
                         style = TextStyle(fontFamily = pingFangTCFamily)
                     )

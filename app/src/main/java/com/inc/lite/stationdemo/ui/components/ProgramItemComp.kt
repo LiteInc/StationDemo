@@ -16,19 +16,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import coil.compose.rememberAsyncImagePainter
 import com.inc.lite.stationdemo.model.ProgramItem
 import com.inc.lite.stationdemo.util.AdjScreenSize
-import com.inc.lite.stationdemo.viewModels.MainViewModel
+import com.inc.lite.stationdemo.viewModels.HomeViewModel
 
 
 @Composable
@@ -36,7 +30,7 @@ fun ProgramItemComponent(
     modifier: Modifier = Modifier,
     programItem: ProgramItem = ProgramItem(title = "Google Maps"),
     navHostController: NavHostController,
-    viewModel: MainViewModel
+    viewModel: HomeViewModel
 ) {
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
@@ -48,9 +42,7 @@ fun ProgramItemComponent(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() }
             ) {
-                viewModel.setWebProgram(programItem)
-                viewModel.setProgramForWebView(programItem)
-                navHostController.navigate("webview_screen")
+                viewModel.navigateToWeb(programItem)
             },
         color =  Color.Transparent
     ) {

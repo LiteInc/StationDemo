@@ -110,7 +110,6 @@ fun EnterSMS(
                     Spacer(modifier = Modifier.height(size.dp(40)))
                     DigitKeyboard(
                         onDigitClicked = {key ->
-                            viewModel.onKeyBoardClick(key, Screen.LoginEnterPass)
                             smsCode = viewModel.addValueByKey(smsCode,key)
                         }
                     )
