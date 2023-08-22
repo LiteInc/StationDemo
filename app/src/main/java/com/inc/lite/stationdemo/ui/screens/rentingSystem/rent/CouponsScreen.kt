@@ -21,7 +21,7 @@ import com.inc.lite.stationdemo.viewModels.RentViewModel
 @Composable
 fun CouponsScreen(
     navHostController: NavHostController,
-    viewModel: RentViewModel = hiltViewModel(),
+    viewModel: RentViewModel,
 ) {
 
     val context = LocalContext.current
@@ -34,14 +34,14 @@ fun CouponsScreen(
     Scaffold(
         topBar = {
             Column {
-                StatusBar(uiState = StatusBarUiState())
+                StatusBar(uiState = viewModel.statusBarUiState.value)
                 TopBar(
                     title = stringResource(id = R.string.log_in),
                     onBackArrowClick = {
-                        viewModel.logOut()
+                        viewModel.logOut(context)
                     },
                     onReturnHomeClick = {
-                        context.startActivity(intent)
+                        viewModel.logOut(context)
                     }
                 )
             }

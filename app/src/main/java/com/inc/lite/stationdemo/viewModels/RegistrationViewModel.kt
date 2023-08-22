@@ -21,7 +21,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
-    private val mainRepository: MainRepository
+    private val mainRepository: MainRepository,
+    sharedInfo: SharedInformation
 ) : ViewModel(), AuthViewModel {
     private var _uiState = MutableStateFlow(LoginUiState())
     override val uiState = _uiState
@@ -47,6 +48,9 @@ class RegistrationViewModel @Inject constructor(
     override val isCodeError = _isCodeError
     private var _isShowToast: MutableState<Boolean> = mutableStateOf(false)
     override val isShowToast = _isShowToast
+
+    private val _statusBarUiState = mutableStateOf(sharedInfo.statusBarState)
+    override val statusBarUiState = _statusBarUiState
 
     private var user = mutableStateOf(User())
 

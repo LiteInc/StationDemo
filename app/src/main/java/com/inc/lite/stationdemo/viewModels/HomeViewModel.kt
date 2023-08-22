@@ -31,6 +31,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val mainRepository: MainRepository,
+    private val sharedInformation: SharedInformation,
     private val app: MyApplication
 ): ViewModel() {
     private val _uiState = MutableStateFlow(MainUiState())
@@ -177,15 +178,14 @@ class HomeViewModel @Inject constructor(
         Log.d(TAG, "Started")
         val imei = "86732904546307"
 
+        sharedInformation.setStatusBarState(stationID = app.getStationId(), title = "時光3C內湖體驗門市")
+
         val qrURL = QrCodeLink().getLink(imei)
         _uiState.update {
             it.copy(
                 stationID = imei.toLong(),
                 stationQR = qrURL,
-                statusUiState = StatusBarUiState(
-                    stationID = app.getStationId(),
-                    titleText = "時光3C內湖體驗門市"
-                )
+                statusUiState = sharedInformation.statusBarState
             )
         }
         getAddsRequest()

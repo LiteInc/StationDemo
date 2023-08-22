@@ -7,6 +7,7 @@ import com.inc.lite.stationdemo.repository.AuthRepository
 import com.inc.lite.stationdemo.repository.MainRepoImpl
 import com.inc.lite.stationdemo.repository.MainRepository
 import com.inc.lite.stationdemo.repository.RemoteRepository
+import com.inc.lite.stationdemo.viewModels.SharedInformation
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -82,5 +83,11 @@ object AppModule {
     @Singleton
     fun provideApplication(): MyApplication {
         return MyApplication()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedInformation(): SharedInformation {
+        return SharedInformation()
     }
 }

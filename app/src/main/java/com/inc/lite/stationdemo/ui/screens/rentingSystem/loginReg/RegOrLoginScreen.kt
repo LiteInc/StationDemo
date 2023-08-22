@@ -32,6 +32,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.activities.MainActivity
@@ -44,11 +45,14 @@ import com.inc.lite.stationdemo.ui.theme.MainColor
 import com.inc.lite.stationdemo.ui.theme.mainTextStyle
 import com.inc.lite.stationdemo.ui.theme.pingFangTCFamily
 import com.inc.lite.stationdemo.util.AdjScreenSize
+import com.inc.lite.stationdemo.viewModels.AuthViewModel
+import com.inc.lite.stationdemo.viewModels.LoginViewModel
 
 //@Preview(widthDp = 800, heightDp = 1280)
 @Composable
 fun RegOrLoginScreen(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    viewModel: AuthViewModel = hiltViewModel<LoginViewModel>()
 ) {
 
     val configuration = LocalConfiguration.current
@@ -59,7 +63,7 @@ fun RegOrLoginScreen(
     Scaffold(
         topBar = {
             Column {
-                StatusBar(uiState = StatusBarUiState())
+                StatusBar(uiState = viewModel.statusBarUiState.value)
                 TopBar(
                     returnHomeText = "",
                     title = "",

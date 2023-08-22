@@ -30,7 +30,7 @@ fun RegistrationScreen(
     Scaffold(
         topBar = {
             Column {
-                StatusBar(uiState = StatusBarUiState())
+                StatusBar(uiState = viewModel.statusBarUiState.value)
                 TopBar(
                     title = stringResource(id = R.string.register),
                     onBackArrowClick = {

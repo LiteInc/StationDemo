@@ -2,6 +2,7 @@ package com.inc.lite.stationdemo.viewModels
 
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
+import com.inc.lite.stationdemo.model.StatusBarUiState
 import com.inc.lite.stationdemo.model.uiState.LoginUiState
 import com.inc.lite.stationdemo.ui.navigation.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,6 +17,7 @@ interface AuthViewModel {
     val smsCode: MutableState<String>
     val phoneNumber: MutableState<String>
     val password: MutableState<String>
+    val statusBarUiState: MutableState<StatusBarUiState>
 
 //    val isCleanPassword: MutableState<Boolean>
     fun onDropDownItemClick(pair: Pair<String, String>)

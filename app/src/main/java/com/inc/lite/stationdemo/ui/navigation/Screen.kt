@@ -25,6 +25,7 @@ sealed class Screen(val route: String){
 
     //Rent
     object StartRent: Screen("start_rent_screen")
+    object ChoosePaymentMethod: Screen("choose_payment_method_screen")
 
     object AskCoupons: Screen("ask_coupons")
     object Coupons: Screen("coupons")

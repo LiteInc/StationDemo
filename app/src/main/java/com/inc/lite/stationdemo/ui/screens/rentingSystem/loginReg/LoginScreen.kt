@@ -33,7 +33,7 @@ fun LoginScreen(
     Scaffold(
         topBar = {
             Column {
-                StatusBar(uiState = StatusBarUiState())
+                StatusBar(uiState = viewModel.statusBarUiState.value)
                 TopBar(
                     title = stringResource(id = R.string.log_in),
                     onBackArrowClick = {
