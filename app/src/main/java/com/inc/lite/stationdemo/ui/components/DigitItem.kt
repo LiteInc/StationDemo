@@ -34,17 +34,18 @@ fun DigitItem(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = size.dp(5)),
+//                    .padding(bottom = size.dp(5))
+                ,
                 text = digit,
                 fontSize = size.sp(28),
                 textAlign = TextAlign.Center
             )
-            Spacer(
-                modifier = Modifier
-                    .height(1.dp)
-                    .fillMaxWidth()
-                    .background(LightGrayColor)
-            )
+//            Spacer(
+//                modifier = Modifier
+//                    .height(1.dp)
+//                    .fillMaxWidth()
+//                    .background(LightGrayColor)
+//            )
         }
     }
 }

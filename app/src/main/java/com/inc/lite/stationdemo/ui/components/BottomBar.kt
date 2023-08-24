@@ -98,7 +98,7 @@ fun BottomBar(
                         modifier = Modifier
                             .width(size.dp(226))
                             .padding(end = size.dp(5)),
-                        fontSize = size.sp(16),
+                        fontSize = size.sp(20),
                         style = mainTextStyle
                     )
                     QrElement(

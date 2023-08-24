@@ -4,7 +4,7 @@ import com.inc.lite.stationdemo.util.CountryCodes
 
 data class LoginUiState(
     val isNumberSent: Boolean = false,
-    val countriesList: List<Pair<String, String>> = CountryCodes().countryListChinese,
+    val countriesList: List<Pair<String, String>> = CountryCodes().countryListEng,
     val countyCode: String = "886",
     val countryName: String = "乌克兰",
 //    val countyCode: String = "380",

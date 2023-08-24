@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.inc.lite.stationdemo.ui.screens.rentingSystem.loginReg.EnterPhoneNumber
 import com.inc.lite.stationdemo.ui.screens.rentingSystem.rent.coupons.AskCoupons
+import com.inc.lite.stationdemo.ui.screens.rentingSystem.rent.coupons.ChooseWhichCouponsScreen
 import com.inc.lite.stationdemo.viewModels.LoginViewModel
 import com.inc.lite.stationdemo.viewModels.RentViewModel
 
@@ -29,7 +30,12 @@ fun CouponsNavGraph(
                 paddingValues = paddingValues
             )
         }
-        composable(Screen.ChoseWitchCoupons.route) {}
+        composable(Screen.ChoseWitchCoupons.route) {
+            ChooseWhichCouponsScreen(
+                viewModel = viewModel,
+                paddingValues = paddingValues
+            )
+        }
         composable(Screen.DoYouHaveCoupons.route) {}
     }
 }

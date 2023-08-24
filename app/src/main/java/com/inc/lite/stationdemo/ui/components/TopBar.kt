@@ -78,7 +78,7 @@ fun TopBar(
                     text = returnHomeText,
                     textAlign = TextAlign.Center,
                     color = MainColor,
-                    fontSize = size.sp(18),
+                    fontSize = size.sp(24),
                     modifier = Modifier
                         .clickable(
                             indication = null,
@@ -111,7 +111,7 @@ fun TopBar(
                     }
                     Text(
                         text = title,
-                        fontSize = size.sp(32),
+                        fontSize = size.sp(40),
                         textAlign = TextAlign.Center,
                         style = TextStyle(fontFamily = pingFangTCFamily)
                     )

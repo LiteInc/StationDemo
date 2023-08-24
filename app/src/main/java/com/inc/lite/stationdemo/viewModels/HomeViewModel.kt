@@ -247,6 +247,10 @@ class HomeViewModel @Inject constructor(
         navHost.navigate(Screen.WebView.route)
     }
 
+    fun layout1() {
+//        todo make the layout change
+    }
+
 }
 
 

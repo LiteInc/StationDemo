@@ -30,7 +30,11 @@ fun EnteringDigits(
         horizontalArrangement = Arrangement.Center
     ) {
         Text(
-            modifier = Modifier.padding(end = size.dp(14)),
+            modifier = Modifier
+                .padding(
+                    end = size.dp(14),
+                    bottom = size.dp(4)
+                ),
             text = "+",
             fontSize = size.sp(28),
         )
@@ -51,7 +55,8 @@ fun EnteringDigits(
                                 start = size.dp(20),
                                 end = size.dp(5)
                             ),
-                        digit = number[n].toString()
+                        digit = number[n].toString(),
+                        width = 24
                     )
                 }
                 1,4,7 -> {
@@ -61,7 +66,8 @@ fun EnteringDigits(
                                 start = size.dp(5),
                                 end = size.dp(5)
                             ),
-                        digit = number[n].toString()
+                        digit = number[n].toString(),
+                        width = 24
                     )
                 }
                 2,5,8 -> {
@@ -71,7 +77,8 @@ fun EnteringDigits(
                                 end = size.dp(20),
                                 start = size.dp(5)
                             ),
-                        digit = number[n].toString()
+                        digit = number[n].toString(),
+                        width = 24
                     )
                 }
             }

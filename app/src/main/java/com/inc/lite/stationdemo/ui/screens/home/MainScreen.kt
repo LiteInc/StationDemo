@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -52,8 +53,10 @@ import com.inc.lite.stationdemo.model.SponsoredSurfaceData
 import com.inc.lite.stationdemo.ui.components.QrElement
 import com.inc.lite.stationdemo.ui.components.StatusBar
 import com.inc.lite.stationdemo.ui.navigation.Screen
+import com.inc.lite.stationdemo.ui.theme.Black
 import com.inc.lite.stationdemo.ui.theme.SponsoredBack
 import com.inc.lite.stationdemo.ui.theme.SponsoredFront
+import com.inc.lite.stationdemo.ui.theme.White
 import com.inc.lite.stationdemo.ui.theme.mainTextStyle
 import com.inc.lite.stationdemo.util.AdjScreenSize
 
@@ -81,6 +84,65 @@ fun MainScreen(
 
         ) {
             AdsFragment(viewModel = viewModel)
+            Column(
+                modifier = Modifier.padding(
+                    start = size.dp(20),
+                    top = size.dp(70)
+                )
+            ) {
+                Button(
+                    onClick = {
+                              viewModel.layout1()
+                    },
+                    shape = CircleShape,
+                    colors = ButtonDefaults.buttonColors( containerColor = Black.copy(alpha = 0.3f))
+                ) {
+                    Text(
+                        text = "1",
+                        fontSize = size.sp(32),
+                        color = White
+                    )
+                }
+                Button(
+                    onClick = {
+                              viewModel.layout1()
+                    },
+                    shape = CircleShape,
+                    colors = ButtonDefaults.buttonColors( containerColor = Black.copy(alpha = 0.3f))
+                ) {
+                    Text(
+                        text = "2",
+                        fontSize = size.sp(32),
+                        color = White
+                    )
+                }
+                Button(
+                    onClick = {
+                              viewModel.layout1()
+                    },
+                    shape = CircleShape,
+                    colors = ButtonDefaults.buttonColors( containerColor = Black.copy(alpha = 0.3f))
+                ) {
+                    Text(
+                        text = "3",
+                        fontSize = size.sp(32),
+                        color = White
+                    )
+                }
+                Button(
+                    onClick = {
+                              viewModel.layout1()
+                    },
+                    shape = CircleShape,
+                    colors = ButtonDefaults.buttonColors( containerColor = Black.copy(alpha = 0.3f))
+                ) {
+                    Text(
+                        text = "4",
+                        fontSize = size.sp(32),
+                        color = White
+                    )
+                }
+            }
         }
 
     }
@@ -149,25 +211,20 @@ fun BottomBarMain(
                     .weight(0.32f)
             )
             LineFromImage()
-//            StrippedVerticalLine(Modifier.padding(vertical = size.dp(18)))
             CentralBottomBox(
                 modifier = Modifier.weight(0.472f),
                 uiState = uiState,
                 viewModel
             )
             LineFromImage()
-//            StrippedVerticalLine()
             RightBottomBox(
                 modifier = Modifier.weight(0.208f),
                 uiState,
                 onAppsClick = {
                     viewModel.navigateToPrograms()
-//                    navHostController.navigate(Screen.Programs.route)
                 },
                 onCertainAppClick = {
                     viewModel.navigateToPrograms()
-//                    navHostController.navigate(Screen.Programs.route)
-
                 }
 //                onSertainAppClick = {item ->
 //                    navHostController.navigate(Screen.Programs.route)

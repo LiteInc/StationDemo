@@ -14,8 +14,8 @@ android {
         minSdk 24
         //noinspection ExpiredTargetSdkVersion
         targetSdk 27
-        versionCode 15
-        versionName "2.4"
+        versionCode 16
+        versionName "2.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -133,4 +133,7 @@ dependencies {
 
     //ExpoPlayer
     implementation 'com.google.android.exoplayer:exoplayer:2.18.0'
+
+
+    implementation 'com.googlecode.libphonenumber:libphonenumber:8.13.19'
 }

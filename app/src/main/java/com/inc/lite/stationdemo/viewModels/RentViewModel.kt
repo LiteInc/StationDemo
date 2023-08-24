@@ -11,6 +11,7 @@ import com.inc.lite.stationdemo.model.PaymentType
 import com.inc.lite.stationdemo.model.uiState.ProfileUiState
 import com.inc.lite.stationdemo.model.uiState.RentUiState
 import com.inc.lite.stationdemo.repository.MainRepository
+import com.inc.lite.stationdemo.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -54,7 +55,7 @@ class RentViewModel @Inject constructor(
 
     }
     fun useCoupons(){
-
+        navHostController.navigate(Screen.ChoseWitchCoupons.route)
     }
 
     fun onPaymentConfirm() {
