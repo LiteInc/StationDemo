@@ -22,7 +22,7 @@ import com.inc.lite.stationdemo.util.AdjScreenSize
 fun DigitItem(
     modifier: Modifier = Modifier,
     digit: String,
-    width: Int = 36
+    width: Int = 26
 ){
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
@@ -34,18 +34,18 @@ fun DigitItem(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-//                    .padding(bottom = size.dp(5))
+                    .padding(bottom = size.dp(5))
                 ,
                 text = digit,
-                fontSize = size.sp(28),
+                fontSize = size.sp(36),
                 textAlign = TextAlign.Center
             )
-//            Spacer(
-//                modifier = Modifier
-//                    .height(1.dp)
-//                    .fillMaxWidth()
-//                    .background(LightGrayColor)
-//            )
+            Spacer(
+                modifier = Modifier
+                    .height(1.dp)
+                    .fillMaxWidth()
+                    .background(LightGrayColor)
+            )
         }
     }
 }

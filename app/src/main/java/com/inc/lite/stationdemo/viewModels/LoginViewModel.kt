@@ -6,12 +6,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.inc.lite.stationdemo.MyApplication
 import com.inc.lite.stationdemo.model.User
 import com.inc.lite.stationdemo.model.UserUpdate
 import com.inc.lite.stationdemo.model.uiState.LoginUiState
 import com.inc.lite.stationdemo.ui.navigation.Screen
 import com.inc.lite.stationdemo.repository.MainRepository
+import com.inc.lite.stationdemo.util.CountryPhones
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -19,7 +21,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val mainRepository: MainRepository,
@@ -36,16 +37,15 @@ class LoginViewModel @Inject constructor(
 
     private val spaces4 = "    "
     private val spaces6 = "      "
-    private val spaces9 = "         "
+
 
     private var _isLoading: MutableState<Boolean> = mutableStateOf(false)
     override val isLoading: MutableState<Boolean> = _isLoading
 
     private var _password: MutableState<String> = mutableStateOf(spaces6)
     private var _smsCode: MutableState<String> = mutableStateOf(spaces4)
-    private var _phoneNumber: MutableState<String> = mutableStateOf(spaces9)
+
     override val smsCode: MutableState<String> = _smsCode
-    override val phoneNumber: MutableState<String> = _phoneNumber
     override val password: MutableState<String> = _password
     private var _isCodeError: MutableState<Boolean> = mutableStateOf(false)
     override val isCodeError = _isCodeError
@@ -65,6 +65,17 @@ class LoginViewModel @Inject constructor(
 
     private var loginedPage = Screen.Coupons.route
 
+    private var countryPhones: CountryPhones = uiState.value.county
+
+    private val phoneNumberUtil = PhoneNumberUtil.getInstance()
+
+    private val asYouTypeFormatter = phoneNumberUtil.getAsYouTypeFormatter(countryPhones.code)
+    override val phoneNumber: MutableState<String> = mutableStateOf(countryPhones.phoneCode)
+
+
+    init {
+        loadCountryCode()
+    }
 
     fun cleanUser(){
         user.value =  User()
@@ -119,11 +130,17 @@ class LoginViewModel @Inject constructor(
                 }else{
                     Log.e(TAG, "StartVerification error: $message")
                     _isLoading.value = false
-//                    _isCodeError.value = true
-                    _phoneNumber.value = spaces9
+                    clearPhoneNumber()
+                    loadCountryCode()
                 }
             }
         }
+    }
+
+    private fun clearPhoneNumber() {
+        phoneNumber.value = ""
+        asYouTypeFormatter.clear()
+
     }
 
     private fun confirmVerification(){
@@ -192,8 +209,8 @@ class LoginViewModel @Inject constructor(
     }
     override fun confirmPhoneNumber(navHostController: NavHostController) {
         navigationHost = navHostController
-        fullPhoneNumber =  "+" + uiState.value.countyCode + phoneNumber.value
-        Log.d(TAG, "Phone number: ${phoneNumber.value}")
+        fullPhoneNumber = phoneNumber.value.replace(" ","")
+        Log.d(TAG, "Phone number: ${fullPhoneNumber}")
         _isLoading.value = true
         startVerification()
     }
@@ -218,14 +235,18 @@ class LoginViewModel @Inject constructor(
     }
 
 
-
-    override fun onDropDownItemClick(pair: Pair<String, String>){
-        _uiState.update {
-            uiState.value.copy(
-                countryName = pair.first,
-                countyCode = pair.second.drop(1)
-            )
+    override fun onDropDownItemClick(countryPhonesItem: CountryPhones){
+        countryPhones = countryPhonesItem
+        loadCountryCode()
+        phoneNumber.value = countryPhones.phoneCode
+        uiState.update {
+           it.copy(
+               county = countryPhonesItem
+           )
         }
+
+        Log.d(TAG, "Country input: ${countryPhonesItem.name}")
+        Log.d(TAG, "Country updated: ${uiState.value.county.name}")
     }
 
     override fun confirmEmail(email: String){
@@ -297,5 +318,36 @@ class LoginViewModel @Inject constructor(
             }
             return result
         }
+    }
+    private fun loadCountryCode(){
+        asYouTypeFormatter.clear()
+        countryPhones.phoneCode.forEach {
+            phoneNumber.value = asYouTypeFormatter.inputDigit(it)
+        }
+    }
+    override fun inputNumber(key: String) {
+
+        if(key != "d" && key != " "){
+            phoneNumber.value = asYouTypeFormatter.inputDigit(key.toCharArray().first())
+            Log.d(TAG, "PhNumber = ${phoneNumber.value}")
+
+        }else if (key == "d"){
+            var buffer = ""
+            asYouTypeFormatter.clear()
+            val charNumber = phoneNumber.value.toCharArray()
+            if(charNumber[charNumber.size-2] == ' '){
+                phoneNumber.value = phoneNumber.value.dropLast(2)
+            }else{
+                phoneNumber.value = phoneNumber.value.dropLast(1)
+            }
+            phoneNumber.value.forEach {
+                buffer = asYouTypeFormatter.inputDigit(it)
+            }
+            phoneNumber.value = buffer
+            Log.d(TAG, "PhNumber = ${phoneNumber.value}")
+            Log.d(TAG, "buffer = $buffer")
+
+        }
+
     }
 }

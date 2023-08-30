@@ -1,6 +1,9 @@
 package com.inc.lite.stationdemo.activities
 
+import android.graphics.Rect
 import android.os.Bundle
+import android.view.View
+import android.view.ViewTreeObserver
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,6 +36,24 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        FullScreenMode().hideSystemUI(window)
+        val rootView = window.decorView
+        val listener = ViewTreeObserver.OnGlobalLayoutListener {
+            val rect = Rect()
+            rootView.getWindowVisibleDisplayFrame(rect)
+            val screenHeight = rootView.height
+            val keypadHeight = screenHeight - rect.bottom
+
+            if (keypadHeight > screenHeight * 0.15) {
+                // Keyboard is open
+            } else {
+                rootView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                FullScreenMode().hideSystemUI(window)
+                // Keyboard is closed
+                // Here you can hide the navigation bar if needed
+            }
+        }
+        rootView.viewTreeObserver.addOnGlobalLayoutListener(listener)
         FullScreenMode().hideSystemUI(window)
     }
 }

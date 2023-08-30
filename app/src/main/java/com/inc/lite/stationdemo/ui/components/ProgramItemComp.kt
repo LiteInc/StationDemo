@@ -69,7 +69,7 @@ fun ProgramItemComponent(
 //            )
             Text(
                 text = programItem.title,
-                fontSize = size.sp(24),
+                fontSize = size.sp(32),
                 fontWeight = FontWeight.Light
             )
         }

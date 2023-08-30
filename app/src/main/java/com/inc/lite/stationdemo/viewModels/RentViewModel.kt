@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.inc.lite.stationdemo.activities.MainActivity
 import com.inc.lite.stationdemo.model.PaymentType
@@ -13,8 +14,11 @@ import com.inc.lite.stationdemo.model.uiState.RentUiState
 import com.inc.lite.stationdemo.repository.MainRepository
 import com.inc.lite.stationdemo.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,6 +43,17 @@ class RentViewModel @Inject constructor(
     private val _statusBarUiState = mutableStateOf(sharedInfo.statusBarState)
     val statusBarUiState = _statusBarUiState
 
+    private val _showStationSlotsInfo = mutableStateOf(false)
+    val showStationSlotsInfo  = _showStationSlotsInfo
+
+    private var time = 20
+    private val _rentalTimer = mutableStateOf(time)
+    val rentalTimer = _rentalTimer
+
+    lateinit var context: Context
+
+
+
 
     fun logOut(context: Context){
         val intent = Intent(context, MainActivity::class.java)
@@ -52,7 +67,11 @@ class RentViewModel @Inject constructor(
     }
 
     fun skipCoupons(){
+        startRental()
+    }
 
+    fun startRental(){
+        mainNavHost.navigate(Screen.StartRent.route)
     }
     fun useCoupons(){
         navHostController.navigate(Screen.ChoseWitchCoupons.route)
@@ -72,6 +91,25 @@ class RentViewModel @Inject constructor(
 
     fun onLinePaySelect() {
         _selectedPayment.value = PaymentType.LinePay
+    }
+
+    fun onFinishRent(){
+        time = 1
+    }
+    fun popUpPowerBank(context: Context){
+        viewModelScope.launch(Dispatchers.IO) {
+            delay(2000)
+            _showStationSlotsInfo.value = true
+            while (time > 1 ){
+                delay( 1000)
+                time -= 1
+                _rentalTimer.value = time
+            }
+            logOut(context)
+//            viewModelScope.launch(Dispatchers.Main){
+//                mainNavHost.navigate(Screen.RegOrLogin.route)
+//            }
+        }
     }
 
 }

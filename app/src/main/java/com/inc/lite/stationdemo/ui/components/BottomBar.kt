@@ -96,7 +96,7 @@ fun BottomBar(
                     Text(
                         text = stringResource(id = R.string.bottom_info),
                         modifier = Modifier
-                            .width(size.dp(226))
+                            .width(size.dp(235))
                             .padding(end = size.dp(5)),
                         fontSize = size.sp(20),
                         style = mainTextStyle

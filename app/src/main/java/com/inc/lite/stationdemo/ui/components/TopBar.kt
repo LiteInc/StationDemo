@@ -78,7 +78,7 @@ fun TopBar(
                     text = returnHomeText,
                     textAlign = TextAlign.Center,
                     color = MainColor,
-                    fontSize = size.sp(24),
+                    fontSize = size.sp(32),
                     modifier = Modifier
                         .clickable(
                             indication = null,

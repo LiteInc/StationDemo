@@ -3,7 +3,11 @@ package com.inc.lite.stationdemo
 import com.inc.lite.stationdemo.model.AdsItem
 import com.inc.lite.stationdemo.model.AdsLayouts
 import com.inc.lite.stationdemo.model.AdsType
+import com.inc.lite.stationdemo.model.uiState.LoginUiState
+import com.inc.lite.stationdemo.repository.MainRepoImpl
+import com.inc.lite.stationdemo.repository.MainRepository
 import com.inc.lite.stationdemo.util.AdsTimer
+import com.inc.lite.stationdemo.viewModels.LoginViewModel
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -38,4 +42,7 @@ class ExampleUnitTest {
 
         println( "\n" + adsTimer.listOfAds  + "\n")
     }
+
+
+
 }

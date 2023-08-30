@@ -105,7 +105,7 @@ fun MainScreen(
                 }
                 Button(
                     onClick = {
-                              viewModel.layout1()
+                              viewModel.layout2()
                     },
                     shape = CircleShape,
                     colors = ButtonDefaults.buttonColors( containerColor = Black.copy(alpha = 0.3f))
@@ -118,7 +118,7 @@ fun MainScreen(
                 }
                 Button(
                     onClick = {
-                              viewModel.layout1()
+                              viewModel.layout3()
                     },
                     shape = CircleShape,
                     colors = ButtonDefaults.buttonColors( containerColor = Black.copy(alpha = 0.3f))
@@ -131,7 +131,7 @@ fun MainScreen(
                 }
                 Button(
                     onClick = {
-                              viewModel.layout1()
+                              viewModel.layout4()
                     },
                     shape = CircleShape,
                     colors = ButtonDefaults.buttonColors( containerColor = Black.copy(alpha = 0.3f))

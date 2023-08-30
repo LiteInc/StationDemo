@@ -4,7 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
 import com.inc.lite.stationdemo.model.StatusBarUiState
 import com.inc.lite.stationdemo.model.uiState.LoginUiState
-import com.inc.lite.stationdemo.ui.navigation.Screen
+import com.inc.lite.stationdemo.util.CountryPhones
 import kotlinx.coroutines.flow.MutableStateFlow
 
 interface AuthViewModel {
@@ -15,13 +15,15 @@ interface AuthViewModel {
     val isShowToast: MutableState<Boolean>
 
     val smsCode: MutableState<String>
-    val phoneNumber: MutableState<String>
+//    val phoneNumber: MutableState<String>
     val password: MutableState<String>
     val statusBarUiState: MutableState<StatusBarUiState>
+    val phoneNumber: MutableState<String>
 
 //    val isCleanPassword: MutableState<Boolean>
-    fun onDropDownItemClick(pair: Pair<String, String>)
+    fun onDropDownItemClick(code: CountryPhones)
     fun addValueByKey(string: String, key: String): String
+    fun inputNumber(key: String)
     fun confirmPhoneNumber(navHostController: NavHostController)
     fun confirmEmail(email: String)
     fun confirmNickname(nickname: String)

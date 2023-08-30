@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -27,6 +28,7 @@ import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.activities.MainActivity
 import com.inc.lite.stationdemo.model.StatusBarUiState
 import com.inc.lite.stationdemo.ui.components.BottomBar
+import com.inc.lite.stationdemo.ui.components.StationPopUpDialogWindow
 import com.inc.lite.stationdemo.ui.components.StatusBar
 import com.inc.lite.stationdemo.ui.components.TopBar
 import com.inc.lite.stationdemo.ui.navigation.LoginNavGraph
@@ -46,16 +48,20 @@ fun StartRentScreen(
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
     
+    LaunchedEffect(true){
+        viewModel.popUpPowerBank(context)
+    }
+    
     Scaffold(
         topBar = {
             Column {
                 StatusBar(uiState = viewModel.statusBarUiState.value)
-                TopBar(
-                    returnHomeText = stringResource(id = R.string.logout),
-                    onReturnHomeClick = {
-                        viewModel.logOut(context)
-                    }
-                )
+//                TopBar(
+//                    returnHomeText = stringResource(id = R.string.logout),
+//                    onReturnHomeClick = {
+//                        viewModel.logOut(context)
+//                    }
+//                )
             }
         },
         bottomBar = {
@@ -88,6 +94,7 @@ fun StartRentScreen(
                     .height(size.dp(129))
             )
         }
+        StationPopUpDialogWindow(modifier = Modifier.padding(it),viewModel )
 
     }
 }

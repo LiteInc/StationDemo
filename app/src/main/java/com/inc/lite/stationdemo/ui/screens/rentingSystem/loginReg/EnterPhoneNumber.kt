@@ -37,9 +37,10 @@ import androidx.navigation.NavHostController
 import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.ui.components.DigitKeyboard
 import com.inc.lite.stationdemo.ui.components.DropDownList
-import com.inc.lite.stationdemo.ui.components.EnteringDigits
 import com.inc.lite.stationdemo.ui.components.LoadingIndicator
-import com.inc.lite.stationdemo.ui.navigation.Screen
+import com.inc.lite.stationdemo.ui.screens.home.Keyboard
+import com.inc.lite.stationdemo.ui.screens.home.keyboardAsState
+import com.inc.lite.stationdemo.ui.theme.Black
 import com.inc.lite.stationdemo.ui.theme.LightGrayColor
 import com.inc.lite.stationdemo.ui.theme.MainColor
 import com.inc.lite.stationdemo.ui.theme.mainTextStyle
@@ -63,7 +64,7 @@ fun EnterPhoneNumber(
     var countriesMenu by remember {
         mutableStateOf(false)
     }
-    var phoneNumber by viewModel.phoneNumber
+
     var isButtonEnabled by remember { mutableStateOf(false) }
 
     viewModel.passMainNavHost(mainNavHost)
@@ -71,9 +72,8 @@ fun EnterPhoneNumber(
     Surface(
         modifier
             .fillMaxSize()
-            .padding(
-                top = size.dp(60)
-            )
+            .padding(top = size.dp(60))
+
     ) {
         Column(
             Modifier.fillMaxSize(),
@@ -84,8 +84,8 @@ fun EnterPhoneNumber(
                 Text(
                     modifier = Modifier,
                     text = stringResource(id = R.string.enter_your_phone_number),
-                    color = LightGrayColor,
-                    fontSize = size.sp(28),
+                    color = Black,
+                    fontSize = size.sp(36),
                     textAlign = TextAlign.Center
                 )
                 Row(
@@ -98,32 +98,33 @@ fun EnterPhoneNumber(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = uiState.countryName,
-                        fontSize = size.sp(28),
-                        style = mainTextStyle
+                        text = uiState.county.name,
+                        fontSize = size.sp(36),
+                        style = mainTextStyle,
+                        color = LightGrayColor
                     )
                     Image(
                         modifier = Modifier
-                            .padding(start = size.dp(16))
-                            .size(size.dp(24)),
+                            .padding(start = size.dp(8))
+                            .size(size.dp(28)),
                         painter = painterResource(id = R.drawable.down_arrow_small),
                         contentDescription = ""
                     )
 
                 }
 
-                EnteringDigits(
-                    Modifier.padding(top = size.dp(60)),
-                    countyCode = uiState.countyCode,
-                    number = phoneNumber.toCharArray()
+                Text(
+                    modifier = Modifier.padding(top = size.dp(60)),
+                    text = viewModel.phoneNumber.value,
+                    fontSize = size.sp(36)
                 )
 
                 Box(Modifier.padding(top = size.dp(80)), contentAlignment = Alignment.Center){
                     if (!viewModel.isLoading.value){
-                        isButtonEnabled = viewModel.phoneNumber.value.toCharArray().last() != ' '
+                        isButtonEnabled = viewModel.phoneNumber.value.length >= 11
                         Button(
                             modifier = Modifier
-                                .height(size.dp(80))
+                                .height(size.dp(90))
                                 .width(size.dp(182)),
                             enabled = isButtonEnabled,
                             onClick = {
@@ -137,7 +138,7 @@ fun EnterPhoneNumber(
                             Text(
                                 modifier = Modifier,
                                 text = stringResource(id = R.string.confirm),
-                                fontSize = size.sp(24),
+                                fontSize = size.sp(32),
                                 style = mainTextStyle
                             )
                         }
@@ -148,7 +149,7 @@ fun EnterPhoneNumber(
             }
             DigitKeyboard(
                 onDigitClicked = {key ->
-                    phoneNumber = viewModel.addValueByKey(phoneNumber,key)
+                    viewModel.inputNumber(key)
                 }
             )
         }
@@ -185,6 +186,7 @@ fun EnterPhoneNumber(
             }
         )
     }
+
 
 }
 

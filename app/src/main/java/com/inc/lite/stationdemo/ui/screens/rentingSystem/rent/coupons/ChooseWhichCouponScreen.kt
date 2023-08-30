@@ -15,6 +15,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -24,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.ui.components.CouponItem
 import com.inc.lite.stationdemo.ui.components.CouponItemData
+import com.inc.lite.stationdemo.ui.components.CouponManualItem
 import com.inc.lite.stationdemo.ui.theme.MainColor
 import com.inc.lite.stationdemo.ui.theme.mainTextStyle
 import com.inc.lite.stationdemo.util.AdjScreenSize
@@ -47,15 +52,65 @@ fun ChooseWhichCouponsScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(paddingValues)
     ) {
+
+        var isSelected1 by remember { mutableStateOf(false) }
+        var isSelected2 by remember { mutableStateOf(false) }
+        var isSelected3 by remember { mutableStateOf(false) }
+
         LazyColumn(
-            modifier = Modifier.fillMaxWidth().weight(1f),
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
             verticalArrangement = Arrangement.Center
         ){
-            items(couponItemsList){
+            item {
                 CouponItem(
-                    it,
-                    isSelected = false,
-                    onClick = {}
+                    couponItemsList[0],
+                    isSelected1,
+                    onClick = { couponItemData ->
+                        if(!isSelected1){
+                            isSelected1 = true
+                            isSelected2 = false
+                            isSelected3 = false
+                        }else{
+                            isSelected1 = false
+                            isSelected2 = false
+                            isSelected3 = false
+                        }
+                    }
+                )
+            }
+            item {
+                CouponItem(
+                    couponItemsList[1],
+                    isSelected2,
+                    onClick = { couponItemData ->
+                        if(!isSelected2){
+                            isSelected1 = false
+                            isSelected2 = true
+                            isSelected3 = false
+                        }else{
+                            isSelected1 = false
+                            isSelected2 = false
+                            isSelected3 = false
+                        }
+                    }
+                )
+            }
+            item {
+                CouponManualItem(
+                    isSelected3,
+                    onClick = {s, b ->
+                        if(!isSelected3){
+                            isSelected1 = false
+                            isSelected2 = false
+                            isSelected3 = true
+                        }else{
+                            isSelected1 = false
+                            isSelected2 = false
+                            isSelected3 = false
+                        }
+                    }
                 )
             }
         }
@@ -65,7 +120,7 @@ fun ChooseWhichCouponsScreen(
                 .height(size.dp(90))
                 .width(size.dp(198)),
             onClick = {
-
+                viewModel.startRental()
             },
             colors = ButtonDefaults.buttonColors(containerColor = MainColor),
             elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)

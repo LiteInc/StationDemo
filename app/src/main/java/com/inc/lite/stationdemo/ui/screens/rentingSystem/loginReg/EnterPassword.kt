@@ -95,7 +95,7 @@ fun EnterPassword(
                                 Text(
                                     modifier = Modifier.padding(horizontal = size.dp(55)),
                                     text = stringResource(id = R.string.log_in),
-                                    fontSize = size.sp(24)
+                                    fontSize = size.sp(32)
                                 )
                             }
 
@@ -122,7 +122,7 @@ fun EnterPassword(
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.enter_your_password),
-                    fontSize = size.sp(28),
+                    fontSize = size.sp(36),
                     color = LightGrayColor,
                     textAlign = TextAlign.Center
                 )
@@ -195,7 +195,7 @@ fun InfoPassword(
         Text(
             text = message,
             modifier = Modifier,
-            fontSize = size.sp(24),
+            fontSize = size.sp(32),
             color = RedInfoColor,
             style = mainTextStyle
         )

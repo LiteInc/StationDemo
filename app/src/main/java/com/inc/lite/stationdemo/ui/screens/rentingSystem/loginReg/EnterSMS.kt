@@ -100,7 +100,7 @@ fun EnterSMS(
                                 Text(
                                     modifier = Modifier.padding(horizontal = size.dp(55)),
                                     text = stringResource(id = R.string.confirm),
-                                    fontSize = size.sp(24)
+                                    fontSize = size.sp(32)
                                 )
                             }
 
@@ -127,7 +127,7 @@ fun EnterSMS(
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.enter_verification_code),
-                    fontSize = size.sp(28),
+                    fontSize = size.sp(36),
                     color = LightGrayColor,
                     textAlign = TextAlign.Center,
                     style = mainTextStyle
@@ -206,7 +206,7 @@ fun InfoRow(
             modifier = Modifier
                 .width(size.dp(350))
                 .height(size.dp(66)),
-            fontSize = size.sp(24),
+            fontSize = size.sp(32),
             color = RedInfoColor,
             style = mainTextStyle
         )

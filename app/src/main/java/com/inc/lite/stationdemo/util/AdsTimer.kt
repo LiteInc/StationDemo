@@ -7,7 +7,7 @@ import com.inc.lite.stationdemo.model.AdsType
 import kotlinx.coroutines.delay
 
 class AdsTimer private constructor(
-    val layoutType: AdsLayouts,
+    var layoutType: AdsLayouts,
     var listOfAds: List<AdsItem>,
 ) {
     private var isTimer = false
@@ -40,11 +40,19 @@ class AdsTimer private constructor(
         isTimer = false
     }
 
+    fun updateLayoutType(newLayout: AdsLayouts){
+        layoutType = newLayout
+    }
+
 
     suspend fun showAdsFlow(
         actionOnPlay: (AdsItem)-> Unit
     ){
         Log.d(TAG,"Start the ads flow")
+
+
+
+
         isTimer = true
         while (isTimer){
             for(n in listOfAds.indices){

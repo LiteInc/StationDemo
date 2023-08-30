@@ -67,7 +67,7 @@ fun EnterText(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = title,
-                fontSize = size.sp(28),
+                fontSize = size.sp(36),
                 color = LightGrayColor,
                 textAlign = TextAlign.Center,
                 style = mainTextStyle
@@ -88,7 +88,7 @@ fun EnterText(
                     focusedIndicatorColor = MainColor,
                     unfocusedIndicatorColor = LightGrayColor,
                     focusedTextColor = Color.Black,
-
+                    cursorColor = MainColor
                 ),
                 textStyle = TextStyle(
                     fontSize = size.sp(28),
@@ -110,7 +110,7 @@ fun EnterText(
                 Text(
                     modifier = Modifier.padding(horizontal = size.dp(55)),
                     text = stringResource(id = R.string.next),
-                    fontSize = size.sp(24),
+                    fontSize = size.sp(32),
                     style = mainTextStyle
                 )
             }

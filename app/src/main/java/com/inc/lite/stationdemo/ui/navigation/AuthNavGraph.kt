@@ -1,4 +1,4 @@
-package com.inc.lite.stationdemo.ui.navigation
+ package com.inc.lite.stationdemo.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -32,8 +32,9 @@ fun AuthNavGraph(
             LoginScreen(navHostController = navHostController)
         }
         composable(Screen.Registration.route){
-            StartRentScreen(navHostController = navHostController, viewModel = rentViewModel)
-//            RegistrationScreen(navHostController = navHostController)
+//            CouponsScreen(navHostController = navHostController, viewModel = rentViewModel)
+//            StartRentScreen(navHostController = navHostController, viewModel = rentViewModel)
+            RegistrationScreen(navHostController = navHostController)
         }
 //        composable(Screen.ProfilePage.route){
 //            ProfileScreen(navHostController = navHostController)

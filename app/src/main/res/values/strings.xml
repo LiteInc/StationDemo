@@ -15,7 +15,7 @@
     <string name="next_step">下一步</string>
     <string name="lite_wallet">錢包</string>
     <string name="logout">登出</string>
-    <string name="bottom_info">就算他人正陶醉於螢幕世界，你\\n只需掃描神秘的QR碼，即刻啟\\n動借電之旅！</string>
+    <string name="bottom_info">就算他人正陶醉於螢幕世\n界，你只需掃描神秘的QR\n碼，即刻啟動借電之旅！</string>
     <string name="do_you_want_to_use_coupon">Do you want to use coupon?</string>
     <string name="yes_login">快速登入</string>
     <string name="no_register">首次註冊</string>
@@ -34,4 +34,8 @@
     <string name="let_you_charge_up_now">馬上讓你充上電...</string>
     <string name="expiration_date">使用截止:</string>
     <string name="apply">Apply</string>
+    <string name="enter_manually_coupon">Enter manually coupon</string>
+    <string name="logout_after_n_sec">結束 (%s 秒)</string>
+    <string name="cancel">取消</string>
+    <string name="search">搜尋</string>
 </resources>

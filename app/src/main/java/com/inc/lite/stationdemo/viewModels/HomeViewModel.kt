@@ -155,6 +155,8 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+
     private fun initAdsTimer(){
         adsTimer = AdsTimer.AdsTimerBuilder()
             .layout(AdsLayouts.SingleImage)
@@ -188,9 +190,11 @@ class HomeViewModel @Inject constructor(
                 statusUiState = sharedInformation.statusBarState
             )
         }
-        getAddsRequest()
+//        getAddsRequest()
         initAdsTimer()
-        getProgramsRequest()
+        layout1()
+//        getProgramsRequest()
+
     }
     fun startTimer(){
         isTimerOn = true
@@ -248,7 +252,95 @@ class HomeViewModel @Inject constructor(
     }
 
     fun layout1() {
-//        todo make the layout change
+        adsIsLoaded.value = false
+
+        adsTimer.updateListOfAds(
+            listOf(
+                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000)
+            )
+        )
+        _uiState.update {
+            it.copy(
+                ads =
+                AdsUI().copy(
+                    adsLayout = AdsLayouts.SingleImage,
+                    adsList = listOf(
+                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
+                    )
+                )
+            )
+        }
+    }
+
+    fun layout2() {
+        adsTimer.updateListOfAds(
+            listOf(
+                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692868788/zetywm808lwif21m38ba.png",AdsType.Image, 5000),
+                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692868788/zetywm808lwif21m38ba.png",AdsType.Image, 5000),
+            )
+        )
+        _uiState.update {
+            it.copy(
+                ads =
+                AdsUI().copy(
+                    adsLayout = AdsLayouts.TwoImage,
+                    adsList = listOf(
+                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692868788/zetywm808lwif21m38ba.png",AdsType.Image, 5000),
+                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692868788/zetywm808lwif21m38ba.png",AdsType.Image, 5000),
+                    )
+                )
+            )
+        }
+
+    }
+    fun layout3() {
+        adsTimer.updateListOfAds(
+            listOf(
+                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692868788/zetywm808lwif21m38ba.png",AdsType.Image, 5000),
+                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
+                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
+            )
+        )
+        _uiState.update {
+            it.copy(
+                ads =
+                AdsUI().copy(
+                    adsLayout = AdsLayouts.ThreeImage,
+                    adsList = listOf(
+                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692868788/zetywm808lwif21m38ba.png",AdsType.Image, 5000),
+                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
+                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
+                    )
+                )
+            )
+        }
+    }
+    fun layout4() {
+        adsIsLoaded.value = false
+
+        adsTimer.updateListOfAds(
+            listOf(
+                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
+                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
+                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
+                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
+            )
+        )
+
+        _uiState.update {
+            it.copy(
+                ads =
+                AdsUI().copy(
+                    adsLayout = AdsLayouts.FourImage,
+                    adsList = listOf(
+                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
+                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
+                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
+                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
+                    )
+                )
+            )
+        }
     }
 
 }

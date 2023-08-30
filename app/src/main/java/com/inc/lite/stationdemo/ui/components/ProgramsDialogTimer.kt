@@ -62,7 +62,7 @@ fun ProgDialogTimer(
                 Text(
                     text = stringResource(id = R.string.are_you_here),
                     modifier = Modifier,
-                    fontSize = size.sp(32)
+                    fontSize = size.sp(40)
                 )
                 Spacer(modifier = Modifier.height(size.dp(24)))
                 Text(
@@ -71,7 +71,7 @@ fun ProgDialogTimer(
                         withStyle(
                             style = SpanStyle(
                                 color = LittleTextLight,
-                                fontSize = size.sp(18),
+                                fontSize = size.sp(24),
                                 fontWeight = FontWeight.Normal,
                                 fontFamily = pingFangTCFamily
                             )
@@ -81,7 +81,7 @@ fun ProgDialogTimer(
                         withStyle(
                             style = SpanStyle(
                                 color = MainColor,
-                                fontSize = size.sp(20),
+                                fontSize = size.sp(28),
                                 fontWeight = FontWeight.Bold
                             )
                         ){
@@ -90,7 +90,7 @@ fun ProgDialogTimer(
                         withStyle(
                             style = SpanStyle(
                                 color = LittleTextLight,
-                                fontSize = size.sp(18),
+                                fontSize = size.sp(24),
                                 fontWeight = FontWeight.Normal,
                                 fontFamily = pingFangTCFamily
                             )
@@ -108,7 +108,7 @@ fun ProgDialogTimer(
                     Button(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .weight(1.38f),
+                            .weight(1.5f),
                         onClick = {
                             onContinueClick()
                         },
@@ -117,7 +117,7 @@ fun ProgDialogTimer(
                     ) {
                         Text(
                             text = stringResource(id = R.string.text_continue),
-                            fontSize = size.sp(24),
+                            fontSize = size.sp(32),
                             style = mainTextStyle,
                             fontWeight = FontWeight.Bold
                         )
@@ -139,7 +139,7 @@ fun ProgDialogTimer(
                     ) {
                         Text(
                             text = stringResource(id = R.string.exit),
-                            fontSize = size.sp(24),
+                            fontSize = size.sp(32),
                             fontWeight = FontWeight.Light,
                             style = mainTextStyle
                         )
