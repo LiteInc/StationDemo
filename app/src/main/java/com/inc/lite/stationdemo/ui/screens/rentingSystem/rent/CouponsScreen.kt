@@ -36,9 +36,9 @@ fun CouponsScreen(
             Column {
                 StatusBar(uiState = viewModel.statusBarUiState.value)
                 TopBar(
-                    title = stringResource(id = R.string.log_in),
+                    title = stringResource(id = viewModel.topTitle.value),
                     onBackArrowClick = {
-                        viewModel.logOut(context)
+                        viewModel.navigateBack()
                     },
                     onReturnHomeClick = {
                         viewModel.logOut(context)

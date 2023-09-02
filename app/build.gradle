@@ -14,8 +14,8 @@ android {
         minSdk 24
         //noinspection ExpiredTargetSdkVersion
         targetSdk 27
-        versionCode 16
-        versionName "2.5"
+        versionCode 17
+        versionName "2.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -44,15 +44,19 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    kotlin {
-        jvmToolchain {
-            languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_1_8.majorVersion))
-        }
-        // Or shorter:
-        jvmToolchain(8)
-        // For example:
-        jvmToolchain(8)
+//    kotlin {
+//        jvmToolchain {
+//            languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_1_8.majorVersion))
+//        }
+//        // Or shorter:
+//        jvmToolchain(8)
+//        // For example:
+//        jvmToolchain(8)
+//    }
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions.jvmTarget = "1.8"
     }
+
     buildFeatures {
         compose true
     }

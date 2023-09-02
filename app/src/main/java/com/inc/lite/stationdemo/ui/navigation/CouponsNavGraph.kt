@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import com.inc.lite.stationdemo.ui.screens.rentingSystem.loginReg.EnterPhoneNumber
 import com.inc.lite.stationdemo.ui.screens.rentingSystem.rent.coupons.AskCoupons
 import com.inc.lite.stationdemo.ui.screens.rentingSystem.rent.coupons.ChooseWhichCouponsScreen
+import com.inc.lite.stationdemo.ui.screens.rentingSystem.rent.coupons.EnterManuallyCoupons
 import com.inc.lite.stationdemo.viewModels.LoginViewModel
 import com.inc.lite.stationdemo.viewModels.RentViewModel
 
@@ -36,6 +37,11 @@ fun CouponsNavGraph(
                 paddingValues = paddingValues
             )
         }
-        composable(Screen.DoYouHaveCoupons.route) {}
+        composable(Screen.EnterManuallyCoupons.route) {
+            EnterManuallyCoupons(
+                viewModel = viewModel,
+                paddingValues = paddingValues
+            )
+        }
     }
 }

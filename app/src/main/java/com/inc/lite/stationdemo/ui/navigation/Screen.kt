@@ -29,7 +29,7 @@ sealed class Screen(val route: String){
 
     object AskCoupons: Screen("ask_coupons")
     object Coupons: Screen("coupons")
-    object DoYouHaveCoupons: Screen("do_you_have_coupons")
+    object EnterManuallyCoupons: Screen("enter_manually_coupons")
     object ChoseWitchCoupons: Screen("chose_witch_coupons")
 
 

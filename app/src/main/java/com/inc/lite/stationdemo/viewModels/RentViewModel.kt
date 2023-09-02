@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.activities.MainActivity
 import com.inc.lite.stationdemo.model.PaymentType
 import com.inc.lite.stationdemo.model.uiState.ProfileUiState
@@ -52,8 +53,8 @@ class RentViewModel @Inject constructor(
 
     lateinit var context: Context
 
-
-
+    private val _topTitle: MutableState<Int>  = mutableStateOf(R.string.log_in)
+    val topTitle = _topTitle
 
     fun logOut(context: Context){
         val intent = Intent(context, MainActivity::class.java)
@@ -70,11 +71,17 @@ class RentViewModel @Inject constructor(
         startRental()
     }
 
-    fun startRental(){
+    private fun startRental(){
         mainNavHost.navigate(Screen.StartRent.route)
+
     }
     fun useCoupons(){
         navHostController.navigate(Screen.ChoseWitchCoupons.route)
+        setTitle(R.string.voucher)
+    }
+
+    fun setTitle(title: Int){
+        _topTitle.value = title
     }
 
     fun onPaymentConfirm() {
@@ -98,8 +105,10 @@ class RentViewModel @Inject constructor(
     }
     fun popUpPowerBank(context: Context){
         viewModelScope.launch(Dispatchers.IO) {
+            popUpPowerBank()
             delay(2000)
             _showStationSlotsInfo.value = true
+
             while (time > 1 ){
                 delay( 1000)
                 time -= 1
@@ -111,5 +120,17 @@ class RentViewModel @Inject constructor(
 //            }
         }
     }
+    fun navigateBack(){
+        navHostController.popBackStack()
+    }
+    fun addManualCoupon(){
+        navHostController.navigate(Screen.EnterManuallyCoupons.route)
+    }
+    fun confirmManualCoupon(){
 
+    }
+
+    private fun popUpPowerBank(){
+
+    }
 }

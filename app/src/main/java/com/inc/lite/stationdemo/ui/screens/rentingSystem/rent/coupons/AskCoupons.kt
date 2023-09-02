@@ -53,7 +53,7 @@ fun AskCoupons(
             Spacer(modifier = Modifier.height(size.dp(80)))
             Row(
                 Modifier
-                    .width(size.dp(497))
+                    .width(size.dp(664))
                     .height(size.dp(90)),
             ) {
                 
@@ -72,7 +72,7 @@ fun AskCoupons(
                 ) {
                     Text(
                         text = stringResource(id = R.string.no_skip),
-                        fontSize = size.sp(24),
+                        fontSize = size.sp(32),
                         fontWeight = FontWeight.Light,
                         style = mainTextStyle
                     )
@@ -89,8 +89,8 @@ fun AskCoupons(
                     elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                 ) {
                     Text(
-                        text = stringResource(id = R.string.yes_use),
-                        fontSize = size.sp(24),
+                        text = stringResource(id = R.string.use),
+                        fontSize = size.sp(32),
                         style = mainTextStyle
                     )
                 }
