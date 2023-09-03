@@ -17,6 +17,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,6 +39,10 @@ fun AskCoupons(
 ) {
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
+    LaunchedEffect(key1 = true){
+        viewModel.setTitle(R.string.log_in)
+    }
+
     Surface(Modifier.fillMaxSize().padding(paddingValues)) {
         Column(
             verticalArrangement = Arrangement.Top,

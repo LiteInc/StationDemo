@@ -49,7 +49,9 @@ fun StartRentScreen(
     val size = AdjScreenSize(configuration)
     
     LaunchedEffect(true){
+        viewModel.putContext(context)
         viewModel.popUpPowerBank(context)
+        viewModel.loadingAnimation()
     }
     
     Scaffold(
@@ -81,7 +83,7 @@ fun StartRentScreen(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = stringResource(id = R.string.let_you_charge_up_now),
+                text = stringResource(id = R.string.let_you_charge_up_now) + viewModel.loadingString.value,
                 style = mainTextStyle,
                 fontSize = size.sp(36)
             )

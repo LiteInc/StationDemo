@@ -17,6 +17,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,7 +34,9 @@ import com.inc.lite.stationdemo.R
 import com.inc.lite.stationdemo.ui.components.CouponItem
 import com.inc.lite.stationdemo.ui.components.CouponItemData
 import com.inc.lite.stationdemo.ui.components.CouponManualItem
+import com.inc.lite.stationdemo.ui.theme.LightGrayBackgroundDisabled
 import com.inc.lite.stationdemo.ui.theme.MainColor
+import com.inc.lite.stationdemo.ui.theme.White
 import com.inc.lite.stationdemo.ui.theme.mainTextStyle
 import com.inc.lite.stationdemo.util.AdjScreenSize
 import com.inc.lite.stationdemo.viewModels.RentViewModel
@@ -43,15 +46,13 @@ import com.inc.lite.stationdemo.viewModels.RentViewModel
 fun ChooseWhichCouponsScreen(
     viewModel: RentViewModel,
     paddingValues: PaddingValues,
-    couponItemsList: List<CouponItemData> = emptyList()
-//        listOf(
-//            CouponItemData(),
-//            CouponItemData(),
-//        )
 ) {
 
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
+    LaunchedEffect(key1 = true){
+        viewModel.setTitle(R.string.voucher)
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -70,7 +71,7 @@ fun ChooseWhichCouponsScreen(
         ){
 
 
-            if(couponItemsList.isEmpty()){
+            if(viewModel.couponsList.value.isEmpty()){
                 item {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -98,55 +99,112 @@ fun ChooseWhichCouponsScreen(
 
                 }
             }else{
-                item {
-                    CouponItem(
-                        couponItemsList[0],
-                        isSelected1,
-                        onClick = { couponItemData ->
-                            if(!isSelected1){
-                                isSelected1 = true
-                                isSelected2 = false
-                                isSelected3 = false
-                            }else{
-                                isSelected1 = false
-                                isSelected2 = false
-                                isSelected3 = false
+
+                if(viewModel.couponsList.value.size == 1){
+                    item {
+                        CouponItem(
+                            viewModel.couponsList.value[0],
+                            isSelected1,
+                            onClick = {
+                                isSelected1 = !isSelected1
+                                viewModel.couponAvailable.value = isSelected1
                             }
-                        }
-                    )
-                }
-                item {
-                    CouponItem(
-                        couponItemsList[1],
-                        isSelected2,
-                        onClick = { couponItemData ->
-                            if(!isSelected2){
-                                isSelected1 = false
-                                isSelected2 = true
-                                isSelected3 = false
-                            }else{
-                                isSelected1 = false
-                                isSelected2 = false
-                                isSelected3 = false
+                        )
+                    }
+                }else if(viewModel.couponsList.value.size == 2){
+                    item {
+                        CouponItem(
+                            viewModel.couponsList.value[0],
+                            isSelected1,
+                            onClick = {
+                                if(!isSelected1){
+                                    isSelected1 = true
+                                    isSelected2 = false
+                                    viewModel.couponAvailable.value = true
+                                }else{
+                                    isSelected1 = false
+                                    isSelected2 = false
+                                    viewModel.couponAvailable.value = false
+                                }
                             }
-                        }
-                    )
-                }
-                item {
-                    CouponManualItem(
-                        isSelected3,
-                        onClick = {s, b ->
-                            if(!isSelected3){
-                                isSelected1 = false
-                                isSelected2 = false
-                                isSelected3 = true
-                            }else{
-                                isSelected1 = false
-                                isSelected2 = false
-                                isSelected3 = false
+                        )
+                    }
+                    item {
+                        CouponItem(
+                            viewModel.couponsList.value[1],
+                            isSelected2,
+                            onClick = {
+                                if(!isSelected2){
+                                    isSelected1 = false
+                                    isSelected2 = true
+                                    viewModel.couponAvailable.value = true
+                                }else{
+                                    isSelected1 = false
+                                    isSelected2 = false
+                                    viewModel.couponAvailable.value = false
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
+                }else {
+
+                    item {
+                        CouponItem(
+                            viewModel.couponsList.value[0],
+                            isSelected1,
+                            onClick = {
+                                if(!isSelected1){
+                                    isSelected1 = true
+                                    isSelected2 = false
+                                    isSelected3 = false
+                                    viewModel.couponAvailable.value = true
+                                }else{
+                                    isSelected1 = false
+                                    isSelected2 = false
+                                    isSelected3 = false
+                                    viewModel.couponAvailable.value = false
+                                }
+                            }
+                        )
+                    }
+                    item {
+                        CouponItem(
+                            viewModel.couponsList.value[1],
+                            isSelected2,
+                            onClick = {
+                                if(!isSelected2){
+                                    isSelected1 = false
+                                    isSelected2 = true
+                                    isSelected3 = false
+                                    viewModel.couponAvailable.value = true
+                                }else{
+                                    isSelected1 = false
+                                    isSelected2 = false
+                                    isSelected3 = false
+                                    viewModel.couponAvailable.value = false
+                                }
+                            }
+                        )
+                    }
+                    item {
+                        CouponItem(
+                            viewModel.couponsList.value[2],
+                            isSelected3,
+                            onClick = {
+                                if(!isSelected2){
+                                    isSelected1 = false
+                                    isSelected2 = false
+                                    isSelected3 = true
+                                    viewModel.couponAvailable.value = true
+                                }else{
+                                    isSelected1 = false
+                                    isSelected2 = false
+                                    isSelected3 = false
+                                    viewModel.couponAvailable.value = false
+                                }
+                            }
+                        )
+                    }
                 }
             }
         }
@@ -163,10 +221,14 @@ fun ChooseWhichCouponsScreen(
                     .fillMaxWidth()
                     .weight(1f),
                 onClick = {
-//                    viewModel.useCoupons()
+                    viewModel.startRental()
                 },
-                enabled = false,
-                colors = ButtonDefaults.buttonColors(containerColor = MainColor),
+                enabled = viewModel.couponAvailable.value,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MainColor,
+                    disabledContainerColor = LightGrayBackgroundDisabled,
+                    disabledContentColor = White
+                ),
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
             ) {
                 Text(
@@ -198,22 +260,6 @@ fun ChooseWhichCouponsScreen(
             }
 
         }
-//        Button(
-//            modifier = Modifier
-//                .height(size.dp(90))
-//                .width(size.dp(198)),
-//            onClick = {
-//                viewModel.startRental()
-//            },
-//            colors = ButtonDefaults.buttonColors(containerColor = MainColor),
-//            elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
-//        ) {
-//            Text(
-//                text = stringResource(id = R.string.apply),
-//                fontSize = size.sp(24),
-//                style = mainTextStyle
-//            )
-//        }
         Spacer(modifier = Modifier.height(size.dp(92)))
 
     }

@@ -51,7 +51,7 @@ import com.inc.lite.stationdemo.util.AdjScreenSize
 
 
 data class CouponItemData(
-    val expiredData: String = "2019-12-31",
+    val expiredData: String = "2023-12-31",
     val typeText: String = "一小時免費"
 
 )

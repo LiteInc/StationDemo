@@ -13,6 +13,7 @@ import com.inc.lite.stationdemo.model.PaymentType
 import com.inc.lite.stationdemo.model.uiState.ProfileUiState
 import com.inc.lite.stationdemo.model.uiState.RentUiState
 import com.inc.lite.stationdemo.repository.MainRepository
+import com.inc.lite.stationdemo.ui.components.CouponItemData
 import com.inc.lite.stationdemo.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +22,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.inc.lite.stationdemo.MyApplication
 
 @HiltViewModel
 class RentViewModel @Inject constructor(
@@ -55,6 +58,15 @@ class RentViewModel @Inject constructor(
 
     private val _topTitle: MutableState<Int>  = mutableStateOf(R.string.log_in)
     val topTitle = _topTitle
+    private val _couponsList: MutableState<MutableList<CouponItemData>>  = mutableStateOf(mutableListOf())
+    val couponsList = _couponsList
+
+    private val _couponAvailable: MutableState<Boolean>  = mutableStateOf(false)
+    val couponAvailable = _couponAvailable
+    private val _loadingString: MutableState<String>  = mutableStateOf(".")
+    val loadingString = _loadingString
+
+    private var isLoadingAnimationStop = true
 
     fun logOut(context: Context){
         val intent = Intent(context, MainActivity::class.java)
@@ -67,11 +79,15 @@ class RentViewModel @Inject constructor(
         this.navHostController = navHostController
     }
 
+    fun putContext(c: Context){
+        context = c
+    }
+
     fun skipCoupons(){
         startRental()
     }
 
-    private fun startRental(){
+    fun startRental(){
         mainNavHost.navigate(Screen.StartRent.route)
 
     }
@@ -105,10 +121,10 @@ class RentViewModel @Inject constructor(
     }
     fun popUpPowerBank(context: Context){
         viewModelScope.launch(Dispatchers.IO) {
-            popUpPowerBank()
             delay(2000)
+            sendBroadcastToPopUp()
             _showStationSlotsInfo.value = true
-
+            isLoadingAnimationStop = true
             while (time > 1 ){
                 delay( 1000)
                 time -= 1
@@ -126,11 +142,37 @@ class RentViewModel @Inject constructor(
     fun addManualCoupon(){
         navHostController.navigate(Screen.EnterManuallyCoupons.route)
     }
-    fun confirmManualCoupon(){
+    fun confirmManualCoupon(coupon: String){
+        if(couponsList.value.size < 4){
+            couponsList.value.add(
+                CouponItemData()
+            )
+        }
+        navHostController.navigate(Screen.ChoseWitchCoupons.route)
 
     }
 
-    private fun popUpPowerBank(){
+    fun loadingAnimation(){
+        isLoadingAnimationStop = false
+        viewModelScope.launch {
+            while(!isLoadingAnimationStop){
+                _loadingString.value = "."
+                delay(500)
+                _loadingString.value = ".."
+                delay(500)
+                _loadingString.value = "..."
+                delay(400)
+            }
 
+        }
     }
+
+    private fun sendBroadcastToPopUp() {
+        val intent = Intent("com.inc.lite.station.actions.hardCommands.Popup")
+
+        val localBroadcastManager = LocalBroadcastManager.getInstance(context)
+        localBroadcastManager.sendBroadcast(intent)
+    }
+
+
 }

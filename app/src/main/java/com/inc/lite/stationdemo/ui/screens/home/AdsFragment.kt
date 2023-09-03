@@ -73,6 +73,7 @@ fun AdsFragment(
                 AdsLayouts.FourImage -> {
                     Layout4(uiState.ads.adsList)
                 }
+
             }
         }
 

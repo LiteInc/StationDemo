@@ -13,7 +13,6 @@ import com.inc.lite.stationdemo.model.AdsType
 import com.inc.lite.stationdemo.model.AdsUI
 import com.inc.lite.stationdemo.model.uiState.MainUiState
 import com.inc.lite.stationdemo.model.ProgramItem
-import com.inc.lite.stationdemo.model.StatusBarUiState
 import com.inc.lite.stationdemo.repository.MainRepository
 import com.inc.lite.stationdemo.ui.navigation.Screen
 import com.inc.lite.stationdemo.util.AdsTimer
@@ -46,6 +45,10 @@ class HomeViewModel @Inject constructor(
     private var programsTime = 0
     private val timeOut = 60 // Time out in seconds for timer
 
+    private val image1 = "https://res.cloudinary.com/dzyfcoofz/image/upload/v1693740495/a4_1_t2nx0v.png"
+    private val image2 = "https://res.cloudinary.com/dzyfcoofz/image/upload/v1693670146/a4_2_omqezt.png"
+    private val image3 = "https://res.cloudinary.com/dzyfcoofz/image/upload/v1693670156/a4_3_bixnke.png"
+    private val image4 = "https://res.cloudinary.com/dzyfcoofz/image/upload/v1693670157/a4_4_fp5jbv.png"
 
     private var isVideoPlaying = true
     private lateinit var adsTimer: AdsTimer
@@ -77,6 +80,8 @@ class HomeViewModel @Inject constructor(
         }
         onStart()
     }
+
+
 
     fun initiateNavHost(navHostController: NavHostController){
         navHost = navHostController
@@ -256,7 +261,7 @@ class HomeViewModel @Inject constructor(
 
         adsTimer.updateListOfAds(
             listOf(
-                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000)
+                AdsItem(image1,AdsType.Image, 5000)
             )
         )
         _uiState.update {
@@ -265,18 +270,38 @@ class HomeViewModel @Inject constructor(
                 AdsUI().copy(
                     adsLayout = AdsLayouts.SingleImage,
                     adsList = listOf(
-                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
+                        AdsItem(image1,AdsType.Image, 5000),
+                    )
+                )
+            )
+        }
+    }
+    fun layout2() {
+        adsIsLoaded.value = false
+
+        adsTimer.updateListOfAds(
+            listOf(
+                AdsItem("https://res.cloudinary.com/riisu/video/upload/v1693667606/xpqoq2pup1ohfq3wmiit.mp4",AdsType.Video)
+            )
+        )
+        _uiState.update {
+            it.copy(
+                ads =
+                AdsUI().copy(
+                    adsLayout = AdsLayouts.SingleImage,
+                    adsList = listOf(
+                        AdsItem("https://res.cloudinary.com/riisu/video/upload/v1693667606/xpqoq2pup1ohfq3wmiit.mp4",AdsType.Video),
                     )
                 )
             )
         }
     }
 
-    fun layout2() {
+    fun layout3() {
         adsTimer.updateListOfAds(
             listOf(
-                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692868788/zetywm808lwif21m38ba.png",AdsType.Image, 5000),
-                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692868788/zetywm808lwif21m38ba.png",AdsType.Image, 5000),
+                AdsItem("https://res.cloudinary.com/riisu/video/upload/v1693668086/f2jxyyrl97wozhv2hij8.mp4",AdsType.Video),
+                AdsItem(image2,AdsType.Image, 5000),
             )
         )
         _uiState.update {
@@ -285,20 +310,21 @@ class HomeViewModel @Inject constructor(
                 AdsUI().copy(
                     adsLayout = AdsLayouts.TwoImage,
                     adsList = listOf(
-                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692868788/zetywm808lwif21m38ba.png",AdsType.Image, 5000),
-                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692868788/zetywm808lwif21m38ba.png",AdsType.Image, 5000),
+                        AdsItem("https://res.cloudinary.com/riisu/video/upload/v1693668086/f2jxyyrl97wozhv2hij8.mp4",AdsType.Video),
+                        AdsItem("https://res.cloudinary.com/riisu/video/upload/v1693667980/gduqrjywrpdjwsxmapus.mp4",AdsType.Video),
+//                        AdsItem(image2,AdsType.Image, 5000),
                     )
                 )
             )
         }
 
     }
-    fun layout3() {
+    fun layout4() {
         adsTimer.updateListOfAds(
             listOf(
-                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692868788/zetywm808lwif21m38ba.png",AdsType.Image, 5000),
-                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
-                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
+                AdsItem("https://res.cloudinary.com/riisu/video/upload/v1693667980/gduqrjywrpdjwsxmapus.mp4",AdsType.Video),
+                AdsItem(image1,AdsType.Image, 5000),
+                AdsItem(image2,AdsType.Image, 5000),
             )
         )
         _uiState.update {
@@ -307,23 +333,23 @@ class HomeViewModel @Inject constructor(
                 AdsUI().copy(
                     adsLayout = AdsLayouts.ThreeImage,
                     adsList = listOf(
-                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692868788/zetywm808lwif21m38ba.png",AdsType.Image, 5000),
-                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
-                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
+                        AdsItem("https://res.cloudinary.com/riisu/video/upload/v1693667980/gduqrjywrpdjwsxmapus.mp4",AdsType.Video),
+                        AdsItem(image1,AdsType.Image, 5000),
+                        AdsItem(image2,AdsType.Image, 5000),
                     )
                 )
             )
         }
     }
-    fun layout4() {
+    fun layout5() {
         adsIsLoaded.value = false
 
         adsTimer.updateListOfAds(
             listOf(
-                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
-                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
-                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
-                AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
+                AdsItem(image1,AdsType.Image, 5000),
+                AdsItem(image2,AdsType.Image, 5000),
+                AdsItem(image3,AdsType.Image, 5000),
+                AdsItem(image4,AdsType.Image, 5000),
             )
         )
 
@@ -333,10 +359,10 @@ class HomeViewModel @Inject constructor(
                 AdsUI().copy(
                     adsLayout = AdsLayouts.FourImage,
                     adsList = listOf(
-                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
-                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
-                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
-                        AdsItem("https://res.cloudinary.com/riisu/image/upload/v1692865710/dva8rn2ltaju0artrisr.jpg",AdsType.Image, 5000),
+                        AdsItem(image1,AdsType.Image, 5000),
+                        AdsItem(image2,AdsType.Image, 5000),
+                        AdsItem(image3,AdsType.Image, 5000),
+                        AdsItem(image4,AdsType.Image, 5000),
                     )
                 )
             )

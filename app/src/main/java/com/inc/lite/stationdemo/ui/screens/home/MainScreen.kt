@@ -52,7 +52,6 @@ import com.inc.lite.stationdemo.model.ProgramItem
 import com.inc.lite.stationdemo.model.SponsoredSurfaceData
 import com.inc.lite.stationdemo.ui.components.QrElement
 import com.inc.lite.stationdemo.ui.components.StatusBar
-import com.inc.lite.stationdemo.ui.navigation.Screen
 import com.inc.lite.stationdemo.ui.theme.Black
 import com.inc.lite.stationdemo.ui.theme.SponsoredBack
 import com.inc.lite.stationdemo.ui.theme.SponsoredFront
@@ -83,7 +82,14 @@ fun MainScreen(
                 .fillMaxWidth()
 
         ) {
-            AdsFragment(viewModel = viewModel)
+            Column {
+                AdsFragment(viewModel = viewModel)
+                Box(modifier = Modifier
+                    .background(Black)
+                    .height(size.dp(138))
+                    .fillMaxWidth()
+                )
+            }
             Column(
                 modifier = Modifier.padding(
                     start = size.dp(20),
@@ -138,6 +144,19 @@ fun MainScreen(
                 ) {
                     Text(
                         text = "4",
+                        fontSize = size.sp(32),
+                        color = White
+                    )
+                }
+                Button(
+                    onClick = {
+                              viewModel.layout5()
+                    },
+                    shape = CircleShape,
+                    colors = ButtonDefaults.buttonColors( containerColor = Black.copy(alpha = 0.3f))
+                ) {
+                    Text(
+                        text = "5",
                         fontSize = size.sp(32),
                         color = White
                     )

@@ -32,9 +32,9 @@ fun AuthNavGraph(
             LoginScreen(navHostController = navHostController)
         }
         composable(Screen.Registration.route){
-            CouponsScreen(navHostController = navHostController, viewModel = rentViewModel)
+//            CouponsScreen(navHostController = navHostController, viewModel = rentViewModel)
 //            StartRentScreen(navHostController = navHostController, viewModel = rentViewModel)
-//            RegistrationScreen(navHostController = navHostController)
+            RegistrationScreen(navHostController = navHostController)
         }
 //        composable(Screen.ProfilePage.route){
 //            ProfileScreen(navHostController = navHostController)

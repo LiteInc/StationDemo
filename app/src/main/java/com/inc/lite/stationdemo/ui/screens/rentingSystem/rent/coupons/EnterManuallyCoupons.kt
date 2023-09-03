@@ -2,6 +2,7 @@ package com.inc.lite.stationdemo.ui.screens.rentingSystem.rent.coupons
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,6 +29,10 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,7 +44,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.inc.lite.stationdemo.R
+import com.inc.lite.stationdemo.ui.screens.home.Keyboard
+import com.inc.lite.stationdemo.ui.screens.home.keyboardAsState
 import com.inc.lite.stationdemo.ui.theme.Background
+import com.inc.lite.stationdemo.ui.theme.LightGrayBackgroundDisabled
 import com.inc.lite.stationdemo.ui.theme.LightGrayColor
 import com.inc.lite.stationdemo.ui.theme.MainColor
 import com.inc.lite.stationdemo.ui.theme.White
@@ -50,29 +58,38 @@ import com.inc.lite.stationdemo.viewModels.RentViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+
 fun EnterManuallyCoupons(
     viewModel: RentViewModel,
     paddingValues: PaddingValues
 ) {
     val configuration = LocalConfiguration.current
     val size = AdjScreenSize(configuration)
+    val isKeyboardOpen by keyboardAsState()
+
+    var coupon by remember { mutableStateOf("") }
     LaunchedEffect(key1 = true){
         viewModel.setTitle(R.string.enter_promo_code)
     }
-    Surface(
+    Box(
         Modifier
             .fillMaxSize()
-            .padding(paddingValues)) {
+            .background(White)
+            .padding(paddingValues),
+        contentAlignment = Alignment.BottomCenter
+    ) {
         Column(
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
+            if(isKeyboardOpen == Keyboard.Opened){
+                Spacer(Modifier.height(size.dp(100)))
+            }
             Card(
                 modifier = Modifier
-                    .height(size.dp(151))
-                    .fillMaxWidth()
-                    .padding(horizontal = size.dp(20)),
+                    .padding(horizontal = size.dp(48))
+                    .height(size.dp(152))
+                    .fillMaxWidth(),
                 shape = RoundedCornerShape(size.dp(20)),
                 colors = CardDefaults.cardColors(
                     containerColor = White,
@@ -82,12 +99,17 @@ fun EnterManuallyCoupons(
             ){
                 Box(
                     contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
                 ) {
                     TextField(
-                        modifier = Modifier.align(Alignment.Center),
-                        value = "",
-                        onValueChange = {},
+                        modifier = Modifier,
+                        value = coupon,
+                        onValueChange = {
+                            val uppercaseText = it.uppercase()
+                            coupon = uppercaseText
+                        },
                         colors = TextFieldDefaults.colors(
                             focusedContainerColor = Background,
                             unfocusedContainerColor = Background,
@@ -95,7 +117,8 @@ fun EnterManuallyCoupons(
                             unfocusedIndicatorColor = Background,
                             focusedTextColor = Color.Black,
                             cursorColor = MainColor,
-                            disabledContainerColor = Background
+                            disabledContainerColor = Background,
+
 
                         ),
                         textStyle = TextStyle(
@@ -109,13 +132,18 @@ fun EnterManuallyCoupons(
             }
             Spacer(modifier = Modifier.height(size.dp(65)))
             Button(
+                enabled = coupon.toCharArray().size >= 5,
                 modifier = Modifier
                     .height(size.dp(90))
                     .width(size.dp(385)),
                 onClick = {
-                    viewModel.confirmManualCoupon()
+                    viewModel.confirmManualCoupon(coupon)
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = MainColor),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MainColor,
+                    disabledContainerColor = LightGrayBackgroundDisabled,
+                    disabledContentColor = White
+                ),
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
             ) {
                 Text(
