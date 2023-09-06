@@ -4,5 +4,6 @@ enum class AdsLayouts {
     SingleImage,
     TwoImage,
     ThreeImage,
+    ThreeImageInverted,
     FourImage
 }

@@ -49,6 +49,9 @@ class HomeViewModel @Inject constructor(
     private val image2 = "https://res.cloudinary.com/dzyfcoofz/image/upload/v1693670146/a4_2_omqezt.png"
     private val image3 = "https://res.cloudinary.com/dzyfcoofz/image/upload/v1693670156/a4_3_bixnke.png"
     private val image4 = "https://res.cloudinary.com/dzyfcoofz/image/upload/v1693670157/a4_4_fp5jbv.png"
+    private val verticalVideo = "https://res.cloudinary.com/riisu/video/upload/v1693667606/xpqoq2pup1ohfq3wmiit.mp4"
+    private val horisontalVideo1 = "https://res.cloudinary.com/riisu/video/upload/v1693668086/f2jxyyrl97wozhv2hij8.mp4"
+    private val horisontalVideo2 = "https://res.cloudinary.com/riisu/video/upload/v1693667980/gduqrjywrpdjwsxmapus.mp4"
 
     private var isVideoPlaying = true
     private lateinit var adsTimer: AdsTimer
@@ -300,19 +303,20 @@ class HomeViewModel @Inject constructor(
     fun layout3() {
         adsTimer.updateListOfAds(
             listOf(
-                AdsItem("https://res.cloudinary.com/riisu/video/upload/v1693668086/f2jxyyrl97wozhv2hij8.mp4",AdsType.Video),
-                AdsItem(image2,AdsType.Image, 5000),
+                AdsItem(horisontalVideo1,AdsType.Video),
+                AdsItem(image3,AdsType.Image, 5000),
+                AdsItem(image4,AdsType.Image, 5000),
             )
         )
         _uiState.update {
             it.copy(
                 ads =
                 AdsUI().copy(
-                    adsLayout = AdsLayouts.TwoImage,
+                    adsLayout = AdsLayouts.ThreeImage,
                     adsList = listOf(
-                        AdsItem("https://res.cloudinary.com/riisu/video/upload/v1693668086/f2jxyyrl97wozhv2hij8.mp4",AdsType.Video),
-                        AdsItem("https://res.cloudinary.com/riisu/video/upload/v1693667980/gduqrjywrpdjwsxmapus.mp4",AdsType.Video),
-//                        AdsItem(image2,AdsType.Image, 5000),
+                        AdsItem(horisontalVideo1,AdsType.Video),
+                        AdsItem(image3,AdsType.Image, 5000),
+                        AdsItem(image4,AdsType.Image, 5000),
                     )
                 )
             )
@@ -322,7 +326,7 @@ class HomeViewModel @Inject constructor(
     fun layout4() {
         adsTimer.updateListOfAds(
             listOf(
-                AdsItem("https://res.cloudinary.com/riisu/video/upload/v1693667980/gduqrjywrpdjwsxmapus.mp4",AdsType.Video),
+                AdsItem(horisontalVideo2,AdsType.Video),
                 AdsItem(image1,AdsType.Image, 5000),
                 AdsItem(image2,AdsType.Image, 5000),
             )
@@ -331,9 +335,9 @@ class HomeViewModel @Inject constructor(
             it.copy(
                 ads =
                 AdsUI().copy(
-                    adsLayout = AdsLayouts.ThreeImage,
+                    adsLayout = AdsLayouts.ThreeImageInverted,
                     adsList = listOf(
-                        AdsItem("https://res.cloudinary.com/riisu/video/upload/v1693667980/gduqrjywrpdjwsxmapus.mp4",AdsType.Video),
+                        AdsItem(horisontalVideo2,AdsType.Video),
                         AdsItem(image1,AdsType.Image, 5000),
                         AdsItem(image2,AdsType.Image, 5000),
                     )
@@ -346,10 +350,10 @@ class HomeViewModel @Inject constructor(
 
         adsTimer.updateListOfAds(
             listOf(
-                AdsItem(image1,AdsType.Image, 5000),
-                AdsItem(image2,AdsType.Image, 5000),
                 AdsItem(image3,AdsType.Image, 5000),
                 AdsItem(image4,AdsType.Image, 5000),
+                AdsItem(image1,AdsType.Image, 5000),
+                AdsItem(image2,AdsType.Image, 5000),
             )
         )
 
@@ -359,10 +363,10 @@ class HomeViewModel @Inject constructor(
                 AdsUI().copy(
                     adsLayout = AdsLayouts.FourImage,
                     adsList = listOf(
-                        AdsItem(image1,AdsType.Image, 5000),
-                        AdsItem(image2,AdsType.Image, 5000),
                         AdsItem(image3,AdsType.Image, 5000),
                         AdsItem(image4,AdsType.Image, 5000),
+                        AdsItem(image1,AdsType.Image, 5000),
+                        AdsItem(image2,AdsType.Image, 5000),
                     )
                 )
             )

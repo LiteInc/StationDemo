@@ -70,6 +70,9 @@ fun AdsFragment(
                 AdsLayouts.ThreeImage -> {
                     Layout3(uiState.ads.adsList)
                 }
+                AdsLayouts.ThreeImageInverted -> {
+                    Layout3Inverted(uiState.ads.adsList)
+                }
                 AdsLayouts.FourImage -> {
                     Layout4(uiState.ads.adsList)
                 }
@@ -218,7 +221,83 @@ fun Layout3(
         }
 
     }
-}@Composable
+}
+@Composable
+fun Layout3Inverted(
+    ads: List<AdsItem> = listOf(
+        AdsItem("", AdsType.Image),
+        AdsItem("", AdsType.Image),
+        AdsItem("", AdsType.Image)
+    )
+) {
+    val configuration = LocalConfiguration.current
+    val size = AdjScreenSize(configuration)
+    Column(Modifier.fillMaxSize()) {
+
+
+
+        Row(Modifier.height(size.dp(571))) {
+            if(ads[1].type == AdsType.Image){
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        model = ads[1].url
+                    ),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .height(size.dp(571))
+                        .width(size.dp(400)),
+                )
+            }else{
+                VideoElement(
+                    modifier = Modifier
+                        .height(size.dp(571))
+                        .width(size.dp(400)),
+                    url = ads[1].url
+                )
+            }
+
+            if(ads[2].type == AdsType.Image){
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        model = ads[2].url
+                    ),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .height(size.dp(571))
+                        .width(size.dp(400)),
+                )
+            }else{
+                VideoElement(
+                    modifier = Modifier
+                        .height(size.dp(571))
+                        .width(size.dp(400)),
+                    url = ads[2].url
+                )
+            }
+
+        }
+        if(ads[0].type == AdsType.Image){
+            Image(
+                painter = rememberAsyncImagePainter(
+                    model = ads[0].url
+                ),
+                contentDescription = "",
+                modifier = Modifier
+                    .height(size.dp(571))
+                    .width(size.dp(800)),
+            )
+        } else {
+            VideoElement(
+                modifier = Modifier
+                    .height(size.dp(571))
+                    .width(size.dp(800)),
+                url = ads[0].url
+            )
+        }
+
+    }
+}
+@Composable
 fun Layout4(
     ads: List<AdsItem> = listOf(
         AdsItem("", AdsType.Image),

@@ -2,6 +2,7 @@ package com.inc.lite.stationdemo.viewModels
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -30,6 +31,8 @@ class RentViewModel @Inject constructor(
     private val mainRepository: MainRepository,
     sharedInfo: SharedInformation
 ): ViewModel() {
+
+    private val TAG = "RentViewModel"
 
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState = _uiState.asStateFlow()
@@ -168,10 +171,12 @@ class RentViewModel @Inject constructor(
     }
 
     private fun sendBroadcastToPopUp() {
-        val intent = Intent("com.inc.lite.station.actions.hardCommands.Popup")
-
-        val localBroadcastManager = LocalBroadcastManager.getInstance(context)
-        localBroadcastManager.sendBroadcast(intent)
+//        val intent = Intent("com.inc.lite.station.actions.hardCommands.Popup")
+//
+//        val localBroadcastManager = LocalBroadcastManager.getInstance(context)
+//        localBroadcastManager.sendBroadcast(intent)
+//
+//        Log.d(TAG,"Pop command sended: intent${intent.action}")
     }
 
 

@@ -45,7 +45,7 @@ fun VideoPlayer(
     playerView.player = exoPlayer
 
 //    var volumeControl = exoPlayer.volume
-    exoPlayer.volume = 0f
+//    exoPlayer.volume = 0f
 
     DisposableEffect(
         AndroidView(
@@ -72,6 +72,7 @@ fun VideoPlayer(
                     exoPlayer.play()
                     viewModel.videoPlaying(true)
                 }
+
             }
         })
 
